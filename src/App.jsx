@@ -1,28 +1,51 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Leaf, 
   MessageCircle,
   ArrowRight,
+  ArrowLeft,
   CheckCircle,
   Globe,
   Users,
-  Award
+  Award,
+  Menu,
+  X
 } from 'lucide-react';
 import './App.css';
 
 const App = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Prevent body scroll when mobile menu is open
+  React.useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileMenuOpen]);
+
   const scrollToContact = () => {
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    setMobileMenuOpen(false);
   };
 
   const scrollToServices = () => {
     document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+    setMobileMenuOpen(false);
+  };
+
+  const handleNavClick = () => {
+    setMobileMenuOpen(false);
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    alert('Thank you for your interest! We\'ll contact you soon via WhatsApp.');
+    alert('شكراً لطلب الاستشارة ال! سيتواصل معك فريق الخبراء لدينا خلال 24 ساعة لمناقشة احتياجاتك من الاستشارات البيئية.');
   };
 
   return (
@@ -41,161 +64,324 @@ const App = () => {
             transition={{ duration: 0.15, ease: "easeOut" }}
           >
             <Leaf className="logo-icon" />
-            <span className="logo-text">Earth Footprint</span>
+            <span className="logo-text">بصمة الأرض</span>
           </motion.div>
 
-          <div className="nav-links">
-            <a href="#services" onClick={scrollToServices}>Services</a>
-            <a href="#projects">Projects</a>
-            <a href="#about">About</a>
-            <a href="#contact" onClick={scrollToContact}>Contact</a>
+          {/* Desktop Navigation */}
+          <div className="nav-links desktop-nav">
+            <a href="#services" onClick={scrollToServices}>الخدمات</a>
+            <a href="#projects" onClick={handleNavClick}>المشاريع</a>
+            <a href="#about" onClick={handleNavClick}>من نحن</a>
+            <a href="#contact" onClick={scrollToContact}>تواصل معنا</a>
           </div>
+
+          {/* Mobile Menu Button */}
+          <button 
+            className="mobile-menu-button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </motion.div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              className="mobile-menu"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              <div className="mobile-menu-links">
+                <a href="#services" onClick={scrollToServices}>الخدمات</a>
+                <a href="#projects" onClick={handleNavClick}>المشاريع</a>
+                <a href="#about" onClick={handleNavClick}>من نحن</a>
+                <a href="#contact" onClick={scrollToContact}>تواصل معنا</a>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
       {/* Hero Section */}
       <section className="hero">
-        <div className="hero-background professional-bg">
-          <div className="professional-grid">
-            {[...Array(12)].map((_, i) => (
+        {/* Animated Background */}
+        <div className="hero-background">
+          {/* Particle orbs */}
+          <div className="particles-container">
+            {[...Array(8)].map((_, i) => (
               <motion.div
                 key={i}
-                className="grid-line"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 0.1, scale: 1 }}
-                transition={{ duration: 0.5, delay: i * 0.05, ease: "easeOut" }}
+                className={`particle particle-${i + 1}`}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ 
+                  opacity: [0.1, 0.3, 0.1],
+                  scale: [1, 1.2, 1],
+                  x: [0, Math.random() * 30 - 15, 0],
+                  y: [0, Math.random() * 30 - 15, 0]
+                }}
+                transition={{ 
+                  duration: 5 + i,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: i * 0.3
+                }}
               />
             ))}
           </div>
-          <div className="professional-elements">
+          
+          {/* Gradient waves */}
+          <div className="gradient-waves">
             <motion.div 
-              className="professional-icon-1"
+              className="wave wave-1"
               animate={{ 
-                opacity: [0.3, 0.7, 0.3],
+                rotate: [0, 360],
                 scale: [1, 1.1, 1]
               }}
               transition={{ 
-                duration: 4,
+                duration: 20,
                 repeat: Infinity,
-                ease: "easeInOut"
+                ease: "linear"
               }}
-            >
-              <Globe size={60} />
-            </motion.div>
+            />
             <motion.div 
-              className="professional-icon-2"
+              className="wave wave-2"
               animate={{ 
-                opacity: [0.2, 0.5, 0.2],
-                x: [0, 20, 0]
+                rotate: [360, 0],
+                scale: [1.1, 1, 1.1]
               }}
               transition={{ 
-                duration: 6,
+                duration: 25,
                 repeat: Infinity,
-                ease: "easeInOut"
+                ease: "linear"
               }}
-            >
-              <Award size={50} />
-            </motion.div>
+            />
           </div>
         </div>
         
-        <div className="hero-content professional-layout">
-              <motion.div
-                className="hero-text professional-text"
-                initial={{ opacity: 0, y: 20 }}
+        <div className="hero-content">
+          {/* Main Content Card - Asymmetric */}
+          <motion.div
+            className="hero-main-card"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+          >
+            <motion.div
+              className="hero-badge"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <Leaf size={18} />
+              <span>التميز البيئي</span>
+            </motion.div>
+
+            <motion.h1 
+              className="hero-title"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              <motion.span 
+                className="title-word"
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+                transition={{ duration: 0.6, delay: 0.4 }}
               >
-                <motion.h1 
-                  className="hero-title professional-title"
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
-                >
-              <span className="title-line">Expert</span>
-              <span className="title-line highlight professional-highlight">Environmental Consulting</span>
-              <span className="title-line">Solutions</span>
+                حوّل أعمالك
+              </motion.span>
+              <motion.span 
+                className="title-word gradient-text"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+              >
+                إلى مستقبل
+              </motion.span>
+              <motion.span 
+                className="title-word"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+              >
+                مستدام بحلول
+              </motion.span>
+              <motion.span 
+                className="title-word accent-text"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.7 }}
+              >
+                بيئية متطورة
+              </motion.span>
             </motion.h1>
+
             <motion.p 
-              className="hero-subtitle professional-subtitle"
-              initial={{ opacity: 0, y: 15 }}
+              className="hero-subtitle"
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.4, ease: "easeOut" }}
+              transition={{ duration: 0.6, delay: 0.8 }}
             >
-              Navigate complex environmental regulations and sustainability challenges with our expert consulting services. 
-              We help businesses achieve compliance, reduce environmental risks, and build sustainable practices that drive success.
+              استشارات بيئية متخصصة لمساعدتك في التعامل مع اللوائح وتحقيق الامتثال وبناء ممارسات مستدامة تدفع نجاح أعمالك والبيئة معاً.
             </motion.p>
+
             <motion.div 
-              className="hero-buttons professional-buttons"
-              initial={{ opacity: 0, y: 15 }}
+              className="hero-cta-section"
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.5, ease: "easeOut" }}
+              transition={{ duration: 0.6, delay: 0.9 }}
             >
-              <motion.button 
-                className="btn-primary professional-btn"
-                onClick={scrollToContact}
-                whileHover={{ 
-                  scale: 1.05, 
-                  y: -3
-                }}
-                whileTap={{ scale: 0.95 }}
-                animate={{
-                  boxShadow: [
-                    "0 8px 24px rgba(45, 90, 39, 0.4)",
-                    "0 12px 32px rgba(45, 90, 39, 0.6)",
-                    "0 8px 24px rgba(45, 90, 39, 0.4)"
-                  ],
-                  y: [0, -2, 0]
-                }}
-                transition={{
-                  boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut" },
-                  y: { duration: 2, repeat: Infinity, ease: "easeInOut" }
-                }}
+              <div className="hero-buttons">
+                <button 
+                  className="btn-secondary"
+                  onClick={scrollToServices}
+                >
+                  تصفح خدماتنا
+                </button>
+                <button 
+                  className="btn-primary btn-cta"
+                  onClick={scrollToContact}
+                >
+                  <span>احصل على استشارة الان </span>
+                  <ArrowLeft size={20} />
+                </button>
+              </div>
+              
+              <motion.div 
+                className="cta-trust-badges"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 1.1 }}
               >
-                Get Started
-                <ArrowRight size={20} />
-              </motion.button>
-              <motion.button 
-                className="btn-secondary professional-btn-secondary"
-                onClick={scrollToServices}
-                whileHover={{ 
-                  scale: 1.02, 
-                  y: -2
-                }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Explore Solutions
-              </motion.button>
+                <div className="trust-badge">
+                  <CheckCircle size={16} />
+                  <span>استشارة أولية </span>
+                </div>
+                <div className="trust-badge">
+                  <Users size={16} />
+                  <span>فريق خبراء معتمد</span>
+                </div>
+              </motion.div>
             </motion.div>
           </motion.div>
-          
-          <motion.div
-            className="hero-stats professional-stats"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.4, ease: "easeOut" }}
-          >
+
+          {/* Floating Stats Cards */}
+          <div className="floating-stats">
             {[
-              { number: "500+", label: "Projects Completed" },
-              { number: "50%", label: "Carbon Reduction" },
-              { number: "100+", label: "Happy Clients" }
+              { 
+                number: "+500", 
+                label: "مشروع", 
+                icon: <CheckCircle size={22} />,
+                color: "#2d5a27",
+                delay: 1.0
+              },
+              { 
+                number: "%50", 
+                label: "تقليل الكربون", 
+                icon: <Leaf size={22} />,
+                color: "#0369a1",
+                delay: 1.1
+              },
+              { 
+                number: "+100", 
+                label: "عميل سعيد", 
+                icon: <Users size={22} />,
+                color: "#0ea5e9",
+                delay: 1.2
+              }
             ].map((stat, index) => (
               <motion.div
                 key={index}
-                className="stat-item professional-stat"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.5 + index * 0.05, ease: "easeOut" }}
+                className={`stat-card stat-card-${index + 1}`}
+                initial={{ opacity: 0, y: 30, scale: 0.8 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: stat.delay,
+                  ease: [0.25, 0.1, 0.25, 1]
+                }}
                 whileHover={{ 
-                  scale: 1.03, 
-                  y: -3,
+                  y: -8,
+                  scale: 1.03,
                   transition: { duration: 0.2 }
                 }}
               >
-                <div className="stat-number professional-number">{stat.number}</div>
-                <div className="stat-label professional-label">{stat.label}</div>
+                <motion.div 
+                  className="stat-icon"
+                  animate={{ 
+                    rotate: [0, 10, -10, 0],
+                  }}
+                  transition={{ 
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: index * 0.3
+                  }}
+                >
+                  {stat.icon}
+                </motion.div>
+                <div className="stat-content">
+                  <div className="stat-number">{stat.number}</div>
+                  <div className="stat-label">{stat.label}</div>
+                </div>
+                <motion.div 
+                  className="stat-glow"
+                  animate={{ 
+                    opacity: [0.2, 0.5, 0.2],
+                  }}
+                  transition={{ 
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  style={{ background: `radial-gradient(circle, ${stat.color}40, transparent)` }}
+                />
               </motion.div>
             ))}
+          </div>
+
+          {/* Decorative Globe Element */}
+          <motion.div
+            className="hero-globe"
+            initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ duration: 1, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+          >
+            <motion.div
+              animate={{ 
+                rotate: 360,
+              }}
+              transition={{ 
+                duration: 40,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            >
+              <Globe size={280} strokeWidth={1} />
+            </motion.div>
+            <motion.div 
+              className="globe-ring"
+              animate={{ 
+                rotate: -360,
+                scale: [1, 1.05, 1]
+              }}
+              transition={{ 
+                rotate: {
+                  duration: 30,
+                  repeat: Infinity,
+                  ease: "linear"
+                },
+                scale: {
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }
+              }}
+            />
           </motion.div>
         </div>
       </section>
@@ -210,10 +396,9 @@ const App = () => {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="section-title professional-title">Our Consulting Services</h2>
+            <h2 className="section-title professional-title">خدماتنا الاستشارية</h2>
             <p className="section-subtitle professional-subtitle">
-              Expert environmental consulting services designed to help your business navigate regulations, 
-              achieve compliance, and implement sustainable practices that drive growth
+              خدمات استشارات بيئية متخصصة مصممة لمساعدة أعمالك في التعامل مع اللوائح وتحقيق الامتثال وتنفيذ ممارسات مستدامة تدفع النمو
             </p>
           </motion.div>
 
@@ -222,39 +407,39 @@ const App = () => {
               {[
                 {
                   icon: <Globe className="service-icon" />,
-                  title: "Environmental Compliance",
-                  description: "Expert guidance on environmental regulations, permits, and compliance requirements to keep your business protected.",
-                  features: ["Regulatory Analysis", "Permit Applications", "Compliance Audits"]
+                  title: "الامتثال البيئي",
+                  description: "إرشادات متخصصة حول اللوائح البيئية والتصاريح ومتطلبات الامتثال لحماية أعمالك.",
+                  features: ["التحليل التنظيمي", "طلبات التصاريح", "تدقيق الامتثال"]
                 },
                 {
                   icon: <Leaf className="service-icon" />,
-                  title: "Sustainability Strategy",
-                  description: "Develop comprehensive sustainability strategies that align with your business goals and environmental objectives.",
-                  features: ["Strategy Development", "Goal Setting", "Implementation Planning"]
+                  title: "استراتيجية الاستدامة",
+                  description: "تطوير استراتيجيات استدامة شاملة تتماشى مع أهداف عملك والأهداف البيئية.",
+                  features: ["تطوير الاستراتيجية", "تحديد الأهداف", "تخطيط التنفيذ"]
                 },
                 {
                   icon: <CheckCircle className="service-icon" />,
-                  title: "Environmental Risk Assessment",
-                  description: "Identify and evaluate environmental risks to protect your business and ensure long-term sustainability.",
-                  features: ["Risk Identification", "Impact Analysis", "Mitigation Strategies"]
+                  title: "تقييم المخاطر البيئية",
+                  description: "تحديد وتقييم المخاطر البيئية لحماية عملك وضمان الاستدامة على المدى الطويل.",
+                  features: ["تحديد المخاطر", "تحليل الأثر", "استراتيجيات التخفيف"]
                 },
                 {
                   icon: <Globe className="service-icon" />,
-                  title: "Green Business Consulting",
-                  description: "Transform your business operations with sustainable practices that reduce costs and environmental impact.",
-                  features: ["Process Optimization", "Resource Efficiency", "Cost Reduction"]
+                  title: "استشارات الأعمال الخضراء",
+                  description: "حوّل عمليات عملك بممارسات مستدامة تقلل التكاليف والأثر البيئي.",
+                  features: ["تحسين العمليات", "كفاءة الموارد", "خفض التكاليف"]
                 },
                 {
                   icon: <Users className="service-icon" />,
-                  title: "Environmental Training",
-                  description: "Comprehensive training programs to educate your team on environmental best practices and regulations.",
-                  features: ["Staff Training", "Compliance Education", "Best Practices"]
+                  title: "التدريب البيئي",
+                  description: "برامج تدريبية شاملة لتثقيف فريقك حول أفضل الممارسات البيئية واللوائح.",
+                  features: ["تدريب الموظفين", "تعليم الامتثال", "أفضل الممارسات"]
                 },
                 {
                   icon: <CheckCircle className="service-icon" />,
-                  title: "Environmental Reporting",
-                  description: "Professional environmental reporting and documentation to meet regulatory requirements and stakeholder expectations.",
-                  features: ["ESG Reporting", "Regulatory Reports", "Stakeholder Communication"]
+                  title: "التقارير البيئية",
+                  description: "تقارير ووثائق بيئية احترافية لتلبية المتطلبات التنظيمية وتوقعات أصحاب المصلحة.",
+                  features: ["تقارير ESG", "التقارير التنظيمية", "التواصل مع المعنيين"]
                 }
               ].map((service, index) => (
                 <motion.div
@@ -299,9 +484,9 @@ const App = () => {
             transition={{ duration: 0.5, ease: "easeOut" }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            <h2 className="section-title professional-title">Our Success Stories</h2>
+            <h2 className="section-title professional-title">قصص نجاحنا</h2>
             <p className="section-subtitle professional-subtitle">
-              Discover how we've helped businesses achieve their environmental goals and reduce their carbon footprint
+              اكتشف كيف ساعدنا الشركات في تحقيق أهدافها البيئية وتقليل بصمتها الكربونية
             </p>
           </motion.div>
 
@@ -309,27 +494,27 @@ const App = () => {
             <div className="professional-projects-grid">
               {[
                 {
-                  title: "Green Manufacturing Initiative",
-                  company: "TechCorp Industries",
-                  description: "Implemented comprehensive waste reduction and energy efficiency programs, resulting in 40% reduction in carbon emissions.",
-                  results: ["40% Carbon Reduction", "60% Waste Reduction", "$2M Annual Savings"],
-                  category: "Manufacturing",
+                  title: "مبادرة التصنيع الأخضر",
+                  company: "شركة تك كورب للصناعات",
+                  description: "نفذنا برامج شاملة للحد من النفايات وكفاءة الطاقة، مما أدى إلى تقليل انبعاثات الكربون بنسبة 40%.",
+                  results: ["تقليل الكربون 40%", "تقليل النفايات 60%", "توفير 2 مليون دولار سنوياً"],
+                  category: "تصنيع",
                   year: "2023"
                 },
                 {
-                  title: "Sustainable Office Complex",
-                  company: "Metro Business Center",
-                  description: "Designed and implemented green building solutions including solar panels, rainwater harvesting, and smart energy systems.",
-                  results: ["100% Renewable Energy", "50% Water Savings", "LEED Platinum Certified"],
-                  category: "Real Estate",
+                  title: "مجمع المكاتب المستدام",
+                  company: "مركز مترو للأعمال",
+                  description: "صممنا ونفذنا حلول البناء الأخضر بما في ذلك الألواح الشمسية وحصاد مياه الأمطار وأنظمة الطاقة الذكية.",
+                  results: ["طاقة متجددة 100%", "توفير المياه 50%", "شهادة LEED بلاتينيوم"],
+                  category: "عقارات",
                   year: "2023"
                 },
                 {
-                  title: "Carbon Neutral Supply Chain",
-                  company: "Global Logistics Co.",
-                  description: "Transformed entire supply chain operations to achieve carbon neutrality through route optimization and green transportation.",
-                  results: ["Carbon Neutral", "30% Fuel Savings", "ISO 14001 Certified"],
-                  category: "Logistics",
+                  title: "سلسلة توريد محايدة للكربون",
+                  company: "شركة الخدمات اللوجستية العالمية",
+                  description: "حوّلنا عمليات سلسلة التوريد بالكامل لتحقيق الحياد الكربوني من خلال تحسين المسار والنقل الأخضر.",
+                  results: ["محايد للكربون", "توفير الوقود 30%", "شهادة ISO 14001"],
+                  category: "لوجستيات",
                   year: "2024"
                 }
               ].map((project, index) => (
@@ -378,7 +563,7 @@ const App = () => {
               transition={{ duration: 0.5, ease: "easeOut" }}
               viewport={{ once: true, margin: "-100px" }}
             >
-              <h2 className="section-title">About Earth Footprint</h2>
+              <h2 className="section-title">حول بصمة الأرض</h2>
               <motion.p 
                 className="about-description"
                 initial={{ opacity: 0, y: 15 }}
@@ -386,30 +571,28 @@ const App = () => {
                 transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
                 viewport={{ once: true, margin: "-100px" }}
               >
-                We are expert environmental consultants with deep industry knowledge and regulatory expertise. 
-                Our mission is to help businesses navigate complex environmental challenges, achieve compliance, 
-                and implement sustainable practices that drive both environmental and business success.
+                نحن مستشارون بيئيون خبراء يتمتعون بمعرفة صناعية عميقة وخبرة تنظيمية. مهمتنا هي مساعدة الشركات على التعامل مع التحديات البيئية المعقدة وتحقيق الامتثال وتنفيذ ممارسات مستدامة تدفع نجاح الأعمال والبيئة معاً.
               </motion.p>
               <div className="about-values">
                 <div className="value-item">
                   <Users className="value-icon" />
                   <div>
-                    <h4>Expert Team</h4>
-                    <p>Certified environmental professionals with years of industry experience</p>
+                    <h4>فريق متخصص</h4>
+                    <p>محترفون بيئيون معتمدون بسنوات من الخبرة في الصناعة</p>
                   </div>
                 </div>
                 <div className="value-item">
                   <Award className="value-icon" />
                   <div>
-                    <h4>Proven Track Record</h4>
-                    <p>Successfully helping businesses achieve compliance and sustainability goals</p>
+                    <h4>سجل حافل بالنجاح</h4>
+                    <p>نجحنا في مساعدة الشركات على تحقيق أهداف الامتثال والاستدامة</p>
                   </div>
                 </div>
                 <div className="value-item">
                   <Globe className="value-icon" />
                   <div>
-                    <h4>Comprehensive Approach</h4>
-                    <p>End-to-end consulting services from strategy to implementation</p>
+                    <h4>نهج شامل</h4>
+                    <p>خدمات استشارية شاملة من الاستراتيجية إلى التنفيذ</p>
                   </div>
                 </div>
               </div>
@@ -460,23 +643,22 @@ const App = () => {
             viewport={{ once: true, margin: "-100px" }}
           >
             <div className="contact-text">
-              <h2 className="section-title">Ready to Achieve Environmental Excellence?</h2>
+              <h2 className="section-title">احصل على استشارتك اليوم</h2>
               <p className="contact-subtitle">
-                Partner with our expert environmental consultants to navigate regulations, achieve compliance, 
-                and implement sustainable practices that drive your business forward.
+                احجز استشارة  مع خبرائنا البيئيين. سنساعدك على التعامل مع اللوائح وتحقيق الامتثال وتنفيذ ممارسات مستدامة تدفع عملك للأمام.
               </p>
               <div className="contact-info">
                 <div className="contact-item">
                   <MessageCircle className="contact-icon" />
                   <div>
-                    <h4>WhatsApp</h4>
+                    <h4>واتساب</h4>
                     <p>+1 (555) 123-4567</p>
                   </div>
                 </div>
                 <div className="contact-item">
                   <Globe className="contact-icon" />
                   <div>
-                    <h4>Email</h4>
+                    <h4>البريد الإلكتروني</h4>
                     <p>hello@earthfootprint.com</p>
                   </div>
                 </div>
@@ -492,27 +674,27 @@ const App = () => {
             >
               <form className="form" onSubmit={handleFormSubmit}>
                 <div className="form-group">
-                  <input type="text" placeholder="Your Name" required />
+                  <input type="text" placeholder="اسمك" required />
                 </div>
                 <div className="form-group">
-                  <input type="email" placeholder="Your Email" required />
+                  <input type="email" placeholder="البريد الإلكتروني" required />
                 </div>
                 <div className="form-group">
-                  <input type="tel" placeholder="Phone Number" required />
+                  <input type="tel" placeholder="رقم الهاتف" required />
                 </div>
                 <div className="form-group">
                   <select required>
-                    <option value="">Select Consulting Service</option>
-                    <option value="compliance">Environmental Compliance</option>
-                    <option value="strategy">Sustainability Strategy</option>
-                    <option value="risk">Environmental Risk Assessment</option>
-                    <option value="green">Green Business Consulting</option>
-                    <option value="training">Environmental Training</option>
-                    <option value="reporting">Environmental Reporting</option>
+                    <option value="">اختر الخدمة الاستشارية</option>
+                    <option value="compliance">الامتثال البيئي</option>
+                    <option value="strategy">استراتيجية الاستدامة</option>
+                    <option value="risk">تقييم المخاطر البيئية</option>
+                    <option value="green">استشارات الأعمال الخضراء</option>
+                    <option value="training">التدريب البيئي</option>
+                    <option value="reporting">التقارير البيئية</option>
                   </select>
                 </div>
                 <div className="form-group">
-                  <textarea placeholder="Tell us about your project..." rows={4} required></textarea>
+                  <textarea placeholder="أخبرنا عن مشروعك..." rows={4} required></textarea>
                 </div>
                 <motion.button
                   type="submit"
@@ -524,7 +706,7 @@ const App = () => {
                   whileTap={{ scale: 0.95 }}
                   transition={{ duration: 0.2 }}
                 >
-                  Send Message
+                  إرسال الرسالة
                   <MessageCircle size={20} />
                 </motion.button>
               </form>
@@ -539,19 +721,19 @@ const App = () => {
           <div className="footer-content">
             <div className="footer-logo">
               <Leaf className="logo-icon" />
-              <span className="logo-text">Earth Footprint</span>
+              <span className="logo-text">بصمة الأرض</span>
             </div>
             <p className="footer-text">
-              Building a sustainable future, one solution at a time.
+              نبني مستقبلاً مستداماً، حلاً واحداً في كل مرة
             </p>
             <div className="footer-links">
-              <a href="#services">Services</a>
-              <a href="#about">About</a>
-              <a href="#contact">Contact</a>
+              <a href="#services">الخدمات</a>
+              <a href="#about">من نحن</a>
+              <a href="#contact">تواصل معنا</a>
             </div>
           </div>
           <div className="footer-bottom">
-            <p>&copy; 2024 Earth Footprint. All rights reserved.</p>
+            <p>&copy; 2024 بصمة الأرض. جميع الحقوق محفوظة.</p>
           </div>
         </div>
       </footer>
