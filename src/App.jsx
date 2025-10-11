@@ -13,6 +13,7 @@ import {
   X
 } from 'lucide-react';
 import './App.css';
+import logo from './assets/logo_design_to_use.png';
 
 const App = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -45,7 +46,7 @@ const App = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    alert('شكراً لطلب الاستشارة ال! سيتواصل معك فريق الخبراء لدينا خلال 24 ساعة لمناقشة احتياجاتك من الاستشارات البيئية.');
+    alert('شكراً لتواصلك معنا! سيتواصل معك فريقنا خلال 24 ساعة.');
   };
 
   return (
@@ -63,14 +64,14 @@ const App = () => {
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
           >
-            <Leaf className="logo-icon" />
+            <img src={logo} alt="بصمة الأرض" className="logo-image" />
             <span className="logo-text">بصمة الأرض</span>
           </motion.div>
 
           {/* Desktop Navigation */}
           <div className="nav-links desktop-nav">
             <a href="#services" onClick={scrollToServices}>الخدمات</a>
-            <a href="#projects" onClick={handleNavClick}>المشاريع</a>
+            <a href="#projects" onClick={handleNavClick}>لماذا نحن</a>
             <a href="#about" onClick={handleNavClick}>من نحن</a>
             <a href="#contact" onClick={scrollToContact}>تواصل معنا</a>
           </div>
@@ -97,7 +98,7 @@ const App = () => {
             >
               <div className="mobile-menu-links">
                 <a href="#services" onClick={scrollToServices}>الخدمات</a>
-                <a href="#projects" onClick={handleNavClick}>المشاريع</a>
+                <a href="#projects" onClick={handleNavClick}>لماذا نحن</a>
                 <a href="#about" onClick={handleNavClick}>من نحن</a>
                 <a href="#contact" onClick={scrollToContact}>تواصل معنا</a>
               </div>
@@ -110,29 +111,6 @@ const App = () => {
       <section className="hero">
         {/* Animated Background */}
         <div className="hero-background">
-          {/* Particle orbs */}
-          <div className="particles-container">
-            {[...Array(8)].map((_, i) => (
-              <motion.div
-                key={i}
-                className={`particle particle-${i + 1}`}
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ 
-                  opacity: [0.1, 0.3, 0.1],
-                  scale: [1, 1.2, 1],
-                  x: [0, Math.random() * 30 - 15, 0],
-                  y: [0, Math.random() * 30 - 15, 0]
-                }}
-                transition={{ 
-                  duration: 5 + i,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: i * 0.3
-                }}
-              />
-            ))}
-          </div>
-          
           {/* Gradient waves */}
           <div className="gradient-waves">
             <motion.div 
@@ -177,7 +155,7 @@ const App = () => {
               transition={{ duration: 0.5, delay: 0.4 }}
             >
               <Leaf size={18} />
-              <span>التميز البيئي</span>
+              <span>الاستشارات البيئية المتكاملة</span>
             </motion.div>
 
             <motion.h1 
@@ -192,7 +170,7 @@ const App = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
               >
-                حوّل أعمالك
+                مكتب بصمة الأرض
               </motion.span>
               <motion.span 
                 className="title-word gradient-text"
@@ -200,23 +178,15 @@ const App = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.5 }}
               >
-                إلى مستقبل
-              </motion.span>
-              <motion.span 
-                className="title-word"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-              >
-                مستدام بحلول
+                للاستشارات البيئية
               </motion.span>
               <motion.span 
                 className="title-word accent-text"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.7 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
               >
-                بيئية متطورة
+                شريكك البيئي الأول
               </motion.span>
             </motion.h1>
 
@@ -226,7 +196,7 @@ const App = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.8 }}
             >
-              استشارات بيئية متخصصة لمساعدتك في التعامل مع اللوائح وتحقيق الامتثال وبناء ممارسات مستدامة تدفع نجاح أعمالك والبيئة معاً.
+              حلول واستشارات بيئية متكاملة لتمكين المنشآت الصناعية من النمو بوعي ومسؤولية وتحقيق الامتثال الكامل للأنظمة البيئية.
             </motion.p>
 
             <motion.div 
@@ -246,7 +216,7 @@ const App = () => {
                   className="btn-primary btn-cta"
                   onClick={scrollToContact}
                 >
-                  <span>احصل على استشارة الان </span>
+                  <span>تواصل معنا</span>
                   <ArrowLeft size={20} />
                 </button>
               </div>
@@ -259,11 +229,11 @@ const App = () => {
               >
                 <div className="trust-badge">
                   <CheckCircle size={16} />
-                  <span>استشارة أولية </span>
+                  <span>خبرة ميدانية متخصصة</span>
                 </div>
                 <div className="trust-badge">
                   <Users size={16} />
-                  <span>فريق خبراء معتمد</span>
+                  <span>فريق عمل مؤهل</span>
                 </div>
               </motion.div>
             </motion.div>
@@ -273,23 +243,23 @@ const App = () => {
           <div className="floating-stats">
             {[
               { 
-                number: "+500", 
-                label: "مشروع", 
-                icon: <CheckCircle size={22} />,
+                number: "2030", 
+                label: "دعم رؤية المملكة", 
+                icon: <Award size={22} />,
                 color: "#2d5a27",
                 delay: 1.0
               },
               { 
-                number: "%50", 
-                label: "تقليل الكربون", 
-                icon: <Leaf size={22} />,
+                number: "100%", 
+                label: "الامتثال البيئي", 
+                icon: <CheckCircle size={22} />,
                 color: "#0369a1",
                 delay: 1.1
               },
               { 
-                number: "+100", 
-                label: "عميل سعيد", 
-                icon: <Users size={22} />,
+                number: "القصيم", 
+                label: "مقرنا الرئيسي", 
+                icon: <Globe size={22} />,
                 color: "#0ea5e9",
                 delay: 1.2
               }
@@ -344,45 +314,6 @@ const App = () => {
             ))}
           </div>
 
-          {/* Decorative Globe Element */}
-          <motion.div
-            className="hero-globe"
-            initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ duration: 1, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-          >
-            <motion.div
-              animate={{ 
-                rotate: 360,
-              }}
-              transition={{ 
-                duration: 40,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-            >
-              <Globe size={280} strokeWidth={1} />
-            </motion.div>
-            <motion.div 
-              className="globe-ring"
-              animate={{ 
-                rotate: -360,
-                scale: [1, 1.05, 1]
-              }}
-              transition={{ 
-                rotate: {
-                  duration: 30,
-                  repeat: Infinity,
-                  ease: "linear"
-                },
-                scale: {
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }
-              }}
-            />
-          </motion.div>
         </div>
       </section>
 
@@ -396,9 +327,9 @@ const App = () => {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="section-title professional-title">خدماتنا الاستشارية</h2>
+            <h2 className="section-title professional-title">خدماتنا البيئية المتكاملة</h2>
             <p className="section-subtitle professional-subtitle">
-              خدمات استشارات بيئية متخصصة مصممة لمساعدة أعمالك في التعامل مع اللوائح وتحقيق الامتثال وتنفيذ ممارسات مستدامة تدفع النمو
+              نقدّم باقة شاملة من الخدمات البيئية التي تمكّن المنشآت الصناعية من تحقيق الامتثال الكامل للأنظمة والمعايير البيئية المعتمدة في المملكة
             </p>
           </motion.div>
 
@@ -406,40 +337,40 @@ const App = () => {
             <div className="professional-services-grid">
               {[
                 {
+                  icon: <Award className="service-icon" />,
+                  title: "الرخص البيئية",
+                  description: "إصدار وتجديد الرخص البيئية وفق أحدث الأنظمة واللوائح المعتمدة في المملكة.",
+                  features: ["إصدار الرخص", "تجديد الرخص", "الامتثال للأنظمة"]
+                },
+                {
+                  icon: <CheckCircle className="service-icon" />,
+                  title: "الدراسات والتقارير البيئية",
+                  description: "إعداد الدراسات والتقارير البيئية الدورية الشاملة والمتخصصة.",
+                  features: ["دراسات بيئية", "تقارير دورية", "تقارير متخصصة"]
+                },
+                {
                   icon: <Globe className="service-icon" />,
-                  title: "الامتثال البيئي",
-                  description: "إرشادات متخصصة حول اللوائح البيئية والتصاريح ومتطلبات الامتثال لحماية أعمالك.",
-                  features: ["التحليل التنظيمي", "طلبات التصاريح", "تدقيق الامتثال"]
+                  title: "تقييم الأثر البيئي",
+                  description: "تقييم شامل للآثار البيئية المحتملة للمشاريع والأنشطة الصناعية.",
+                  features: ["تقييم الأثر", "دراسات الجدوى", "الحلول البيئية"]
                 },
                 {
                   icon: <Leaf className="service-icon" />,
-                  title: "استراتيجية الاستدامة",
-                  description: "تطوير استراتيجيات استدامة شاملة تتماشى مع أهداف عملك والأهداف البيئية.",
-                  features: ["تطوير الاستراتيجية", "تحديد الأهداف", "تخطيط التنفيذ"]
-                },
-                {
-                  icon: <CheckCircle className="service-icon" />,
-                  title: "تقييم المخاطر البيئية",
-                  description: "تحديد وتقييم المخاطر البيئية لحماية عملك وضمان الاستدامة على المدى الطويل.",
-                  features: ["تحديد المخاطر", "تحليل الأثر", "استراتيجيات التخفيف"]
-                },
-                {
-                  icon: <Globe className="service-icon" />,
-                  title: "استشارات الأعمال الخضراء",
-                  description: "حوّل عمليات عملك بممارسات مستدامة تقلل التكاليف والأثر البيئي.",
-                  features: ["تحسين العمليات", "كفاءة الموارد", "خفض التكاليف"]
+                  title: "التدقيق البيئي",
+                  description: "خدمات تدقيق بيئي متكاملة لضمان الامتثال المستمر للمعايير البيئية.",
+                  features: ["التدقيق الداخلي", "مراجعة الامتثال", "التحسين المستمر"]
                 },
                 {
                   icon: <Users className="service-icon" />,
-                  title: "التدريب البيئي",
-                  description: "برامج تدريبية شاملة لتثقيف فريقك حول أفضل الممارسات البيئية واللوائح.",
-                  features: ["تدريب الموظفين", "تعليم الامتثال", "أفضل الممارسات"]
+                  title: "خطط الإدارة والتأهيل البيئي",
+                  description: "تطوير خطط إدارة بيئية شاملة وبرامج إعادة التأهيل البيئي للمواقع.",
+                  features: ["خطط الإدارة", "إعادة التأهيل", "الإدارة المستدامة"]
                 },
                 {
-                  icon: <CheckCircle className="service-icon" />,
-                  title: "التقارير البيئية",
-                  description: "تقارير ووثائق بيئية احترافية لتلبية المتطلبات التنظيمية وتوقعات أصحاب المصلحة.",
-                  features: ["تقارير ESG", "التقارير التنظيمية", "التواصل مع المعنيين"]
+                  icon: <Globe className="service-icon" />,
+                  title: "الاستشارات الفنية المتخصصة",
+                  description: "استشارات فنية في إدارة الموارد البيئية، النفايات، التلوث، الطاقة المستدامة، والتخطيط الحضري.",
+                  features: ["إدارة الموارد", "الطاقة المستدامة", "التخطيط البيئي"]
                 }
               ].map((service, index) => (
                 <motion.div
@@ -474,7 +405,7 @@ const App = () => {
         </div>
       </section>
 
-      {/* Projects Section */}
+      {/* Why Choose Us Section */}
       <section id="projects" className="projects professional-projects">
         <div className="container">
           <motion.div
@@ -484,9 +415,9 @@ const App = () => {
             transition={{ duration: 0.5, ease: "easeOut" }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            <h2 className="section-title professional-title">قصص نجاحنا</h2>
+            <h2 className="section-title professional-title">لماذا تختار بصمة الأرض؟</h2>
             <p className="section-subtitle professional-subtitle">
-              اكتشف كيف ساعدنا الشركات في تحقيق أهدافها البيئية وتقليل بصمتها الكربونية
+              نتميز بخبرة ميدانية متخصصة وفريق عمل مؤهل يقدم حلولًا مبتكرة تدعم أهداف التنمية المستدامة
             </p>
           </motion.div>
 
@@ -494,28 +425,28 @@ const App = () => {
             <div className="professional-projects-grid">
               {[
                 {
-                  title: "مبادرة التصنيع الأخضر",
-                  company: "شركة تك كورب للصناعات",
-                  description: "نفذنا برامج شاملة للحد من النفايات وكفاءة الطاقة، مما أدى إلى تقليل انبعاثات الكربون بنسبة 40%.",
-                  results: ["تقليل الكربون 40%", "تقليل النفايات 60%", "توفير 2 مليون دولار سنوياً"],
-                  category: "تصنيع",
-                  year: "2023"
+                  title: "الخبرة الميدانية المتخصصة",
+                  company: "فريق عمل مؤهل ومتمرس",
+                  description: "نتميز بخبرة عملية واسعة في التعامل مع مختلف القطاعات الصناعية وتقديم حلول واقعية وفعّالة.",
+                  results: ["فريق متخصص", "خبرة ميدانية", "حلول مبتكرة"],
+                  category: "الخبرة",
+                  year: ""
                 },
                 {
-                  title: "مجمع المكاتب المستدام",
-                  company: "مركز مترو للأعمال",
-                  description: "صممنا ونفذنا حلول البناء الأخضر بما في ذلك الألواح الشمسية وحصاد مياه الأمطار وأنظمة الطاقة الذكية.",
-                  results: ["طاقة متجددة 100%", "توفير المياه 50%", "شهادة LEED بلاتينيوم"],
-                  category: "عقارات",
-                  year: "2023"
+                  title: "دعم التنمية المستدامة",
+                  company: "رؤية المملكة 2030",
+                  description: "نساهم في تحقيق أهداف التنمية المستدامة ودعم رؤية المملكة 2030 من خلال حلول بيئية متكاملة.",
+                  results: ["رؤية 2030", "التنمية المستدامة", "الأداء البيئي"],
+                  category: "الرؤية",
+                  year: ""
                 },
                 {
-                  title: "سلسلة توريد محايدة للكربون",
-                  company: "شركة الخدمات اللوجستية العالمية",
-                  description: "حوّلنا عمليات سلسلة التوريد بالكامل لتحقيق الحياد الكربوني من خلال تحسين المسار والنقل الأخضر.",
-                  results: ["محايد للكربون", "توفير الوقود 30%", "شهادة ISO 14001"],
-                  category: "لوجستيات",
-                  year: "2024"
+                  title: "تغطية شاملة للمملكة",
+                  company: "من القصيم لكل المناطق",
+                  description: "مقرنا في القصيم ونقدم خدماتنا لكافة مناطق المملكة من خلال شبكة من الشراكات والتعاون.",
+                  results: ["تغطية واسعة", "شراكات قوية", "خدمة متميزة"],
+                  category: "التغطية",
+                  year: ""
                 }
               ].map((project, index) => (
                 <motion.div
@@ -563,7 +494,7 @@ const App = () => {
               transition={{ duration: 0.5, ease: "easeOut" }}
               viewport={{ once: true, margin: "-100px" }}
             >
-              <h2 className="section-title">حول بصمة الأرض</h2>
+              <h2 className="section-title">من نحن</h2>
               <motion.p 
                 className="about-description"
                 initial={{ opacity: 0, y: 15 }}
@@ -571,28 +502,37 @@ const App = () => {
                 transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
                 viewport={{ once: true, margin: "-100px" }}
               >
-                نحن مستشارون بيئيون خبراء يتمتعون بمعرفة صناعية عميقة وخبرة تنظيمية. مهمتنا هي مساعدة الشركات على التعامل مع التحديات البيئية المعقدة وتحقيق الامتثال وتنفيذ ممارسات مستدامة تدفع نجاح الأعمال والبيئة معاً.
+                نحن مكتب بصمة الأرض للاستشارات البيئية، نعمل بشغف لإحداث أثرٍ حقيقي في مجال الاستدامة البيئية، من خلال تقديم حلول واستشارات بيئية متكاملة تمكّن المنشآت الصناعية من النمو بوعي ومسؤولية، وتحقيق الامتثال الكامل للأنظمة والمعايير البيئية المعتمدة في المملكة.
+              </motion.p>
+              <motion.p 
+                className="about-description"
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.15, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+              >
+                نؤمن أن البيئة ليست مجرد التزام تنظيمي، بل قيمة اقتصادية واستثمارية تُسهم في بناء مستقبل أكثر استدامة، ولذلك نعمل لنكون الشريك البيئي الأول للقطاع الصناعي في المملكة.
               </motion.p>
               <div className="about-values">
                 <div className="value-item">
                   <Users className="value-icon" />
                   <div>
-                    <h4>فريق متخصص</h4>
-                    <p>محترفون بيئيون معتمدون بسنوات من الخبرة في الصناعة</p>
+                    <h4>فريق عمل مؤهل</h4>
+                    <p>نتميز بفريق عمل مؤهل يقدم حلولًا مبتكرة تدعم أهداف التنمية المستدامة</p>
                   </div>
                 </div>
                 <div className="value-item">
                   <Award className="value-icon" />
                   <div>
-                    <h4>سجل حافل بالنجاح</h4>
-                    <p>نجحنا في مساعدة الشركات على تحقيق أهداف الامتثال والاستدامة</p>
+                    <h4>خبرة ميدانية متخصصة</h4>
+                    <p>خبرة عملية واسعة في التعامل مع مختلف القطاعات الصناعية</p>
                   </div>
                 </div>
                 <div className="value-item">
                   <Globe className="value-icon" />
                   <div>
-                    <h4>نهج شامل</h4>
-                    <p>خدمات استشارية شاملة من الاستراتيجية إلى التنفيذ</p>
+                    <h4>تغطية شاملة</h4>
+                    <p>مقرنا في القصيم ونخدم كافة مناطق المملكة العربية السعودية</p>
                   </div>
                 </div>
               </div>
@@ -606,25 +546,100 @@ const App = () => {
               viewport={{ once: true, margin: "-100px" }}
             >
               <div className="visual-container">
-                <div className="floating-icons">
+                <div className="modern-showcase">
+                  {/* Main Logo Card */}
                   <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    className="logo-card"
+                    initial={{ scale: 0.8, opacity: 0, y: 50 }}
+                    whileInView={{ scale: 1, opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    viewport={{ once: true }}
+                    whileHover={{ 
+                      y: -10,
+                      transition: { duration: 0.3 }
+                    }}
                   >
-                    <Leaf size={60} />
+                    <div className="logo-container">
+                      <img src={logo} alt="بصمة الأرض" className="main-logo" />
+                      <div className="logo-overlay"></div>
+                    </div>
+                    <div className="logo-text">
+                      <h3>بصمة الأرض</h3>
+                      <p>للاستشارات البيئية</p>
+                    </div>
                   </motion.div>
+
+                  {/* Floating Elements */}
                   <motion.div
-                    animate={{ y: [0, -20, 0] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    className="floating-element element-1"
+                    animate={{ 
+                      y: [0, -20, 0],
+                      rotate: [0, 5, 0]
+                    }}
+                    transition={{ 
+                      duration: 4, 
+                      repeat: Infinity, 
+                      ease: "easeInOut",
+                      delay: 0
+                    }}
                   >
-                    <Globe size={50} />
+                    <Leaf size={40} />
                   </motion.div>
+
                   <motion.div
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    className="floating-element element-2"
+                    animate={{ 
+                      y: [0, -15, 0],
+                      rotate: [0, -3, 0]
+                    }}
+                    transition={{ 
+                      duration: 3.5, 
+                      repeat: Infinity, 
+                      ease: "easeInOut",
+                      delay: 0.5
+                    }}
                   >
-                    <Award size={45} />
+                    <Globe size={35} />
                   </motion.div>
+
+                  <motion.div
+                    className="floating-element element-3"
+                    animate={{ 
+                      y: [0, -25, 0],
+                      rotate: [0, 4, 0]
+                    }}
+                    transition={{ 
+                      duration: 4.5, 
+                      repeat: Infinity, 
+                      ease: "easeInOut",
+                      delay: 1
+                    }}
+                  >
+                    <Award size={30} />
+                  </motion.div>
+
+                  <motion.div
+                    className="floating-element element-4"
+                    animate={{ 
+                      y: [0, -18, 0],
+                      rotate: [0, -2, 0]
+                    }}
+                    transition={{ 
+                      duration: 3.8, 
+                      repeat: Infinity, 
+                      ease: "easeInOut",
+                      delay: 1.5
+                    }}
+                  >
+                    <CheckCircle size={32} />
+                  </motion.div>
+
+                  {/* Background Pattern */}
+                  <div className="background-pattern">
+                    <div className="pattern-circle circle-1"></div>
+                    <div className="pattern-circle circle-2"></div>
+                    <div className="pattern-circle circle-3"></div>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -643,23 +658,23 @@ const App = () => {
             viewport={{ once: true, margin: "-100px" }}
           >
             <div className="contact-text">
-              <h2 className="section-title">احصل على استشارتك اليوم</h2>
+              <h2 className="section-title">تواصل معنا</h2>
               <p className="contact-subtitle">
-                احجز استشارة  مع خبرائنا البيئيين. سنساعدك على التعامل مع اللوائح وتحقيق الامتثال وتنفيذ ممارسات مستدامة تدفع عملك للأمام.
+                نحن هنا لمساعدتك في تحقيق الامتثال البيئي وتقديم الحلول المتكاملة لمنشأتك. تواصل معنا اليوم للحصول على استشارة متخصصة.
               </p>
               <div className="contact-info">
                 <div className="contact-item">
-                  <MessageCircle className="contact-icon" />
+                  <Globe className="contact-icon" />
                   <div>
-                    <h4>واتساب</h4>
-                    <p>+1 (555) 123-4567</p>
+                    <h4>الموقع</h4>
+                    <p>منطقة القصيم - المملكة العربية السعودية</p>
                   </div>
                 </div>
                 <div className="contact-item">
-                  <Globe className="contact-icon" />
+                  <MessageCircle className="contact-icon" />
                   <div>
-                    <h4>البريد الإلكتروني</h4>
-                    <p>hello@earthfootprint.com</p>
+                    <h4>التواصل</h4>
+                    <p>نخدم جميع مناطق المملكة</p>
                   </div>
                 </div>
               </div>
@@ -674,27 +689,28 @@ const App = () => {
             >
               <form className="form" onSubmit={handleFormSubmit}>
                 <div className="form-group">
-                  <input type="text" placeholder="اسمك" required />
+                  <input type="text" placeholder="الاسم" required />
                 </div>
                 <div className="form-group">
                   <input type="email" placeholder="البريد الإلكتروني" required />
                 </div>
                 <div className="form-group">
-                  <input type="tel" placeholder="رقم الهاتف" required />
+                  <input type="tel" placeholder="رقم الجوال" required />
                 </div>
                 <div className="form-group">
                   <select required>
-                    <option value="">اختر الخدمة الاستشارية</option>
-                    <option value="compliance">الامتثال البيئي</option>
-                    <option value="strategy">استراتيجية الاستدامة</option>
-                    <option value="risk">تقييم المخاطر البيئية</option>
-                    <option value="green">استشارات الأعمال الخضراء</option>
-                    <option value="training">التدريب البيئي</option>
-                    <option value="reporting">التقارير البيئية</option>
+                    <option value="">اختر الخدمة المطلوبة</option>
+                    <option value="license">الرخص البيئية</option>
+                    <option value="studies">الدراسات والتقارير البيئية</option>
+                    <option value="assessment">تقييم الأثر البيئي</option>
+                    <option value="audit">التدقيق البيئي</option>
+                    <option value="management">خطط الإدارة والتأهيل البيئي</option>
+                    <option value="consulting">الاستشارات الفنية المتخصصة</option>
+                    <option value="other">أخرى</option>
                   </select>
                 </div>
                 <div className="form-group">
-                  <textarea placeholder="أخبرنا عن مشروعك..." rows={4} required></textarea>
+                  <textarea placeholder="تفاصيل الاستفسار أو المشروع..." rows={4} required></textarea>
                 </div>
                 <motion.button
                   type="submit"
@@ -706,11 +722,33 @@ const App = () => {
                   whileTap={{ scale: 0.95 }}
                   transition={{ duration: 0.2 }}
                 >
-                  إرسال الرسالة
+                  إرسال
                   <MessageCircle size={20} />
                 </motion.button>
               </form>
             </motion.div>
+          </motion.div>
+
+          {/* Google Maps */}
+          <motion.div
+            className="contact-map"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <div className="map-container">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3575.4525134593873!2d43.973797399999995!3d26.3442221!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x157f596476ef1083%3A0x1627f4ca3423d980!2z2YXZg9iq2Kgg2KjYtdmF2Kkg2KfZhNin2LHYtiDZhNmE2KfYs9iq2LTYp9ix2KfYqiDYp9mE2KjZitim2YrYqQ!5e0!3m2!1sar!2ssa!4v1760196481123!5m2!1sar!2ssa"
+                width="100%"
+                height="450"
+                style={{ border: 0 }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="موقعنا في بريدة، القصيم"
+              ></iframe>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -720,20 +758,21 @@ const App = () => {
         <div className="container">
           <div className="footer-content">
             <div className="footer-logo">
-              <Leaf className="logo-icon" />
+              <img src={logo} alt="بصمة الأرض" className="logo-image" />
               <span className="logo-text">بصمة الأرض</span>
             </div>
             <p className="footer-text">
-              نبني مستقبلاً مستداماً، حلاً واحداً في كل مرة
+              شريكك البيئي الأول للقطاع الصناعي في المملكة
             </p>
             <div className="footer-links">
               <a href="#services">الخدمات</a>
+              <a href="#projects">لماذا نحن</a>
               <a href="#about">من نحن</a>
               <a href="#contact">تواصل معنا</a>
             </div>
           </div>
           <div className="footer-bottom">
-            <p>&copy; 2024 بصمة الأرض. جميع الحقوق محفوظة.</p>
+            <p>&copy; {new Date().getFullYear()} بصمة الأرض. جميع الحقوق محفوظة.</p>
           </div>
         </div>
       </footer>
