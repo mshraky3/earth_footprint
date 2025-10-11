@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Leaf, 
@@ -30,24 +30,41 @@ const App = () => {
     };
   }, [mobileMenuOpen]);
 
-  const scrollToContact = () => {
+  // Memoized scroll functions for better performance
+  const scrollToContact = useCallback(() => {
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
     setMobileMenuOpen(false);
-  };
+  }, []);
 
-  const scrollToServices = () => {
+  const scrollToServices = useCallback(() => {
     document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
     setMobileMenuOpen(false);
-  };
+  }, []);
 
-  const handleNavClick = () => {
+  const handleNavClick = useCallback(() => {
     setMobileMenuOpen(false);
-  };
+  }, []);
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = useCallback((e) => {
     e.preventDefault();
     alert('شكراً لتواصلك معنا! سيتواصل معك فريقنا خلال 24 ساعة.');
-  };
+  }, []);
+
+  // Memoized animation variants
+  const fadeInUp = useMemo(() => ({
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  }), []);
+
+  const staggerContainer = useMemo(() => ({
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  }), []);
 
   return (
     <div className="app professional-theme">
@@ -64,7 +81,7 @@ const App = () => {
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
           >
-            <img src={logo} alt="بصمة الأرض" className="logo-image" />
+            <img src={logo} alt="بصمة الأرض" className="logo-image" loading="eager" />
             <span className="logo-text">بصمة الأرض</span>
           </motion.div>
 
@@ -165,20 +182,20 @@ const App = () => {
               transition={{ duration: 0.8, delay: 0.3 }}
             >
               <motion.span 
-                className="title-word"
+                className="title-word brand-name-text"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
               >
-                مكتب بصمة الأرض
+                 بصمة الأرض
               </motion.span>
               <motion.span 
-                className="title-word gradient-text"
+                className="title-word gradient-text environmental-text"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.5 }}
               >
-                للاستشارات البيئية
+                
               </motion.span>
               <motion.span 
                 className="title-word accent-text"
@@ -196,7 +213,7 @@ const App = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.8 }}
             >
-              حلول واستشارات بيئية متكاملة لتمكين المنشآت الصناعية من النمو بوعي ومسؤولية وتحقيق الامتثال الكامل للأنظمة البيئية.
+              حلول واستشارات بيئية متكاملة لتمكين المنشآت الصناعية من النمو بوعي ومسؤولية
             </motion.p>
 
             <motion.div 
@@ -207,12 +224,6 @@ const App = () => {
             >
               <div className="hero-buttons">
                 <button 
-                  className="btn-secondary"
-                  onClick={scrollToServices}
-                >
-                  تصفح خدماتنا
-                </button>
-                <button 
                   className="btn-primary btn-cta"
                   onClick={scrollToContact}
                 >
@@ -220,23 +231,8 @@ const App = () => {
                   <ArrowLeft size={20} />
                 </button>
               </div>
-              
-              <motion.div 
-                className="cta-trust-badges"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 1.1 }}
-              >
-                <div className="trust-badge">
-                  <CheckCircle size={16} />
-                  <span>خبرة ميدانية متخصصة</span>
-                </div>
-                <div className="trust-badge">
-                  <Users size={16} />
-                  <span>فريق عمل مؤهل</span>
-                </div>
-              </motion.div>
             </motion.div>
+
           </motion.div>
 
           {/* Floating Stats Cards */}
@@ -647,108 +643,105 @@ const App = () => {
         </div>
       </section>
 
-      {/* Contact Section */}
+      {/* Contact Section - Ultra Compact */}
       <section id="contact" className="contact">
         <div className="container">
+          {/* Minimal Header */}
           <motion.div
-            className="contact-content"
-            initial={{ opacity: 0, y: 30 }}
+            className="contact-header-minimal"
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.4 }}
+            viewport={{ once: true }}
           >
-            <div className="contact-text">
-              <h2 className="section-title">تواصل معنا</h2>
-              <p className="contact-subtitle">
-                نحن هنا لمساعدتك في تحقيق الامتثال البيئي وتقديم الحلول المتكاملة لمنشأتك. تواصل معنا اليوم للحصول على استشارة متخصصة.
-              </p>
-              <div className="contact-info">
-                <div className="contact-item">
-                  <Globe className="contact-icon" />
-                  <div>
-                    <h4>الموقع</h4>
-                    <p>منطقة القصيم - المملكة العربية السعودية</p>
-                  </div>
-                </div>
-                <div className="contact-item">
-                  <MessageCircle className="contact-icon" />
-                  <div>
-                    <h4>التواصل</h4>
-                    <p>نخدم جميع مناطق المملكة</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <motion.div
-              className="contact-form"
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              <form className="form" onSubmit={handleFormSubmit}>
-                <div className="form-group">
-                  <input type="text" placeholder="الاسم" required />
-                </div>
-                <div className="form-group">
-                  <input type="email" placeholder="البريد الإلكتروني" required />
-                </div>
-                <div className="form-group">
-                  <input type="tel" placeholder="رقم الجوال" required />
-                </div>
-                <div className="form-group">
-                  <select required>
-                    <option value="">اختر الخدمة المطلوبة</option>
-                    <option value="license">الرخص البيئية</option>
-                    <option value="studies">الدراسات والتقارير البيئية</option>
-                    <option value="assessment">تقييم الأثر البيئي</option>
-                    <option value="audit">التدقيق البيئي</option>
-                    <option value="management">خطط الإدارة والتأهيل البيئي</option>
-                    <option value="consulting">الاستشارات الفنية المتخصصة</option>
-                    <option value="other">أخرى</option>
-                  </select>
-                </div>
-                <div className="form-group">
-                  <textarea placeholder="تفاصيل الاستفسار أو المشروع..." rows={4} required></textarea>
-                </div>
-                <motion.button
-                  type="submit"
-                  className="btn-primary form-submit"
-                  whileHover={{ 
-                    scale: 1.05,
-                    boxShadow: "0 20px 40px rgba(45, 90, 39, 0.3)"
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  إرسال
-                  <MessageCircle size={20} />
-                </motion.button>
-              </form>
-            </motion.div>
+            <h2>تواصل معنا</h2>
           </motion.div>
 
-          {/* Google Maps */}
-          <motion.div
-            className="contact-map"
-            initial={{ opacity: 0, y: 30 }}
+          {/* Side-by-Side Layout: Info + Map */}
+          <motion.div 
+            className="contact-grid-layout"
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            viewport={{ once: true }}
           >
-            <div className="map-container">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3575.4525134593873!2d43.973797399999995!3d26.3442221!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x157f596476ef1083%3A0x1627f4ca3423d980!2z2YXZg9iq2Kgg2KjYtdmF2Kkg2KfZhNin2LHYtiDZhNmE2KfYs9iq2LTYp9ix2KfYqiDYp9mE2KjZitim2YrYqQ!5e0!3m2!1sar!2ssa!4v1760196481123!5m2!1sar!2ssa"
-                width="100%"
-                height="450"
-                style={{ border: 0 }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="موقعنا في بريدة، القصيم"
-              ></iframe>
+            {/* Left Side - Contact Info */}
+            <div className="contact-info-side">
+              {/* Quick Info */}
+              <div className="contact-quick-info">
+                <div className="quick-info-item">
+                  <Globe size={20} />
+                  <span>القصيم، المملكة العربية السعودية</span>
+                </div>
+              </div>
+
+              {/* WhatsApp Buttons - Stacked */}
+              <div className="whatsapp-buttons-stacked">
+                <motion.a
+                  href="https://wa.link/g2rukl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="whatsapp-btn-minimal whatsapp-primary-minimal"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3, delay: 0.15 }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <MessageCircle size={22} />
+                  <div className="btn-text">
+                    <span className="btn-title">مستشارك البيئي</span>
+                    <span className="btn-subtitle">
+                       متاح دائماً عبر تطبيق واتس اب 
+                       </span>
+                  </div>
+                  <ArrowLeft size={18} />
+                </motion.a>
+
+                <motion.a
+                  href="https://wa.link/cujyls"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="whatsapp-btn-minimal whatsapp-secondary-minimal"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3, delay: 0.2 }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <MessageCircle size={22} />
+                  <div className="btn-text">
+                    <span className="btn-title">اتصل الآن</span>
+                    <span className="btn-subtitle">
+                      تواصل معنا
+                    </span>
+                  </div>
+                  <ArrowLeft size={18} />
+                </motion.a>
+              </div>
             </div>
+
+            {/* Right Side - Square Map */}
+            <motion.div
+              className="contact-map-side"
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4, delay: 0.15 }}
+              viewport={{ once: true }}
+            >
+              <div className="map-wrapper-square">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3575.4525134593873!2d43.973797399999995!3d26.3442221!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x157f596476ef1083%3A0x1627f4ca3423d980!2z2YXZg9iq2Kgg2KjYtdmF2Kkg2KfZhNin2LHYtiDZhNmE2KfYs9iq2LTYp9ix2KfYqiDYp9mE2KjZitim2YrYqQ!5e0!3m2!1sar!2ssa!4v1760196481123!5m2!1sar!2ssa"
+                  style={{ border: 0 }}
+                  allowFullScreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="موقعنا"
+                ></iframe>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
