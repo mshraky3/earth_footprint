@@ -50,10 +50,57 @@ const App = () => {
     alert('شكراً لتواصلك معنا! سيتواصل معك فريقنا خلال 24 ساعة.');
   }, []);
 
-  // Memoized animation variants
+  // Memoized animation variants - Enhanced for scroll
   const fadeInUp = useMemo(() => ({
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
+    hidden: { opacity: 0, y: 60, scale: 0.95 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: [0.22, 1, 0.36, 1]
+      }
+    }
+  }), []);
+
+  const fadeInLeft = useMemo(() => ({
+    hidden: { opacity: 0, x: -60, rotate: -5 },
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      rotate: 0,
+      transition: {
+        duration: 0.7,
+        ease: [0.22, 1, 0.36, 1]
+      }
+    }
+  }), []);
+
+  const fadeInRight = useMemo(() => ({
+    hidden: { opacity: 0, x: 60, rotate: 5 },
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      rotate: 0,
+      transition: {
+        duration: 0.7,
+        ease: [0.22, 1, 0.36, 1]
+      }
+    }
+  }), []);
+
+  const scaleIn = useMemo(() => ({
+    hidden: { opacity: 0, scale: 0.8, rotate: -3 },
+    visible: { 
+      opacity: 1, 
+      scale: 1,
+      rotate: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.34, 1.56, 0.64, 1]
+      }
+    }
   }), []);
 
   const staggerContainer = useMemo(() => ({
@@ -61,7 +108,27 @@ const App = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: 0.15,
+        delayChildren: 0.1
+      }
+    }
+  }), []);
+
+  const cardReveal = useMemo(() => ({
+    hidden: { 
+      opacity: 0, 
+      y: 50, 
+      scale: 0.9,
+      rotateX: 30
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      scale: 1,
+      rotateX: 0,
+      transition: {
+        duration: 0.7,
+        ease: [0.22, 1, 0.36, 1]
       }
     }
   }), []);
@@ -318,10 +385,10 @@ const App = () => {
         <div className="container">
           <motion.div
             className="section-header professional-header"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
           >
             <h2 className="section-title professional-title">خدماتنا البيئية المتكاملة</h2>
             <p className="section-subtitle professional-subtitle">
@@ -330,7 +397,13 @@ const App = () => {
           </motion.div>
 
           <div className="services-professional-layout">
-            <div className="professional-services-grid">
+            <motion.div 
+              className="professional-services-grid"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+            >
               {[
                 {
                   icon: <Award className="service-icon" />,
@@ -372,12 +445,10 @@ const App = () => {
                 <motion.div
                   key={index}
                   className="service-card professional-service-card"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: index * 0.05, ease: "easeOut" }}
-                  viewport={{ once: true, margin: "-50px" }}
+                  variants={cardReveal}
                   whileHover={{ 
                     y: -8,
+                    scale: 1.02,
                     transition: { duration: 0.2, ease: "easeOut" }
                   }}
                 >
@@ -396,7 +467,7 @@ const App = () => {
                   </ul>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -406,9 +477,9 @@ const App = () => {
         <div className="container">
           <motion.div
             className="section-header professional-header"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
+            variants={scaleIn}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
             <h2 className="section-title professional-title">لماذا تختار بصمة الأرض؟</h2>
@@ -418,7 +489,13 @@ const App = () => {
           </motion.div>
 
           <div className="projects-professional-layout">
-            <div className="professional-projects-grid">
+            <motion.div 
+              className="professional-projects-grid"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+            >
               {[
                 {
                   title: "الخبرة الميدانية المتخصصة",
@@ -444,16 +521,18 @@ const App = () => {
                   category: "التغطية",
                   year: ""
                 }
-              ].map((project, index) => (
+              ].map((project, index) => {
+                // Alternate animation directions for creative effect
+                const variant = index % 3 === 0 ? fadeInLeft : index % 3 === 1 ? fadeInUp : fadeInRight;
+                return (
                 <motion.div
                   key={index}
                   className="project-card professional-project-card"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: index * 0.05, ease: "easeOut" }}
-                  viewport={{ once: true, margin: "-50px" }}
+                  variants={variant}
                   whileHover={{ 
                     y: -8,
+                    scale: 1.02,
+                    rotateY: 2,
                     transition: { duration: 0.2, ease: "easeOut" }
                   }}
                 >
@@ -473,8 +552,8 @@ const App = () => {
                     ))}
                   </div>
                 </motion.div>
-              ))}
-            </div>
+              )})}
+            </motion.div>
           </div>
         </div>
       </section>
@@ -485,9 +564,9 @@ const App = () => {
           <div className="about-content">
             <motion.div
               className="about-text"
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
+              variants={fadeInLeft}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
             >
               <h2 className="section-title">من نحن</h2>
@@ -536,9 +615,9 @@ const App = () => {
             
             <motion.div
               className="about-visual"
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
+              variants={fadeInRight}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
             >
               <div className="visual-container">
