@@ -6,7 +6,8 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto; /* Disable native smooth scroll for custom animation */
+  scroll-padding-top: 100px; /* Account for fixed navigation */
 }
 
 body {

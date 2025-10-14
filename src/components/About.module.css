@@ -1,0 +1,805 @@
+/* About Component Styles */
+
+.about {
+  padding: 6rem 0;
+  background: linear-gradient(180deg, #ecfdf5 0%, #f8fafc 50%, #ffffff 100%);
+  position: relative;
+  contain: layout style paint;
+}
+
+.about::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(107, 128, 87, 0.08) 50%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.aboutContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.topRow {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+.aboutText {
+  flex: 1;
+}
+
+.aboutVisual {
+  flex: 0 0 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+  font-family: 'Cairo', sans-serif;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.aboutDescription {
+  font-size: 1.1rem;
+  color: var(--text-gray);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.valueItem {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 1.25rem;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(45, 84, 66, 0.1);
+  contain: layout style paint;
+  will-change: transform;
+}
+
+.valueItem:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: translateX(10px);
+  box-shadow: 0 8px 20px rgba(45, 84, 66, 0.15);
+  border-color: var(--earth-teal);
+}
+
+.valueIcon {
+  width: 56px;
+  height: 56px;
+  color: var(--text-light);
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #2d5442, #6b8057);
+  padding: 12px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(45, 84, 66, 0.25);
+  transition: all 0.4s ease;
+}
+
+.valueItem:hover .valueIcon {
+  transform: scale(1.15) rotate(10deg);
+  box-shadow: 0 12px 28px rgba(45, 84, 66, 0.35);
+}
+
+.valueItem h4 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.valueItem p {
+  color: var(--text-gray);
+  line-height: 1.6;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem 1rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%);
+  border-radius: 16px;
+  border: 1px solid rgba(45, 84, 66, 0.1);
+  box-shadow: 0 4px 20px rgba(45, 84, 66, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.statItem::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(45, 84, 66, 0.03) 0%, rgba(73, 124, 89, 0.03) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.statItem:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(248, 250, 252, 1) 100%);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 35px rgba(45, 84, 66, 0.15);
+  border-color: rgba(45, 84, 66, 0.2);
+}
+
+.statItem:hover::before {
+  opacity: 1;
+}
+
+.statIcon {
+  width: 48px;
+  height: 48px;
+  padding: 12px;
+  background: linear-gradient(135deg, #2d5a27 0%, #4a7c59 100%);
+  border-radius: 50%;
+  color: white;
+  fill: white;
+  stroke: white;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 15px rgba(45, 84, 66, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.statItem:hover .statIcon {
+  transform: scale(1.15) rotate(8deg);
+  box-shadow: 0 8px 25px rgba(45, 84, 66, 0.4);
+}
+
+.statItem h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+  position: relative;
+  z-index: 1;
+}
+
+.statItem p {
+  color: var(--text-gray);
+  line-height: 1.4;
+  font-size: 0.85rem;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.aboutVisual {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.visualContainer {
+  width: 100%;
+  max-width: 500px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+}
+
+/* Floating Logo */
+.floatingLogo {
+  position: absolute;
+  top: 15%;
+  left: -10%;
+  z-index: 0;
+  pointer-events: auto;
+}
+
+.aboutFloatingLogo {
+  width: 130px;
+  height: 130px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.15));
+  transition: all 0.3s ease;
+}
+
+.modernShowcase {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logoCard {
+  position: relative;
+  z-index: 10;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 25px;
+  padding: 2rem;
+  box-shadow: 
+    0 20px 60px rgba(45, 84, 66, 0.15),
+    0 8px 25px rgba(107, 128, 87, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logoCard:hover {
+  box-shadow: 
+    0 25px 80px rgba(45, 84, 66, 0.2),
+    0 12px 35px rgba(107, 128, 87, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border-color: rgba(45, 84, 66, 0.2);
+}
+
+.logoContainer {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1.5rem;
+}
+
+.mainLogo {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 25px rgba(45, 84, 66, 0.4));
+  transition: all 0.3s ease;
+}
+
+.logoOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(45, 84, 66, 0.1), rgba(107, 128, 87, 0.05));
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.logoCard:hover .mainLogo {
+  filter: drop-shadow(0 12px 35px rgba(45, 84, 66, 0.6));
+  transform: scale(1.05);
+}
+
+.logoCard:hover .logoOverlay {
+  opacity: 1;
+}
+
+.logoText h3 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #2d5442, #6b8057);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+  font-family: 'Cairo', sans-serif;
+}
+
+.logoText p {
+  font-size: 1rem;
+  color: var(--text-gray);
+  font-weight: 600;
+  font-family: 'Cairo', sans-serif;
+}
+
+.floatingElement {
+  position: absolute;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.8));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 25px rgba(45, 84, 66, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  color: var(--earth-teal);
+  transition: all 0.3s ease;
+  z-index: 15;
+}
+
+.floatingElement:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 35px rgba(45, 84, 66, 0.25);
+}
+
+.element1 {
+  width: 60px;
+  height: 60px;
+  top: 10%;
+  left: 15%;
+}
+
+.element2 {
+  width: 55px;
+  height: 55px;
+  top: 20%;
+  right: 20%;
+}
+
+.element3 {
+  width: 50px;
+  height: 50px;
+  bottom: 25%;
+  left: 10%;
+}
+
+.element4 {
+  width: 52px;
+  height: 52px;
+  bottom: 15%;
+  right: 15%;
+}
+
+.backgroundPattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.patternCircle {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(45, 84, 66, 0.03), rgba(107, 128, 87, 0.02));
+  border: 1px solid rgba(45, 84, 66, 0.05);
+}
+
+.circle1 {
+  width: 120px;
+  height: 120px;
+  top: 5%;
+  right: 5%;
+  animation: float 6s ease-in-out infinite;
+}
+
+.circle2 {
+  width: 80px;
+  height: 80px;
+  bottom: 10%;
+  left: 5%;
+  animation: float 8s ease-in-out infinite reverse;
+}
+
+.circle3 {
+  width: 100px;
+  height: 100px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: float 7s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .aboutContent {
+    flex-direction: column;
+    gap: 2.5rem;
+    overflow-x: hidden !important;
+  }
+
+  .aboutText,
+  .aboutVisual {
+    width: 100%;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .sectionTitle {
+    font-size: 2.25rem;
+  }
+
+  .visualContainer {
+    height: 350px;
+    max-width: 400px;
+  }
+
+  .logoCard {
+    padding: 1.5rem;
+  }
+
+  .mainLogo {
+    width: 80px;
+    height: 80px;
+  }
+
+  .logoText h3 {
+    font-size: 1.3rem;
+  }
+
+  .logoText p {
+    font-size: 0.9rem;
+  }
+
+  .floatingElement {
+    width: 45px !important;
+    height: 45px !important;
+  }
+
+  .element1 svg,
+  .element2 svg,
+  .element3 svg,
+  .element4 svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .patternCircle {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .sectionTitle {
+    font-size: 1.85rem;
+  }
+
+  .aboutDescription {
+    font-size: 1rem;
+  }
+}
+
+/* Impact Statement Styles */
+.impactStatement {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, #2d5a27 0%, #4a7c59 100%);
+  border-radius: 16px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.impactStatement::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+}
+
+.impactTitle {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 1;
+}
+
+.impactText {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 1024px) {
+  .about {
+    padding: 4rem 0;
+  }
+  
+  .topRow {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .aboutVisual {
+    flex: none;
+    order: -1;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .visualContainer {
+    height: 350px;
+    max-width: 400px;
+  }
+  
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .sectionTitle {
+    font-size: 2.2rem;
+  }
+  
+  .aboutDescription {
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .about {
+    padding: 3rem 0;
+  }
+  
+  .topRow {
+    gap: 1.5rem;
+  }
+  
+  .aboutVisual {
+    max-width: 320px;
+  }
+  
+  .visualContainer {
+    height: 300px;
+    max-width: 320px;
+  }
+  
+  .logoCard {
+    padding: 1.5rem;
+  }
+  
+  .logoText h3 {
+    font-size: 1.4rem;
+  }
+  
+  .logoText p {
+    font-size: 0.9rem;
+  }
+  
+  .floatingElement {
+    width: 35px !important;
+    height: 35px !important;
+  }
+  
+  .element1 svg,
+  .element2 svg,
+  .element3 svg,
+  .element4 svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .statsGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .statItem {
+    padding: 1.25rem 0.75rem;
+  }
+  
+  .statIcon {
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+    margin-bottom: 0.75rem;
+  }
+  
+  .statItem h4 {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+  
+  .statItem p {
+    font-size: 0.8rem;
+  }
+  
+  .sectionTitle {
+    font-size: 2rem;
+  }
+  
+  .aboutDescription {
+    font-size: 1rem;
+  }
+  
+  .impactStatement {
+    margin-top: 2rem;
+    padding: 1.5rem;
+  }
+  
+  .impactTitle {
+    font-size: 1.5rem;
+  }
+  
+  .impactText {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about {
+    padding: 2.5rem 0;
+  }
+  
+  .topRow {
+    gap: 1.25rem;
+  }
+  
+  .aboutVisual {
+    max-width: 280px;
+  }
+  
+  .visualContainer {
+    height: 280px;
+    max-width: 280px;
+  }
+  
+  .logoCard {
+    padding: 1.25rem;
+  }
+  
+  .logoText h3 {
+    font-size: 1.2rem;
+  }
+  
+  .logoText p {
+    font-size: 0.85rem;
+  }
+  
+  .floatingElement {
+    width: 30px !important;
+    height: 30px !important;
+  }
+  
+  .element1 svg,
+  .element2 svg,
+  .element3 svg,
+  .element4 svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .statsGrid {
+    gap: 0.75rem;
+  }
+  
+  .statItem {
+    padding: 1rem 0.5rem;
+  }
+  
+  .statIcon {
+    width: 36px;
+    height: 36px;
+    padding: 8px;
+    margin-bottom: 0.6rem;
+  }
+  
+  .statItem h4 {
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .statItem p {
+    font-size: 0.75rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.8rem;
+  }
+  
+  .aboutDescription {
+    font-size: 0.95rem;
+  }
+  
+  .impactStatement {
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+  }
+  
+  .impactTitle {
+    font-size: 1.3rem;
+  }
+  
+  .impactText {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .about {
+    padding: 2rem 0;
+  }
+  
+  .aboutVisual {
+    max-width: 250px;
+  }
+  
+  .visualContainer {
+    height: 250px;
+    max-width: 250px;
+  }
+  
+  .logoCard {
+    padding: 1rem;
+  }
+  
+  .logoText h3 {
+    font-size: 1.1rem;
+  }
+  
+  .logoText p {
+    font-size: 0.8rem;
+  }
+  
+  .floatingElement {
+    width: 28px !important;
+    height: 28px !important;
+  }
+  
+  .element1 svg,
+  .element2 svg,
+  .element3 svg,
+  .element4 svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .sectionTitle {
+    font-size: 1.6rem;
+  }
+  
+  .aboutDescription {
+    font-size: 0.9rem;
+  }
+  
+  .impactTitle {
+    font-size: 1.2rem;
+  }
+  
+  .impactText {
+    font-size: 0.85rem;
+  }
+}
+

@@ -1,0 +1,257 @@
+/* Clients Section Styles */
+.clients-section {
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.clients-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23e9ecef" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>') repeat;
+  opacity: 0.3;
+  z-index: 0;
+}
+
+.clients-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Floating Logo */
+.clients-floating-logo {
+  position: absolute;
+  top: 25%;
+  right: 5%;
+  z-index: 0;
+  pointer-events: auto;
+}
+
+.clients-logo-image {
+  width: 130px;
+  height: 130px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2));
+  transition: all 0.3s ease;
+}
+
+.clients-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 3rem;
+  position: relative;
+  animation: fadeInUp 0.8s ease-out;
+  direction: rtl;
+  font-family: 'Arial', 'Tahoma', sans-serif;
+}
+
+.clients-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #3498db, #2ecc71);
+  border-radius: 2px;
+  animation: slideIn 1s ease-out 0.3s both;
+}
+
+/* Responsive Grid Layout */
+.clients-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 1.5rem;
+  align-items: center;
+  justify-items: center;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Individual Logo Wrapper */
+.client-logo-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 160px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.client-logo-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s ease;
+}
+
+.client-logo-wrapper:hover::before {
+  left: 100%;
+}
+
+.client-logo-wrapper:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Logo Styling */
+.client-logo {
+  max-width: 90%;
+  max-height: 60px;
+  object-fit: contain;
+  filter: grayscale(100%) opacity(0.7);
+  transition: all 0.3s ease;
+  animation: logoFadeIn 0.6s ease-out;
+}
+
+.client-logo-wrapper:hover .client-logo {
+  filter: grayscale(0%) opacity(1);
+  transform: scale(1.1);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    width: 0;
+  }
+  to {
+    width: 60px;
+  }
+}
+
+@keyframes logoFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+}
+
+/* Staggered animation for logos */
+.client-logo-wrapper:nth-child(1) { animation-delay: 0.1s; }
+.client-logo-wrapper:nth-child(2) { animation-delay: 0.2s; }
+.client-logo-wrapper:nth-child(3) { animation-delay: 0.3s; }
+.client-logo-wrapper:nth-child(4) { animation-delay: 0.4s; }
+.client-logo-wrapper:nth-child(5) { animation-delay: 0.5s; }
+.client-logo-wrapper:nth-child(6) { animation-delay: 0.6s; }
+.client-logo-wrapper:nth-child(7) { animation-delay: 0.7s; }
+.client-logo-wrapper:nth-child(8) { animation-delay: 0.8s; }
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .clients-grid {
+    grid-template-columns: repeat(8, 1fr);
+    gap: 1rem;
+  }
+  
+  .client-logo-wrapper {
+    max-width: 140px;
+    height: 90px;
+  }
+  
+  .client-logo {
+    max-height: 55px;
+  }
+}
+
+@media (max-width: 768px) {
+  .clients-section {
+    padding: 3rem 1rem;
+  }
+  
+  .clients-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .clients-grid {
+    grid-template-columns: repeat(8, 1fr);
+    gap: 0.8rem;
+  }
+  
+  .client-logo-wrapper {
+    max-width: 120px;
+    height: 80px;
+  }
+  
+  .client-logo {
+    max-height: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .clients-section {
+    padding: 2rem 1rem;
+  }
+  
+  .clients-title {
+    font-size: 1.8rem;
+  }
+  
+  .clients-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .client-logo-wrapper {
+    max-width: 100px;
+    height: 70px;
+  }
+  
+  .client-logo {
+    max-height: 40px;
+  }
+}
+
+@media (max-width: 360px) {
+  .clients-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .client-logo-wrapper {
+    max-width: 120px;
+    height: 80px;
+  }
+  
+  .client-logo {
+    max-height: 50px;
+  }
+}
