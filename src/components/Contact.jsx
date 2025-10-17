@@ -3,9 +3,12 @@ import { motion } from 'framer-motion';
 import { Globe, MessageCircle, ArrowLeft, Phone, Copy, Check } from 'lucide-react';
 import styles from './Contact.module.css';
 import logo from '../assets/logo_design_to_use.png';
+import { useLanguage } from '../contexts/LanguageContext';
+import ContactForm from './ContactForm';
 
 const Contact = () => {
   const [copied, setCopied] = useState(false);
+  const { t } = useLanguage();
 
   const handleCopyNumber = async () => {
     try {
@@ -20,24 +23,19 @@ const Contact = () => {
   return (
     <section id="contact" className={styles.contact}>
       <div className="container">
-        {/* Floating Logo */}
+        {/* Optimized Floating Logo */}
         <motion.div
           className={styles.contactFloatingLogo}
-          initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
-          whileInView={{ opacity: 0.1, scale: 1, rotate: 0 }}
+          initial={{ opacity: 0, scale: 0.5 }}
+          whileInView={{ opacity: 0.08, scale: 1 }}
           transition={{ 
-            duration: 2, 
-            delay: 0.3,
+            duration: 1.5, 
+            delay: 0.2,
             ease: [0.25, 0.1, 0.25, 1]
           }}
           viewport={{ once: true }}
-          whileHover={{ 
-            scale: 1.1,
-            opacity: 0.18,
-            transition: { duration: 0.3 }
-          }}
         >
-          <img src={logo} alt="بصمة الأرض" className={styles.contactFloatingLogoImage} />
+          <img src={logo} alt="بصمة الأرض" className={styles.contactFloatingLogoImage} loading="lazy" />
         </motion.div>
 
         {/* Minimal Header */}
@@ -48,7 +46,17 @@ const Contact = () => {
           transition={{ duration: 0.4 }}
           viewport={{ once: true }}
         >
-          <h2>تواصل معنا</h2>
+          <h2>{t('contact.title')}</h2>
+        </motion.div>
+
+        {/* Contact Form */}
+        <motion.div
+          className={styles.contactFormSection}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
+          <ContactForm />
         </motion.div>
 
         {/* Side-by-Side Layout: Info + Map */}
@@ -65,7 +73,7 @@ const Contact = () => {
             <div className={styles.contactQuickInfo}>
               <div className={styles.quickInfoItem}>
                 <Globe size={20} />
-                <span>القصيم، المملكة العربية السعودية</span>
+                <span>{t('contact.location')}</span>
               </div>
             </div>
 
@@ -89,9 +97,9 @@ const Contact = () => {
                 >
                   <MessageCircle size={24} />
                   <div className={styles.communicationContent}>
-                    <span className={styles.communicationTitle}>نافذة التواصل عبر واتساب</span>
+                    <span className={styles.communicationTitle}>{t('contact.whatsapp.title')}</span>
                     <span className={styles.communicationSubtitle}>
-                      التواصل غير المباشر عبر الرسائل
+                      {t('contact.whatsapp.subtitle')}
                     </span>
                     <span className={styles.communicationNumber}>0597007805</span>
                   </div>
@@ -115,9 +123,9 @@ const Contact = () => {
                 >
                   <Phone size={24} />
                   <div className={styles.communicationContent}>
-                    <span className={styles.communicationTitle}>التواصل المباشر عبر الهاتف</span>
+                    <span className={styles.communicationTitle}>{t('contact.phone.title')}</span>
                     <span className={styles.communicationSubtitle}>
-                      انقر لنسخ الرقم
+                      {t('contact.phone.subtitle')}
                     </span>
                     <span className={styles.communicationNumber}>0533778433</span>
                   </div>
@@ -142,7 +150,7 @@ const Contact = () => {
                 allowFullScreen=""
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="موقعنا"
+                title={t('common.mapTitle')}
               ></iframe>
             </div>
           </motion.div>
@@ -159,7 +167,7 @@ const Contact = () => {
           transition={{ duration: 0.3 }}
         >
           <Check size={20} />
-          <span>تم نسخ الرقم بنجاح!</span>
+          <span>{t('contact.copied')}</span>
         </motion.div>
       )}
     </section>

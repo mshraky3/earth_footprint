@@ -1,10 +1,13 @@
 import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Users, Award, Globe, Leaf, CheckCircle } from 'lucide-react';
+import { Leaf, Globe, Award } from 'lucide-react';
 import styles from './About.module.css';
 import logo from '../assets/logo_design_to_use.png';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const About = () => {
+  const { t } = useLanguage();
+  
   const fadeInLeft = useMemo(() => ({
     hidden: { opacity: 0, x: -60, rotate: -5 },
     visible: { 
@@ -32,7 +35,7 @@ const About = () => {
   }), []);
 
   return (
-    <section id="about" className={styles.about}>
+    <section id="about" className={styles.about} role="complementary" aria-label="من نحن">
       <div className="container">
          <div className={styles.aboutContent}>
            {/* Top Row: Text Content + Logo */}
@@ -44,7 +47,7 @@ const About = () => {
                whileInView="visible"
                viewport={{ once: true, margin: "-100px" }}
              >
-               <h2 className={styles.sectionTitle}>من نحن</h2>
+               <h2 className={styles.sectionTitle}>{t('about.title')}</h2>
                <motion.p 
                  className={styles.aboutDescription}
                  initial={{ opacity: 0, y: 15 }}
@@ -52,39 +55,8 @@ const About = () => {
                  transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
                  viewport={{ once: true, margin: "-100px" }}
                >
-                 نحن مكتب بصمة الأرض للاستشارات البيئية، شريكك البيئي الأول لجميع القطاعات في المملكة. نقدم حلول واستشارات بيئية متكاملة تمكّن جميع المنشآت من النمو بوعي ومسؤولية.
+                 {t('about.description')}
                </motion.p>
-               
-               <div className={styles.statsGrid}>
-                 <div className={styles.statItem}>
-                   <Award className={styles.statIcon} />
-                   <div>
-                     <h4>5+ سنوات خبرة</h4>
-                     <p>في الاستشارات البيئية</p>
-                   </div>
-                 </div>
-                 <div className={styles.statItem}>
-                   <CheckCircle className={styles.statIcon} />
-                   <div>
-                     <h4>250+ مشروع ناجح</h4>
-                     <p>بأعلى المعايير</p>
-                   </div>
-                 </div>
-                 <div className={styles.statItem}>
-                   <Globe className={styles.statIcon} />
-                   <div>
-                     <h4>9 مناطق خدمة</h4>
-                     <p>في جميع أنحاء المملكة</p>
-                   </div>
-                 </div>
-                 <div className={styles.statItem}>
-                   <Users className={styles.statIcon} />
-                   <div>
-                     <h4>8+ قطاعات</h4>
-                     <p>صناعة، أغذية، صحية، عقارية</p>
-                   </div>
-                 </div>
-               </div>
              </motion.div>
              
              <motion.div
@@ -96,23 +68,18 @@ const About = () => {
              >
                <div className={styles.visualContainer}>
                  <div className={styles.modernShowcase}>
-                   {/* Floating Logo */}
+                   {/* Optimized Floating Logo */}
                    <motion.div
                      className={styles.floatingLogo}
-                     initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
-                     animate={{ opacity: 0.1, scale: 1, rotate: 0 }}
+                     initial={{ opacity: 0, scale: 0.5 }}
+                     animate={{ opacity: 0.08, scale: 1 }}
                      transition={{ 
-                       duration: 2, 
-                       delay: 0.5,
+                       duration: 1.5, 
+                       delay: 0.3,
                        ease: [0.25, 0.1, 0.25, 1]
                      }}
-                     whileHover={{ 
-                       scale: 1.1,
-                       opacity: 0.18,
-                       transition: { duration: 0.3 }
-                     }}
                    >
-                     <img src={logo} alt="بصمة الأرض" className={styles.aboutFloatingLogo} />
+                     <img src={logo} alt="بصمة الأرض" className={styles.aboutFloatingLogo} loading="lazy" />
                    </motion.div>
 
                    {/* Main Logo Card */}
@@ -132,8 +99,8 @@ const About = () => {
                        <div className={styles.logoOverlay}></div>
                      </div>
                      <div className={styles.logoText}>
-                       <h3>بصمة الأرض</h3>
-                       <p>للاستشارات البيئية</p>
+                       <h3>{t('common.brandName')}</h3>
+                       <p>{t('common.brandSubtitle')}</p>
                      </div>
                    </motion.div>
 
@@ -186,21 +153,6 @@ const About = () => {
                      <Award size={30} />
                    </motion.div>
 
-                   <motion.div
-                     className={`${styles.floatingElement} ${styles.element4}`}
-                     animate={{ 
-                       y: [0, -18, 0],
-                       rotate: [0, -2, 0]
-                     }}
-                     transition={{ 
-                       duration: 3.8, 
-                       repeat: Infinity, 
-                       ease: "easeInOut",
-                       delay: 1.5
-                     }}
-                   >
-                     <CheckCircle size={32} />
-                   </motion.div>
 
                    {/* Background Pattern */}
                    <div className={styles.backgroundPattern}>
@@ -212,20 +164,6 @@ const About = () => {
                </div>
              </motion.div>
            </div>
-           
-           {/* Bottom Full Width: Impact Statement */}
-           <motion.div 
-             className={styles.impactStatement}
-             initial={{ opacity: 0, y: 20 }}
-             whileInView={{ opacity: 1, y: 0 }}
-             transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-             viewport={{ once: true, margin: "-100px" }}
-           >
-             <h3 className={styles.impactTitle}>صنعنا الأثر.. ونمضي لنضاعفه</h3>
-             <p className={styles.impactText}>
-               في أكثر من 8 قطاعات تقود التحول البيئي في المملكة
-             </p>
-           </motion.div>
          </div>
       </div>
     </section>

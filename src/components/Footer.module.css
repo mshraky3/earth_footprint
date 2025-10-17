@@ -122,6 +122,14 @@
   font-size: 0.9rem;
 }
 
+.nationalNumber {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 0.95rem !important;
+  font-weight: 500;
+  margin-top: 0.5rem;
+  direction: rtl;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .footer {

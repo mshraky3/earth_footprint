@@ -3,8 +3,11 @@ import { motion } from 'framer-motion';
 import { Leaf, ArrowLeft, CheckCircle, Globe, Award } from 'lucide-react';
 import styles from './Hero.module.css';
 import logo from '../assets/logo_design_to_use.png';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Hero = () => {
+  const { t } = useLanguage();
+  
   const scrollToContact = useCallback(() => {
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
   }, []);
@@ -12,21 +15,21 @@ const Hero = () => {
   const stats = [
     { 
       number: "5+", 
-      label: "سنوات من الخبرة", 
+      label: t('hero.stats.experience'), 
       icon: <Award size={22} />,
       color: "#2d5a27",
       delay: 1.0
     },
     { 
       number: "250+", 
-      label: "مشروع بيئي ناجح", 
+      label: t('hero.stats.projects'), 
       icon: <CheckCircle size={22} />,
       color: "#0369a1",
       delay: 1.1
     },
     { 
       number: "9", 
-      label: "مناطق نخدمها", 
+      label: t('hero.stats.regions'), 
       icon: <Globe size={22} />,
       color: "#0ea5e9",
       delay: 1.2
@@ -34,30 +37,17 @@ const Hero = () => {
   ];
 
   return (
-    <section className={styles.hero}>
-      {/* Animated Background */}
+    <section className={styles.hero} id="home" role="banner" aria-label="الصفحة الرئيسية">
+      {/* Optimized Background */}
       <div className={styles.heroBackground}>
         <div className={styles.gradientWaves}>
           <motion.div 
             className={`${styles.wave} ${styles.wave1}`}
             animate={{ 
-              rotate: [0, 360],
-              scale: [1, 1.1, 1]
+              rotate: [0, 360]
             }}
             transition={{ 
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-          />
-          <motion.div 
-            className={`${styles.wave} ${styles.wave2}`}
-            animate={{ 
-              rotate: [360, 0],
-              scale: [1.1, 1, 1.1]
-            }}
-            transition={{ 
-              duration: 25,
+              duration: 30,
               repeat: Infinity,
               ease: "linear"
             }}
@@ -80,7 +70,7 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.4 }}
           >
             <Leaf size={18} />
-            <span>الاستشارات البيئية المتكاملة</span>
+            <span>{t('hero.badge')}</span>
           </motion.div>
 
           <motion.h1 
@@ -88,6 +78,7 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
+            itemProp="name"
           >
             <motion.span 
               className={`${styles.titleWord} ${styles.brandNameText}`}
@@ -95,7 +86,7 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-               بصمة الأرض
+              {t('hero.brandName')}
             </motion.span>
             <motion.span 
               className={`${styles.titleWord} ${styles.gradientText} ${styles.environmentalText}`}
@@ -111,7 +102,7 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
             >
-              شريكك البيئي الأول لجميع القطاعات
+              {t('hero.subtitle')}
             </motion.span>
           </motion.h1>
 
@@ -120,8 +111,9 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.8 }}
+            itemProp="description"
           >
-            حلول واستشارات بيئية متكاملة لتمكين جميع المنشآت والقطاعات من النمو بوعي ومسؤولية
+            {t('hero.description')}
           </motion.p>
 
           <motion.div 
@@ -135,7 +127,7 @@ const Hero = () => {
                 className={`${styles.btnPrimary} ${styles.btnCta}`}
                 onClick={scrollToContact}
               >
-                <span>تواصل معنا</span>
+                <span>{t('hero.cta')}</span>
                 <ArrowLeft size={20} />
               </button>
             </div>

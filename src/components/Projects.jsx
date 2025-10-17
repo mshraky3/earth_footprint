@@ -3,8 +3,11 @@ import { motion } from 'framer-motion';
 import { CheckCircle } from 'lucide-react';
 import styles from './Projects.module.css';
 import logo from '../assets/logo_design_to_use.png';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Projects = () => {
+  const { t } = useLanguage();
+  
   const scaleIn = useMemo(() => ({
     hidden: { opacity: 0, scale: 0.8, rotate: -3 },
     visible: { 
@@ -70,27 +73,27 @@ const Projects = () => {
 
   const projects = [
     {
-      title: "الخبرة الميدانية المتخصصة",
-      company: "فريق عمل مؤهل ومتمرس",
-      description: "نتميز بخبرة عملية واسعة في التعامل مع مختلف القطاعات والأنشطة وتقديم حلول واقعية وفعّالة.",
-      results: ["فريق متخصص", "خبرة ميدانية", "حلول مبتكرة"],
-      category: "الخبرة",
+      title: t('projects.experience.title'),
+      company: t('projects.experience.company'),
+      description: t('projects.experience.description'),
+      results: t('projects.experience.results'),
+      category: t('projects.experience.category'),
       year: ""
     },
     {
-      title: "دعم التنمية المستدامة",
-      company: "رؤية المملكة 2030",
-      description: "نساهم في تحقيق أهداف التنمية المستدامة ودعم رؤية المملكة 2030 من خلال حلول بيئية متكاملة.",
-      results: ["رؤية 2030", "التنمية المستدامة", "الأداء البيئي"],
-      category: "الرؤية",
+      title: t('projects.vision.title'),
+      company: t('projects.vision.company'),
+      description: t('projects.vision.description'),
+      results: t('projects.vision.results'),
+      category: t('projects.vision.category'),
       year: ""
     },
     {
-      title: "تغطية شاملة للمملكة",
-      company: "من القصيم لكل المناطق",
-      description: "مقرنا في القصيم ونقدم خدماتنا لكافة مناطق المملكة من خلال شبكة من الشراكات والتعاون.",
-      results: ["تغطية واسعة", "شراكات قوية", "خدمة متميزة"],
-      category: "التغطية",
+      title: t('projects.coverage.title'),
+      company: t('projects.coverage.company'),
+      description: t('projects.coverage.description'),
+      results: t('projects.coverage.results'),
+      category: t('projects.coverage.category'),
       year: ""
     }
   ];
@@ -105,9 +108,9 @@ const Projects = () => {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          <h2 className={styles.sectionTitle}>لماذا تختار بصمة الأرض؟</h2>
+          <h2 className={styles.sectionTitle}>{t('projects.title')}</h2>
           <p className={styles.sectionSubtitle}>
-            نتميز بخبرة ميدانية متخصصة وفريق عمل مؤهل يقدم حلولًا مبتكرة تدعم أهداف التنمية المستدامة
+            {t('projects.subtitle')}
           </p>
         </motion.div>
 

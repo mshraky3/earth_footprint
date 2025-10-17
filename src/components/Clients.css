@@ -67,24 +67,49 @@
   animation: slideIn 1s ease-out 0.3s both;
 }
 
-/* Responsive Grid Layout */
-.clients-grid {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 1.5rem;
-  align-items: center;
-  justify-items: center;
-  animation: fadeInUp 0.8s ease-out 0.2s both;
+/* Track Layout */
+.clients-track {
   width: 100%;
-  max-width: 1400px;
+  overflow: hidden;
+  position: relative;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+  max-width: 1200px;
   margin: 0 auto;
+}
+
+.clients-track-inner {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Sliding animation for the track */
+.clients-track-inner.sliding {
+  animation: trackSlide 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes trackSlide {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-30px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 /* Individual Logo Wrapper */
 .client-logo-wrapper {
   position: relative;
-  width: 100%;
-  max-width: 160px;
+  flex-shrink: 0;
+  width: 160px;
   height: 100px;
   display: flex;
   align-items: center;
@@ -92,29 +117,39 @@
   background: white;
   border-radius: 8px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
   cursor: pointer;
+  transform: translateZ(0);
+  will-change: transform, opacity;
 }
 
-.client-logo-wrapper::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-  transition: left 0.5s ease;
+/* Slow sliding animation for individual logos */
+.client-logo-wrapper.logo-sliding {
+  animation: logoSlide 1.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.client-logo-wrapper:hover::before {
-  left: 100%;
-}
-
-.client-logo-wrapper:hover {
-  transform: translateY(-8px) scale(1.05);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+@keyframes logoSlide {
+  0% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: translateX(-20px) scale(0.98);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateX(-40px) scale(0.95);
+    opacity: 0.6;
+  }
+  75% {
+    transform: translateX(-20px) scale(0.98);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
 }
 
 /* Logo Styling */
@@ -122,14 +157,22 @@
   max-width: 90%;
   max-height: 60px;
   object-fit: contain;
-  filter: grayscale(100%) opacity(0.7);
-  transition: all 0.3s ease;
-  animation: logoFadeIn 0.6s ease-out;
+  filter: opacity(0.8);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: translateZ(0);
+  will-change: transform, filter;
 }
 
 .client-logo-wrapper:hover .client-logo {
-  filter: grayscale(0%) opacity(1);
+  filter: opacity(1);
   transform: scale(1.1);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.client-logo-wrapper:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* Animations */
@@ -153,39 +196,15 @@
   }
 }
 
-@keyframes logoFadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 0.7;
-    transform: scale(1);
-  }
-}
-
-/* Staggered animation for logos */
-.client-logo-wrapper:nth-child(1) { animation-delay: 0.1s; }
-.client-logo-wrapper:nth-child(2) { animation-delay: 0.2s; }
-.client-logo-wrapper:nth-child(3) { animation-delay: 0.3s; }
-.client-logo-wrapper:nth-child(4) { animation-delay: 0.4s; }
-.client-logo-wrapper:nth-child(5) { animation-delay: 0.5s; }
-.client-logo-wrapper:nth-child(6) { animation-delay: 0.6s; }
-.client-logo-wrapper:nth-child(7) { animation-delay: 0.7s; }
-.client-logo-wrapper:nth-child(8) { animation-delay: 0.8s; }
-
 /* Responsive Design */
 @media (max-width: 1200px) {
-  .clients-grid {
-    grid-template-columns: repeat(8, 1fr);
-    gap: 1rem;
+  .clients-track {
+    max-width: calc(6 * (140px + 24px));
   }
-  
   .client-logo-wrapper {
-    max-width: 140px;
+    width: 140px;
     height: 90px;
   }
-  
   .client-logo {
     max-height: 55px;
   }
@@ -195,22 +214,20 @@
   .clients-section {
     padding: 3rem 1rem;
   }
-  
   .clients-title {
     font-size: 2rem;
     margin-bottom: 2rem;
   }
-  
-  .clients-grid {
-    grid-template-columns: repeat(8, 1fr);
-    gap: 0.8rem;
+  .clients-track {
+    max-width: calc(4 * (120px + 16px));
   }
-  
+  .clients-track-inner {
+    gap: 1rem;
+  }
   .client-logo-wrapper {
-    max-width: 120px;
+    width: 120px;
     height: 80px;
   }
-  
   .client-logo {
     max-height: 50px;
   }
@@ -220,38 +237,36 @@
   .clients-section {
     padding: 2rem 1rem;
   }
-  
   .clients-title {
     font-size: 1.8rem;
   }
-  
-  .clients-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.5rem;
+  .clients-track {
+    max-width: calc(3 * (100px + 12px));
   }
-  
+  .clients-track-inner {
+    gap: 0.8rem;
+  }
   .client-logo-wrapper {
-    max-width: 100px;
+    width: 100px;
     height: 70px;
   }
-  
   .client-logo {
     max-height: 40px;
   }
 }
 
 @media (max-width: 360px) {
-  .clients-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .clients-track {
+    max-width: calc(2 * (90px + 10px));
+  }
+  .clients-track-inner {
     gap: 0.5rem;
   }
-  
   .client-logo-wrapper {
-    max-width: 120px;
-    height: 80px;
+    width: 90px;
+    height: 60px;
   }
-  
   .client-logo {
-    max-height: 50px;
+    max-height: 35px;
   }
 }

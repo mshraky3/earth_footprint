@@ -881,3 +881,18 @@
   }
 }
 
+/* Contact Form Section */
+.contactFormSection {
+  display: flex;
+  justify-content: center;
+  margin: 3rem 0;
+  padding: 0 1rem;
+}
+
+@media (max-width: 768px) {
+  .contactFormSection {
+    margin: 2rem 0;
+    padding: 0 0.5rem;
+  }
+}
+
