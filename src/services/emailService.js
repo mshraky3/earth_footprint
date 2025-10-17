@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://earth-footprint-backend.vercel.app' 
+  ? 'https://apiearthfootprint.vercel.app' 
   : 'http://localhost:5000';
 
 const api = axios.create({
