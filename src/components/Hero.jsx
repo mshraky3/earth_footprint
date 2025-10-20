@@ -14,14 +14,14 @@ const Hero = () => {
 
   const stats = [
     { 
-      number: "5+", 
+      number: "20+", 
       label: t('hero.stats.experience'), 
       icon: <Award size={22} />,
       color: "#2d5a27",
       delay: 1.0
     },
     { 
-      number: "250+", 
+      number: "400+", 
       label: t('hero.stats.projects'), 
       icon: <CheckCircle size={22} />,
       color: "#0369a1",

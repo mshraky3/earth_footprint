@@ -11,6 +11,8 @@ const ContactForm = () => {
     name: '',
     email: '',
     phone: '',
+    jobTitle: '',
+    officeName: '',
     service: '',
     message: ''
   });
@@ -36,7 +38,7 @@ const ContactForm = () => {
       });
       
       setStatus('success');
-      setFormData({ name: '', email: '', phone: '', service: '', message: '' });
+      setFormData({ name: '', email: '', phone: '', jobTitle: '', officeName: '', service: '', message: '' });
     } catch (error) {
       setStatus('error');
       console.error('Form submission error:', error);
@@ -101,6 +103,38 @@ const ContactForm = () => {
             onChange={handleChange}
             className={styles.input}
             placeholder={t('contactForm.phonePlaceholder')}
+          />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="jobTitle" className={styles.label}>
+            {t('contactForm.jobTitle')} *
+          </label>
+          <input
+            type="text"
+            id="jobTitle"
+            name="jobTitle"
+            value={formData.jobTitle}
+            onChange={handleChange}
+            required
+            className={styles.input}
+            placeholder={t('contactForm.jobTitlePlaceholder')}
+          />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="officeName" className={styles.label}>
+            {t('contactForm.officeName')} *
+          </label>
+          <input
+            type="text"
+            id="officeName"
+            name="officeName"
+            value={formData.officeName}
+            onChange={handleChange}
+            required
+            className={styles.input}
+            placeholder={t('contactForm.officeNamePlaceholder')}
           />
         </div>
 

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Award, CheckCircle, Globe, Users, TrendingUp, Leaf, Building2, Zap } from 'lucide-react';
+import { Award, CheckCircle, Globe, Users, TrendingUp, Leaf, Building2, Zap, Trash2 } from 'lucide-react';
 import styles from './Numbers.module.css';
 import logo from '../assets/logo_design_to_use.png';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -34,13 +34,13 @@ const Numbers = () => {
   const stats = [
     {
       icon: Award,
-      number: "5+",
+      number: "20+",
       label: t('numbers.stats.experience'),
       description: t('numbers.stats.experienceDesc')
     },
     {
       icon: CheckCircle,
-      number: "250+",
+      number: "400+",
       label: t('numbers.stats.projects'),
       description: t('numbers.stats.projectsDesc')
     },
@@ -52,7 +52,7 @@ const Numbers = () => {
     },
     {
       icon: Building2,
-      number: "8+",
+      number: "9+",
       label: t('numbers.stats.sectors'),
       description: t('numbers.stats.sectorsDesc')
     }
@@ -66,7 +66,8 @@ const Numbers = () => {
     { icon: Globe, name: t('numbers.sectors.water') },
     { icon: Building2, name: t('numbers.sectors.realEstate') },
     { icon: Leaf, name: t('numbers.sectors.agriculture') },
-    { icon: Zap, name: t('numbers.sectors.electronics') }
+    { icon: Zap, name: t('numbers.sectors.electronics') },
+    { icon: Trash2, name: t('numbers.sectors.wasteManagement') }
   ];
 
   return (

@@ -82,11 +82,11 @@ const translations = {
     // Numbers
     'numbers.title': 'بصمة الارض في أرقام',
     'numbers.impactTitle': 'صنعنا الأثر.. ونمضي لنضاعفه',
-    'numbers.impactText': 'أكثر من 8 قطاعات وثقت بخبراتنا في تقديم حلول بيئية مبتكرة ومستدامة.',
+    'numbers.impactText': 'أكثر من 9 قطاعات وثقت بخبراتنا في تقديم حلول بيئية مبتكرة ومستدامة.',
     
     // About
     'about.title': 'من نحن - بصمة الأرض للاستشارات البيئية',
-    'about.description': 'نحن مكتب بصمة الأرض للاستشارات البيئية، شريكك البيئي الأول لجميع القطاعات في المملكة العربية السعودية. نقدم حلول واستشارات بيئية متكاملة تمكّن جميع المنشآت من النمو بوعي ومسؤولية. خبرة 5+ سنوات في التصاريح البيئية، التقارير، التقييمات، والتدقيق البيئي',
+    'about.description': 'نحن مكتب بصمة الأرض للاستشارات البيئية، شريكك البيئي الأول لجميع القطاعات في المملكة العربية السعودية. نقدم حلول واستشارات بيئية متكاملة تمكّن جميع المنشآت من النمو بوعي ومسؤولية. خبرة 20+ سنة في التصاريح البيئية، التقارير، التقييمات، والتدقيق البيئي',
     
     // Contact
     'contact.title': 'تواصل معنا',
@@ -110,11 +110,11 @@ const translations = {
     'numbers.stats.regions': 'مناطق خدمة',
     'numbers.stats.regionsDesc': 'خدماتنا وصلت إلى 9 مناطق.. وجاهزون لخدمتك أينما كنت في المملكة',
     'numbers.stats.sectors': 'قطاعات متخصصة',
-    'numbers.stats.sectorsDesc': 'أكثر من 8 قطاعات وثقت بخبراتنا في تقديم حلول بيئية مبتكرة ومستدامة',
+    'numbers.stats.sectorsDesc': 'أكثر من 9 قطاعات وثقت بخبراتنا في تقديم حلول بيئية مبتكرة ومستدامة',
     
     // Numbers - Sectors
     'numbers.sectors.title': 'قطاعات متخصصة',
-    'numbers.sectors.subtitle': '— صنعنا الأثر في أكثر من 8 قطاعات تقود التحول البيئي في المملكة',
+    'numbers.sectors.subtitle': '— صنعنا الأثر في أكثر من 9 قطاعات تقود التحول البيئي في المملكة',
     'numbers.sectors.industry': 'الصناعة',
     'numbers.sectors.food': 'الأغذية',
     'numbers.sectors.advertising': 'الإعلاني',
@@ -123,6 +123,7 @@ const translations = {
     'numbers.sectors.realEstate': 'التطوير العقاري',
     'numbers.sectors.agriculture': 'الزراعة',
     'numbers.sectors.electronics': 'الإلكترونيات',
+    'numbers.sectors.wasteManagement': 'إدارة النفايات',
     
     // Services
     'services.permits.title': 'التصاريح البيئية',
@@ -135,7 +136,7 @@ const translations = {
     'services.reports.desc': 'إعداد الدراسات والتقارير البيئية الدورية الشاملة والمتخصصة.',
     'services.reports.features': ['دراسات بيئية', 'تقارير دورية', 'تقارير متخصصة'],
     'services.reports.detailedTitle': 'بطاقة خدمة التقارير البيئية الدورية',
-    'services.reports.detailedAbout': 'تُعد خدمة إعداد التقارير البيئية الدورية من الخدمات الأساسية للمنشآت ذات التصنيف البيئي الثاني والثالث، حيث تُلزم هذه المنشآت برفع تقارير دورية توضح مدى التزامها بالاشتراطات والمعايير البيئية المعتمدة من المركز الوطني للرقابة على الالتزام البيئي. يتم إعداد التقارير من قبل مكاتب استشارية معتمدة وتشمل نتائج القياسات البيئية، وتحليل الأداء البيئي للمنشأة، وتقديم توصيات فنية تهدف إلى تحسين كفاءة التشغيل وتقليل التأثيرات البيئية وضمان استدامة النشاط.',
+    'services.reports.detailedAbout': 'تُعد خدمة إعداد التقارير البيئية الدورية من الخدمات الأساسية للمنشآت، حيث تُلزم هذه المنشآت برفع تقارير دورية توضح مدى التزامها بالاشتراطات والمعايير البيئية المعتمدة من المركز الوطني للرقابة على الالتزام البيئي. يتم إعداد التقارير من قبل مكاتب استشارية معتمدة وتشمل نتائج القياسات البيئية، وتحليل الأداء البيئي للمنشأة، وتقديم توصيات فنية تهدف إلى تحسين كفاءة التشغيل وتقليل التأثيرات البيئية وضمان استدامة النشاط.',
     
     'services.assessment.title': 'تقييم الأثر البيئي',
     'services.assessment.desc': 'تقييم شامل للآثار البيئية المحتملة للمشاريع والأنشطة في جميع القطاعات.',
@@ -147,7 +148,7 @@ const translations = {
     'services.audit.desc': 'خدمات تدقيق بيئي متكاملة لضمان الامتثال المستمر للمعايير البيئية.',
     'services.audit.features': ['التدقيق الداخلي', 'مراجعة الامتثال', 'التحسين المستمر'],
     'services.audit.detailedTitle': 'بطاقة خدمة التدقيق البيئي',
-    'services.audit.detailedAbout': 'تُعد خدمة التدقيق البيئي خدمة تطويرية واستباقية تهدف إلى رفع كفاءة الأداء البيئي للمنشآت وضمان الامتثال المستمر للأنظمة والمعايير المعتمدة. يتم من خلالها تنفيذ مراجعات داخلية دقيقة لتقييم مستوى الالتزام البيئي، مع رصد الفرص التحسينية في العمليات والإجراءات التشغيلية. تركّز الخدمة على تحسين الأداء وتقليل المخاطر البيئية، بما يعزز استدامة النشاط ويرفع من كفاءة استخدام الموارد ويعكس التزام المنشأة بالمسؤولية البيئية.',
+    'services.audit.detailedAbout': 'دراسة تشمل نتائج فحص موضوعي ومنظم ودوري وموثّق للعمليات التشغيلية لمنشأة معينة، تُعدّ بعد إنشاء أو خلال تشغيل المنشأة؛ من أجل التحقق من استيفائها للاشتراطات والضوابط والمقاييس والمعايير البيئية، وتحسين الأداء البيئي للمنشأة، والتزامها بالأحكام الواردة في النظام، واللوائح، والتراخيص، والتصاريح ذات العلاقة.',
     
     'services.management.title': 'خطط الإدارة البيئية',
     'services.management.desc': 'تطوير خطط إدارة بيئية شاملة ومتكاملة لضمان الاستدامة البيئية.',
@@ -159,7 +160,7 @@ const translations = {
     'services.rehabilitation.desc': 'تطوير برامج إعادة التأهيل البيئي للمواقع المتضررة والمتدهورة.',
     'services.rehabilitation.features': ['إعادة التأهيل', 'استصلاح المواقع', 'التحسين البيئي'],
     'services.rehabilitation.detailedTitle': 'بطاقة خدمة إعادة التأهيل البيئي',
-    'services.rehabilitation.detailedAbout': 'تُقدّم خدمة خطط إعادة التأهيل البيئي للمواقع المتضررة أو الملوثة، بهدف استعادة توازنها البيئي وتحسين جودتها بشكل مستدام. تشمل الخدمة تطوير برامج متكاملة لإعادة التأهيل والاستصلاح البيئي، تتضمن تقييم الحالة الحالية، وضع استراتيجيات المعالجة، ومتابعة تنفيذ الحلول لضمان استعادة الموارد الطبيعية والوظائف البيئية للموقع. وتهدف الخدمة إلى تحسين الأداء البيئي للمواقع المتدهورة وتعزيز استدامتها بما يتوافق مع المعايير واللوائح البيئية المعتمدة.',
+    'services.rehabilitation.detailedAbout': 'تُقدّم خدمة خطط إعادة التأهيل البيئي للمواقع الملوثة والمتدهورة، بهدف استعادة توازنها البيئي وتحسين جودتها بشكل مستدام. تشمل الخدمة تطوير برامج متكاملة لإعادة التأهيل والاستصلاح البيئي، تتضمن تقييم الحالة الحالية، وضع استراتيجيات المعالجة، ومتابعة تنفيذ الحلول لضمان استعادة الموارد الطبيعية والوظائف البيئية للموقع. وتهدف الخدمة إلى تحسين الأداء البيئي للمواقع المتدهورة وتعزيز استدامتها بما يتوافق مع المعايير واللوائح البيئية المعتمدة.',
     
     'services.consulting.title': 'الاستشارات الفنية المتخصصة',
     'services.consulting.desc': 'استشارات فنية متخصصة في إدارة الموارد البيئية، النفايات، التلوث، الطاقة المستدامة، والتخطيط الحضري لجميع القطاعات.',
@@ -205,6 +206,10 @@ const translations = {
     'contactForm.emailPlaceholder': 'أدخل بريدك الإلكتروني',
     'contactForm.phone': 'رقم الهاتف',
     'contactForm.phonePlaceholder': 'أدخل رقم هاتفك (اختياري)',
+    'contactForm.jobTitle': 'المسمى الوظيفي',
+    'contactForm.jobTitlePlaceholder': 'أدخل المسمى الوظيفي',
+    'contactForm.officeName': 'اسم المكتب',
+    'contactForm.officeNamePlaceholder': 'أدخل اسم المكتب',
     'contactForm.service': 'الخدمة المطلوبة',
     'contactForm.servicePlaceholder': 'اختر الخدمة التي تهمك',
     'contactForm.otherService': 'خدمة أخرى',
@@ -249,11 +254,11 @@ const translations = {
     // Numbers
     'numbers.title': 'Earth Footprint in Numbers',
     'numbers.impactTitle': 'We Made an Impact.. And We Continue to Multiply It',
-    'numbers.impactText': 'More than 8 sectors have trusted our expertise in providing innovative and sustainable environmental solutions.',
+    'numbers.impactText': 'More than 9 sectors have trusted our expertise in providing innovative and sustainable environmental solutions.',
     
     // About
     'about.title': 'About Us',
-    'about.description': 'We are Earth Footprint Environmental Consulting Office, your first environmental partner for all sectors in the Kingdom. We provide comprehensive environmental solutions and consulting that enable all facilities to grow with awareness and responsibility.',
+    'about.description': 'We are Earth Footprint Environmental Consulting Office, your first environmental partner for all sectors in the Kingdom. We provide comprehensive environmental solutions and consulting that enable all facilities to grow with awareness and responsibility. 20+ years of experience in environmental permits, reports, assessments, and environmental auditing.',
     
     // Contact
     'contact.title': 'Contact Us',
@@ -277,11 +282,11 @@ const translations = {
     'numbers.stats.regions': 'Service Regions',
     'numbers.stats.regionsDesc': 'Our services have reached 9 regions.. and we are ready to serve you wherever you are in the Kingdom',
     'numbers.stats.sectors': 'Specialized Sectors',
-    'numbers.stats.sectorsDesc': 'More than 8 sectors have trusted our expertise in providing innovative and sustainable environmental solutions',
+    'numbers.stats.sectorsDesc': 'More than 9 sectors have trusted our expertise in providing innovative and sustainable environmental solutions',
     
     // Numbers - Sectors
     'numbers.sectors.title': 'Specialized Sectors',
-    'numbers.sectors.subtitle': '— We made an impact in more than 8 sectors leading environmental transformation in the Kingdom',
+    'numbers.sectors.subtitle': '— We made an impact in more than 9 sectors leading environmental transformation in the Kingdom',
     'numbers.sectors.industry': 'Industry',
     'numbers.sectors.food': 'Food',
     'numbers.sectors.advertising': 'Advertising',
@@ -290,6 +295,7 @@ const translations = {
     'numbers.sectors.realEstate': 'Real Estate Development',
     'numbers.sectors.agriculture': 'Agriculture',
     'numbers.sectors.electronics': 'Electronics',
+    'numbers.sectors.wasteManagement': 'Waste Management',
     
     // Services
     'services.permits.title': 'Environmental Permits',
@@ -372,6 +378,10 @@ const translations = {
     'contactForm.emailPlaceholder': 'Enter your email address',
     'contactForm.phone': 'Phone Number',
     'contactForm.phonePlaceholder': 'Enter your phone number (optional)',
+    'contactForm.jobTitle': 'Job Title',
+    'contactForm.jobTitlePlaceholder': 'Enter your job title',
+    'contactForm.officeName': 'Office Name',
+    'contactForm.officeNamePlaceholder': 'Enter your office name',
     'contactForm.service': 'Service Required',
     'contactForm.servicePlaceholder': 'Select the service you need',
     'contactForm.otherService': 'Other Service',
