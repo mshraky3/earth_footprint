@@ -8,6 +8,7 @@
   --bg-white: #ffffff;
 }
 
+/* Performance optimizations */
 * {
   margin: 0;
   padding: 0;
@@ -15,6 +16,28 @@
   font-family: 'Cairo', 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* GPU acceleration for better performance */
+.hero,
+.contact,
+.contactForm,
+.communicationBtn,
+.submitButton {
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 html {
@@ -69,6 +92,10 @@ body {
   justify-content: center;
   position: relative;
   padding-top: 80px;
+  /* Performance optimizations */
+  contain: layout style paint;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 @media (max-width: 768px) {

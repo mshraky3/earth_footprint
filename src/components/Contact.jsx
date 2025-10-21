@@ -7,14 +7,14 @@ import { useLanguage } from '../contexts/LanguageContext';
 import ContactForm from './ContactForm';
 
 const Contact = () => {
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState({ number: '', show: false });
   const { t } = useLanguage();
 
-  const handleCopyNumber = async () => {
+  const handleCopyNumber = async (number) => {
     try {
-      await navigator.clipboard.writeText('0533778433');
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000); // Hide notification after 2 seconds
+      await navigator.clipboard.writeText(number);
+      setCopied({ number, show: true });
+      setTimeout(() => setCopied({ number: '', show: false }), 2000); // Hide notification after 2 seconds
     } catch (err) {
       console.error('Failed to copy number: ', err);
     }
@@ -29,9 +29,9 @@ const Contact = () => {
           initial={{ opacity: 0, scale: 0.5 }}
           whileInView={{ opacity: 0.08, scale: 1 }}
           transition={{ 
-            duration: 1.5, 
+            duration: 1.2, 
             delay: 0.2,
-            ease: [0.25, 0.1, 0.25, 1]
+            ease: [0.4, 0, 0.2, 1]
           }}
           viewport={{ once: true }}
         >
@@ -43,7 +43,7 @@ const Contact = () => {
           className={styles.contactHeaderMinimal}
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
           viewport={{ once: true }}
         >
           <h2>{t('contact.title')}</h2>
@@ -54,7 +54,7 @@ const Contact = () => {
           className={styles.contactFormSection}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          transition={{ duration: 0.5, delay: 0.1, ease: [0.4, 0, 0.2, 1] }}
         >
           <ContactForm />
         </motion.div>
@@ -64,7 +64,7 @@ const Contact = () => {
           className={styles.contactGridLayout}
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.1 }}
+          transition={{ duration: 0.5, delay: 0.1, ease: [0.4, 0, 0.2, 1] }}
           viewport={{ once: true }}
         >
           {/* Left Side - Contact Info */}
@@ -79,12 +79,12 @@ const Contact = () => {
 
             {/* Communication Windows */}
             <div className={styles.communicationWindows}>
-              {/* WhatsApp Window */}
+              {/* WhatsApp Window - First Number */}
               <motion.div
                 className={styles.communicationWindow}
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3, delay: 0.15 }}
+                transition={{ duration: 0.4, delay: 0.15, ease: [0.4, 0, 0.2, 1] }}
                 viewport={{ once: true }}
               >
                 <motion.a
@@ -94,6 +94,7 @@ const Contact = () => {
                   className={styles.communicationBtn}
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
                 >
                   <MessageCircle size={24} />
                   <div className={styles.communicationContent}>
@@ -107,16 +108,71 @@ const Contact = () => {
                 </motion.a>
               </motion.div>
 
-              {/* Phone Window */}
+              {/* Phone Window - First Number */}
               <motion.div
                 className={styles.communicationWindow}
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3, delay: 0.2 }}
+                transition={{ duration: 0.4, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
                 viewport={{ once: true }}
               >
                 <motion.button
-                  onClick={handleCopyNumber}
+                  onClick={() => handleCopyNumber('0597007805')}
+                  className={styles.communicationBtn}
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                >
+                  <Phone size={24} />
+                  <div className={styles.communicationContent}>
+                    <span className={styles.communicationTitle}>{t('contact.phone.title')}</span>
+                    <span className={styles.communicationSubtitle}>
+                      {t('contact.phone.subtitle')}
+                    </span>
+                    <span className={styles.communicationNumber}>0597007805</span>
+                  </div>
+                  {copied.show && copied.number === '0597007805' ? <Check size={20} /> : <Copy size={20} />}
+                </motion.button>
+              </motion.div>
+
+              {/* WhatsApp Window - Second Number */}
+              <motion.div
+                className={styles.communicationWindow}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, delay: 0.25 }}
+                viewport={{ once: true }}
+              >
+                <motion.a
+                  href="https://wa.link/k3fflj"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.communicationBtn}
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <MessageCircle size={24} />
+                  <div className={styles.communicationContent}>
+                    <span className={styles.communicationTitle}>{t('contact.whatsapp.title')}</span>
+                    <span className={styles.communicationSubtitle}>
+                      {t('contact.whatsapp.subtitle')}
+                    </span>
+                    <span className={styles.communicationNumber}>0533778433</span>
+                  </div>
+                  <ArrowLeft size={20} />
+                </motion.a>
+              </motion.div>
+
+              {/* Phone Window - Second Number */}
+              <motion.div
+                className={styles.communicationWindow}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, delay: 0.3 }}
+                viewport={{ once: true }}
+              >
+                <motion.button
+                  onClick={() => handleCopyNumber('0533778433')}
                   className={styles.communicationBtn}
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
@@ -129,7 +185,7 @@ const Contact = () => {
                     </span>
                     <span className={styles.communicationNumber}>0533778433</span>
                   </div>
-                  {copied ? <Check size={20} /> : <Copy size={20} />}
+                  {copied.show && copied.number === '0533778433' ? <Check size={20} /> : <Copy size={20} />}
                 </motion.button>
               </motion.div>
             </div>
@@ -158,7 +214,7 @@ const Contact = () => {
       </div>
 
       {/* Copy Notification */}
-      {copied && (
+      {copied.show && (
         <motion.div
           className={styles.copyNotification}
           initial={{ opacity: 0, y: 20, scale: 0.9 }}

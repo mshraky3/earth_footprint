@@ -12,7 +12,7 @@ const Hero = () => {
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
-  const stats = [
+  const stats = useMemo(() => [
     { 
       number: "20+", 
       label: t('hero.stats.experience'), 
@@ -34,7 +34,7 @@ const Hero = () => {
       color: "#0ea5e9",
       delay: 1.2
     }
-  ];
+  ], [t]);
 
   return (
     <section className={styles.hero} id="home" role="banner" aria-label="الصفحة الرئيسية">
@@ -51,6 +51,7 @@ const Hero = () => {
               repeat: Infinity,
               ease: "linear"
             }}
+            style={{ willChange: 'transform' }}
           />
         </div>
       </div>
@@ -150,7 +151,7 @@ const Hero = () => {
               whileHover={{ 
                 y: -8,
                 scale: 1.03,
-                transition: { duration: 0.2 }
+                transition: { duration: 0.2, ease: "easeOut" }
               }}
             >
               <motion.div 
@@ -164,6 +165,7 @@ const Hero = () => {
                   ease: "easeInOut",
                   delay: index * 0.3
                 }}
+                style={{ willChange: 'transform' }}
               >
                 {stat.icon}
               </motion.div>
@@ -181,7 +183,10 @@ const Hero = () => {
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                style={{ background: `radial-gradient(circle, ${stat.color}40, transparent)` }}
+                style={{ 
+                  background: `radial-gradient(circle, ${stat.color}40, transparent)`,
+                  willChange: 'opacity'
+                }}
               />
             </motion.div>
           ))}

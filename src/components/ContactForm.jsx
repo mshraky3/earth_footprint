@@ -52,11 +52,8 @@ const ContactForm = () => {
       className={styles.contactForm}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
     >
-      <h3 className={styles.formTitle}>
-        {t('contactForm.title')}
-      </h3>
       
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.formGroup}>
@@ -184,6 +181,7 @@ const ContactForm = () => {
           className={`${styles.submitButton} ${isLoading ? styles.loading : ''}`}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
+          transition={{ type: "spring", stiffness: 400, damping: 25 }}
         >
           {isLoading ? (
             <>
@@ -203,7 +201,7 @@ const ContactForm = () => {
             className={styles.statusMessage}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
           >
             <CheckCircle size={20} />
             <span>{t('contactForm.successMessage')}</span>
@@ -215,7 +213,7 @@ const ContactForm = () => {
             className={`${styles.statusMessage} ${styles.error}`}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
           >
             <AlertCircle size={20} />
             <span>{t('contactForm.errorMessage')}</span>

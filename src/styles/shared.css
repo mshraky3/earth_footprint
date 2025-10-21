@@ -1,13 +1,5 @@
-/* Optimized CSS Variables - Reduced redundancy */
+/* Core CSS Variables - Only used ones */
 :root {
-  /* Core Colors - Optimized palette */
-  --primary: #2d5442;
-  --primary-dark: #1f3d30;
-  --primary-light: #3d6856;
-  --secondary: #6b8057;
-  --secondary-light: #8a9f74;
-  --secondary-dark: #556642;
-  
   /* Text Colors */
   --text-dark: #1e293b;
   --text-light: #ffffff;
@@ -17,10 +9,6 @@
   --bg-white: #ffffff;
   --bg-light: #f8faf8;
   --bg-cream: #fefffe;
-  
-  /* Optimized Gradients - Pre-computed */
-  --gradient-earth: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--secondary-light) 100%);
-  --gradient-overlay: linear-gradient(135deg, rgba(45, 84, 66, 0.92) 0%, rgba(107, 128, 87, 0.90) 100%);
 }
 
 /* Performance Optimizations */
@@ -36,10 +24,17 @@ section, .container {
   contain: layout style;
 }
 
-/* Optimize rendering */
+/* Additional performance optimizations */
+.hero, .nav {
+  contain: layout style paint;
+}
+
+/* Optimize image rendering */
 img {
   content-visibility: auto;
   contain-intrinsic-size: 300px;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 /* RTL/LTR Language Support */
@@ -110,10 +105,20 @@ img {
   content-visibility: auto;
 }
 
+/* Performance optimizations for animations */
+*,
+*::before,
+*::after {
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimize button and link interactions */
 button,
 a {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -157,4 +162,3 @@ a {
     padding: 0 16px;
   }
 }
-

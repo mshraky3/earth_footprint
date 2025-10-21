@@ -29,7 +29,7 @@ const App = () => {
   return (
     <LanguageProvider>
       <SEOHead />
-      <div className="app professional-theme">
+      <div className="app">
         <Navigation />
         <Hero />
         <Services />
