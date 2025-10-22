@@ -59,7 +59,7 @@ const Testimonials = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchReviews = useCallback(async () => {
+  const fetchReviews = useCallback(async (forceRefresh = false) => {
     try {
       setLoading(true);
       setError(null);
@@ -67,7 +67,8 @@ const Testimonials = () => {
       console.log('🔄 Fetching reviews from API...');
       
       // Try to fetch from backend API - always use the deployed backend URL
-      const apiUrl = 'https://apiearthfootprint.vercel.app/api/reviews';
+      const baseUrl = 'https://apiearthfootprint.vercel.app/api/reviews';
+      const apiUrl = forceRefresh ? `${baseUrl}/refresh` : baseUrl;
         
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -87,6 +88,10 @@ const Testimonials = () => {
         if (data.success && data.data && data.data.length > 0) {
           setTestimonials(data.data);
           console.log('✅ Live reviews loaded:', data.count, 'reviews');
+          console.log('🖼️ First review profile image:', data.data[0]?.profileImage);
+          if (data.refreshed) {
+            console.log('🔄 Reviews force refreshed!');
+          }
         } else {
           console.warn('⚠️ No reviews in API response, using static data');
           setTestimonials(staticTestimonials);
@@ -123,11 +128,19 @@ const Testimonials = () => {
           <p>نفتخر بثقة عملائنا ونلتزم بتقديم أفضل الخدمات</p>
           <div className={styles['header-controls']}>
             <button 
-              onClick={fetchReviews} 
+              onClick={() => fetchReviews()} 
               disabled={loading}
               className={styles['refresh-btn']}
             >
               {loading ? 'جاري التحديث...' : 'تحديث المراجعات'}
+            </button>
+            <button 
+              onClick={() => fetchReviews(true)} 
+              disabled={loading}
+              className={styles['refresh-btn']}
+              style={{ backgroundColor: '#ff6b35', marginTop: '10px' }}
+            >
+              {loading ? 'جاري التحديث...' : '🔄 تحديث قسري (مراجعات جديدة)'}
             </button>
             {error && (
               <span className={styles['error-message']}>
@@ -156,7 +169,9 @@ const Testimonials = () => {
                           className={styles['profile-image']}
                           loading="lazy"
                           decoding="async"
+                          onLoad={() => console.log('✅ Profile image loaded for:', testimonial.name)}
                           onError={(e) => {
+                            console.log('❌ Profile image failed to load for:', testimonial.name, testimonial.profileImage);
                             e.target.style.display = 'none';
                             e.target.nextSibling.style.display = 'flex';
                           }}
