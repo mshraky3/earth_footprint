@@ -8,6 +8,7 @@ import Clients from './components/Clients';
 import About from './components/About';
 import Numbers from './components/Numbers';
 import Contact from './components/Contact';
+import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
 import SEOHead from './components/SEOHead';
 import './styles/shared.css';
@@ -38,6 +39,7 @@ const App = () => {
         <Numbers />
         <Contact />
         <Clients />
+        <Testimonials />
         <Footer />
       </div>
     </LanguageProvider>
