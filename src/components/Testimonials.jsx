@@ -66,10 +66,8 @@ const Testimonials = () => {
       
       console.log('🔄 Fetching reviews from API...');
       
-      // Try to fetch from backend API - use live host URL
-      const apiUrl = process.env.NODE_ENV === 'production' 
-        ? '/api/reviews' 
-        : 'https://apiearthfootprint.vercel.app/api/reviews';
+      // Try to fetch from backend API - always use the deployed backend URL
+      const apiUrl = 'https://apiearthfootprint.vercel.app/api/reviews';
         
       const response = await fetch(apiUrl, {
         method: 'GET',
