@@ -54,6 +54,29 @@
   line-height: 1.6;
 }
 
+/* Source Indicator */
+.source-indicator {
+  margin: 12px 0;
+  text-align: center;
+}
+
+.google-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #4285f4, #34a853);
+  color: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(66, 133, 244, 0.3);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
 /* Header Controls */
 .header-controls {
   display: flex;
@@ -151,6 +174,49 @@
   overflow: hidden;
   backdrop-filter: blur(8px);
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 248, 0.9) 100%);
+}
+
+/* Clickable card styles */
+.testimonial-card[style*="cursor: pointer"] {
+  cursor: pointer;
+}
+
+.testimonial-card[style*="cursor: pointer"]:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  border-color: rgba(16, 185, 129, 0.4);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(248, 250, 248, 0.98) 100%);
+}
+
+/* Click indicator */
+.click-indicator {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.click-icon {
+  font-size: 14px;
+  color: #10b981;
+  transition: all 0.3s ease;
+}
+
+.testimonial-card[style*="cursor: pointer"]:hover .click-indicator {
+  background: rgba(16, 185, 129, 0.2);
+  transform: scale(1.1);
+}
+
+.testimonial-card[style*="cursor: pointer"]:hover .click-icon {
+  color: #059669;
+  transform: scale(1.1);
 }
 
 .testimonial-card::before {

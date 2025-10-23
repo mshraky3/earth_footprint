@@ -1,65 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styles from './Testimonials.module.css';
 
-// Fallback static testimonials
-const staticTestimonials = [
-  {
-    id: "review_0",
-    name: "Moamen Khafagy",
-    rating: 5,
-    review: "مكتب بصمة الأرض للإستشارات البيئية\nالسرعة و الدقة والتنفيذ هو محل اهتمامهم والتواصل معهم قمة  في الذوق و الإحترام و متابعة طلبات العميل لحظة بلحظة إلى أن يتم تسليم العميل التصاريح و التراخيص معتمدة .نتمنى لهم نفس من التميز و النجاح الدائم.            إن شاء الله",
-    profileImage: "https://lh3.googleusercontent.com/a/ACg8ocIpE3aKzhn_fBIV8f7H7gZCrB7blKCg7Aoi4vFue2o2ixptvQ=w36-h36-p-rp-mo-br100"
-  },
-  {
-    id: "review_1",
-    name: "Saeed Salah 1418",
-    rating: 5,
-    review: "مكتب بصمة الأرض للاستشارات البيئية من أميز المكاتب المتخصصة في المجال، ولمست فيهم الاحترافية والجدية. وأخص بالشكر المهندس فهد على تعامله الراقي وحرصه على تقديم أفضل ما عنده بكل إخلاص.واسكره علي سعة صدره وان شاء الله كل التعاملات القادمه معهم  انصح فيهم جدا",
-    profileImage: "https://lh3.googleusercontent.com/a/ACg8ocLc2WaGn0mkL4i_wPe525ltu7AtYmMtlsnQe39hmqHUbS6SKA=w36-h36-p-rp-mo-br100"
-  },
-  {
-    id: "review_2",
-    name: "عبدالله العنزي",
-    rating: 5,
-    review: "مكتب تصاريح بيئيه\nواستشارات\nشاب سعودي واقف على شغله الله يعطيه العافية\nيستحق الدعم من اصحاب الاعمال ..\n\nتم عمل تصريح في وقت قياسي ودقة في العمل",
-    profileImage: "https://lh3.googleusercontent.com/a/ACg8ocLvID-PivQ42DPKaiTdzA717fZtEvffx37bL66rbOXu5g5byg=w36-h36-p-rp-mo-ba3-br100"
-  },
-  {
-    id: "review_3",
-    name: "M6B",
-    rating: 5,
-    review: "شكر خاص لتعاملهم الراقي و خدمتهم السريعة\nو سرعة استجابتهم بالواتساب لين استخرجت التصاريح",
-    profileImage: "https://lh3.googleusercontent.com/a-/ALV-UjXIHRNyEK79lBa7FqdoBdEYRTBH9UqrrGyW5JScY1mIEopTFnM=w36-h36-p-rp-mo-ba2-br100"
-  },
-  {
-    id: "review_4",
-    name: "Dodge",
-    rating: 5,
-    review: "مكتب محترف وسريع ودقيق وتعامل أكثر من رائع .\nيستاهلون ألف نجمه",
-    profileImage: "https://lh3.googleusercontent.com/a/ACg8ocI7R2Cvss9ut4vOEyhWAIQ1UWbzbpgjhxpGVtiBqv1AOmor_w=w36-h36-p-rp-mo-br100"
-  },
-  {
-    id: "review_5",
-    name: "جاف الإعلانية خدمات التصميم والطباعة",
-    rating: 5,
-    review: "مكتب مميز وسريع بالاجراءات اصدر لنا تصريح بيئي ، والأخ فهد ما يقصر واضح وخدوم",
-    profileImage: "https://lh3.googleusercontent.com/a-/ALV-UjXK1dl7bmEx32NKSeEg3aOn3nmp3NI_VJtozkMlQT7Q57Qk7kQn=w36-h36-p-rp-mo-br100"
-  },
-  {
-    id: "review_6",
-    name: "Tarem Saleh",
-    rating: 5,
-    review: "سريع بالانجاز التصاريح",
-    profileImage: "https://lh3.googleusercontent.com/a/ACg8ocLE7Y3LhnwlOk2FxjrjLtV-g2esx1zrV3zEvbitlpZf_JfGtA=w36-h36-p-rp-mo-br100"
-  },
-  {
-    id: "review_7",
-    name: "Muhmod Alshraky",
-    rating: 5,
-    review: "والله يا مكتب بصمة الأرض للاستشارات البيئية، لقيت الجدية والاحترام من أول لحظة. وأخص بالشكر المهندس رائد، اللي كان تعامله فعلاً راقي ومحترم، وما يقدر ينكر إنه حريص كل الحرص يسوي الأمور بأفضل شكل، وبإخلاص كبير. ويا ليت كل الناس تتعامل هالطريقة ، خصوصًا سعة صدره وطيبة قلبه في كل المواقف. وإن شاء الله أي تعامل قادم معهم يكون أكيد، وأنا أضمنهم للجميع بدون تردد",
-    profileImage: "https://lh3.googleusercontent.com/a-/ALV-UjXs6IZkxvbRnqPbhvq_ZBarFG0Aaalz_VK9dGB1_JloNpmyMDA=w36-h36-p-rp-mo-br100"
-  }
-];
+// Empty fallback for testing (will show loading state if API fails)
+const staticTestimonials = [];
 
 const Testimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
@@ -71,9 +14,9 @@ const Testimonials = () => {
       setLoading(true);
       setError(null);
       
-      console.log('🔄 Fetching reviews from API...');
+      console.log('🔄 Fetching reviews from backend API...');
       
-      // Try to fetch from backend API - always use the deployed backend URL
+      // Try backend API first (production)
       const baseUrl = 'https://apiearthfootprint.vercel.app/api/reviews';
       const apiUrl = forceRefresh ? `${baseUrl}/refresh` : baseUrl;
         
@@ -82,7 +25,6 @@ const Testimonials = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        // Add timeout
         signal: AbortSignal.timeout(15000)
       });
 
@@ -94,8 +36,8 @@ const Testimonials = () => {
         
         if (data.success && data.data && data.data.length > 0) {
           setTestimonials(data.data);
-          console.log('✅ Live reviews loaded:', data.count, 'reviews');
-          console.log('🖼️ First review profile image:', data.data[0]?.profileImage);
+          console.log('✅ Backend reviews loaded:', data.count, 'reviews');
+          console.log('🖼️ Source:', data.source);
           if (data.refreshed) {
             console.log('🔄 Reviews force refreshed!');
           }
@@ -107,7 +49,7 @@ const Testimonials = () => {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
     } catch (error) {
-      console.warn('⚠️ Failed to fetch live reviews, using static data:', error.message);
+      console.warn('⚠️ Failed to fetch backend reviews, using static data:', error.message);
       setError(error.message);
       setTestimonials(staticTestimonials);
     } finally {
@@ -133,9 +75,16 @@ const Testimonials = () => {
         <div className={styles['testimonials-header']}>
           <h2>آراء عملائنا</h2>
           <p>نفتخر بثقة عملائنا ونلتزم بتقديم أفضل الخدمات</p>
+          {testimonials.length > 0 && testimonials[0]?.source && testimonials[0].source !== 'static' && (
+            <div className={styles['source-indicator']}>
+              <span className={styles['google-badge']}>
+                📍 {testimonials[0].source.includes('apify') ? 'مراجعات مباشرة من Google Maps' : 'مراجعات مباشرة من Google'}
+              </span>
+            </div>
+          )}
           <div className={styles['header-controls']}>
             <button 
-              onClick={() => fetchReviews()} 
+              onClick={() => fetchReviews(true)} 
               disabled={loading}
               className={styles['refresh-btn']}
             >
@@ -152,7 +101,20 @@ const Testimonials = () => {
         ) : (
           <div className={styles['testimonials-grid']}>
             {testimonials.map((testimonial) => (
-              <div key={testimonial.id} className={styles['testimonial-card']}>
+              <div 
+                key={testimonial.id} 
+                className={styles['testimonial-card']}
+                onClick={() => {
+                  if (testimonial.reviewUrl) {
+                    window.open(testimonial.reviewUrl, '_blank', 'noopener,noreferrer');
+                  }
+                }}
+                style={{ 
+                  cursor: testimonial.reviewUrl ? 'pointer' : 'default',
+                  transition: 'all 0.3s ease'
+                }}
+                title={testimonial.reviewUrl ? 'انقر لعرض المراجعة على Google Maps' : ''}
+              >
                 <div className={styles['testimonial-header']}>
                   <div className={styles['testimonial-info']}>
                     <div className={styles['testimonial-profile']}>
@@ -185,6 +147,11 @@ const Testimonials = () => {
                       </div>
                     </div>
                   </div>
+                  {testimonial.reviewUrl && (
+                    <div className={styles['click-indicator']}>
+                      <span className={styles['click-icon']}>🔗</span>
+                    </div>
+                  )}
                 </div>
                 
                 <div className={styles['testimonial-content']}>
