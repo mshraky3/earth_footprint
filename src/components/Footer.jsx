@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { motion } from 'framer-motion';
 import styles from './Footer.module.css';
-import logo from '../assets/logo_design_to_use.png';
+import logo from '../assets/logo_design_to_use.webp';
 import { scrollToSection } from '../utils/scrollUtils';
 import { useLanguage } from '../contexts/LanguageContext';
 

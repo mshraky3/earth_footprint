@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Leaf, Globe, Award } from 'lucide-react';
 import styles from './About.module.css';
-import logo from '../assets/logo_design_to_use.png';
+import logo from '../assets/logo_design_to_use.webp';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const About = () => {

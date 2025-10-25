@@ -2,7 +2,7 @@ import React, { useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Leaf, ArrowLeft, CheckCircle, Globe, Award } from 'lucide-react';
 import styles from './Hero.module.css';
-import logo from '../assets/logo_design_to_use.png';
+import logo from '../assets/logo_design_to_use.webp';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const Hero = () => {

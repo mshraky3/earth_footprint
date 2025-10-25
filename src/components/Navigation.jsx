@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Globe } from 'lucide-react';
 import styles from './Navigation.module.css';
-import logo from '../assets/logo_design_to_use.png';
+import logo from '../assets/logo_design_to_use.webp';
 import { scrollToSection } from '../utils/scrollUtils';
 import { useLanguage } from '../contexts/LanguageContext';
 

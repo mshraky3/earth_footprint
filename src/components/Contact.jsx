@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Globe, MessageCircle, ArrowLeft, Phone, Copy, Check } from 'lucide-react';
 import styles from './Contact.module.css';
-import logo from '../assets/logo_design_to_use.png';
+import logo from '../assets/logo_design_to_use.webp';
 import { useLanguage } from '../contexts/LanguageContext';
 import ContactForm from './ContactForm';
 

@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Award, CheckCircle, Globe, Leaf, Users, ChevronDown, ChevronUp } from 'lucide-react';
 import styles from './Services.module.css';
-import logo from '../assets/logo_design_to_use.png';
+import logo from '../assets/logo_design_to_use.webp';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const Services = () => {

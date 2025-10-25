@@ -14,7 +14,7 @@ import clientLogo7 from '../assets/clients/client-logo-7.jpg';
 import clientLogo8 from '../assets/clients/client-logo-8.jpg';
 
 // Import company logo
-import logo from '../assets/logo_design_to_use.png';
+import logo from '../assets/logo_design_to_use.webp';
 
 const Clients = () => {
   const [currentSlide, setCurrentSlide] = useState(0);

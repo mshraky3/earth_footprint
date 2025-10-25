@@ -2,7 +2,7 @@
 
 .contact {
   padding: 2.5rem 0 2rem !important;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(248, 250, 252, 0.01) 50%, rgba(240, 249, 255, 0.05) 100%), url('../assets/contact16-9.jpg');
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(248, 250, 252, 0.01) 50%, rgba(240, 249, 255, 0.05) 100%), url('../assets/contact16-9.webp');
   background-size: cover;
   background-position: center center;
   background-attachment: scroll;
@@ -573,7 +573,7 @@
 @media (max-width: 768px) {
   .contact {
     padding: 2rem 0 1.5rem !important;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(248, 250, 252, 0.08) 50%, rgba(240, 249, 255, 0.75) 100%), url('../assets/contact-9-16.jpg');
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(248, 250, 252, 0.08) 50%, rgba(240, 249, 255, 0.75) 100%), url('../assets/contact-9-16.webp');
     background-size: cover;
     background-position: center center;
     background-attachment: scroll;

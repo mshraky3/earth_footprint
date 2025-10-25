@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Award, CheckCircle, Globe, Users, TrendingUp, Leaf, Building2, Zap, Trash2 } from 'lucide-react';
 import styles from './Numbers.module.css';
-import logo from '../assets/logo_design_to_use.png';
+import logo from '../assets/logo_design_to_use.webp';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const Numbers = () => {
