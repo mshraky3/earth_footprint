@@ -4,14 +4,14 @@ import { motion } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 
 // Import all client logos
-import clientLogo1 from '../assets/clients/client-logo-1.jpg';
-import clientLogo2 from '../assets/clients/client-logo-2.jpg';
-import clientLogo3 from '../assets/clients/client-logo-3.jpg';
-import clientLogo4 from '../assets/clients/client-logo-4.jpg';
-import clientLogo5 from '../assets/clients/client-logo-5.jpg';
-import clientLogo6 from '../assets/clients/client-logo-6.jpg';
-import clientLogo7 from '../assets/clients/client-logo-7.jpg';
-import clientLogo8 from '../assets/clients/client-logo-8.jpg';
+import clientLogo1 from '../assets/clients/client-logo-1.webp';
+import clientLogo2 from '../assets/clients/client-logo-2.webp';
+import clientLogo3 from '../assets/clients/client-logo-3.webp';
+import clientLogo4 from '../assets/clients/client-logo-4.webp';
+import clientLogo5 from '../assets/clients/client-logo-5.webp';
+import clientLogo6 from '../assets/clients/client-logo-6.webp';
+import clientLogo7 from '../assets/clients/client-logo-7.webp';
+import clientLogo8 from '../assets/clients/client-logo-8.webp';
 
 // Import company logo
 import logo from '../assets/logo_design_to_use.webp';
