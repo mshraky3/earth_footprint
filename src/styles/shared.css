@@ -1,0 +1,164 @@
+/* Core CSS Variables - Only used ones */
+:root {
+  /* Text Colors */
+  --text-dark: #1e293b;
+  --text-light: #ffffff;
+  --text-gray: #64748b;
+  
+  /* Background Colors */
+  --bg-white: #ffffff;
+  --bg-light: #f8faf8;
+  --bg-cream: #fefffe;
+}
+
+/* Performance Optimizations */
+* {
+  font-family: 'Cairo', 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+}
+
+/* CSS Containment for better performance */
+section, .container {
+  contain: layout style;
+}
+
+/* Additional performance optimizations */
+.hero, .nav {
+  contain: layout style paint;
+}
+
+/* Optimize image rendering */
+img {
+  content-visibility: auto;
+  contain-intrinsic-size: 300px;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* RTL/LTR Language Support */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="ltr"] {
+  text-align: left;
+}
+
+/* Language-specific styles */
+.lang-ar {
+  font-family: 'Cairo', 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.lang-en {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* RTL-specific adjustments */
+[dir="rtl"] .container {
+  direction: rtl;
+}
+
+[dir="ltr"] .container {
+  direction: ltr;
+}
+
+/* Enhanced Typography */
+body {
+  font-weight: 400;
+  line-height: 1.7;
+  letter-spacing: -0.01em;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+html {
+  scroll-behavior: auto; /* Disable native smooth scroll for custom animation */
+  scroll-padding-top: 100px; /* Account for fixed navigation */
+}
+
+body,
+html {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+body {
+  overflow-x: hidden !important;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  content-visibility: auto;
+}
+
+/* Performance optimizations for animations */
+*,
+*::before,
+*::after {
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimize button and link interactions */
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  html {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Common Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    max-width: 960px;
+    padding: 0 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 16px;
+  }
+}

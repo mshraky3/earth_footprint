@@ -1,0 +1,105 @@
+/* Critical CSS - Above the fold styles only */
+:root {
+  --earth-teal: #2d5442;
+  --earth-teal-dark: #1f3d30;
+  --earth-sage: #6b8057;
+  --text-dark: #1e293b;
+  --text-light: #ffffff;
+  --bg-white: #ffffff;
+}
+
+/* Performance optimizations */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Cairo', 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* GPU acceleration for better performance */
+.hero,
+.contact,
+.contactForm,
+.communicationBtn,
+.submitButton {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+html {
+  scroll-behavior: auto;
+  scroll-padding-top: 100px;
+}
+
+body {
+  margin: 0;
+  line-height: 1.8;
+  color: #2c3e50;
+  background-color: #ffffff;
+  direction: rtl;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Navigation Critical Styles */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(45, 84, 66, 0.1);
+}
+
+/* Hero Critical Styles */
+.hero {
+  background: linear-gradient(135deg, rgba(31, 61, 48, 0.55) 0%, rgba(45, 84, 66, 0.45) 40%, rgba(85, 102, 66, 0.40) 70%, rgba(61, 104, 86, 0.50) 100%), url('../assets/16-9background-min.webp');
+  background-size: cover;
+  background-position: center;
+  background-attachment: scroll;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding-top: 80px;
+  /* Performance optimizations */
+  contain: layout style paint;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 16px;
+  }
+}
