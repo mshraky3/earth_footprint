@@ -62,6 +62,24 @@ const SEOHead = () => {
     }
     twitterDescription.content = description;
 
+    // Update Open Graph image
+    let ogImage = document.querySelector('meta[property="og:image"]');
+    if (!ogImage) {
+      ogImage = document.createElement('meta');
+      ogImage.setAttribute('property', 'og:image');
+      document.head.appendChild(ogImage);
+    }
+    ogImage.content = 'https://erthfc.com/logo_design_to_use.webp';
+
+    // Update Twitter image
+    let twitterImage = document.querySelector('meta[property="twitter:image"]');
+    if (!twitterImage) {
+      twitterImage = document.createElement('meta');
+      twitterImage.setAttribute('property', 'twitter:image');
+      document.head.appendChild(twitterImage);
+    }
+    twitterImage.content = 'https://erthfc.com/logo_design_to_use.webp';
+
     // Update hreflang for language switching
     const currentUrl = window.location.origin + window.location.pathname;
     const arUrl = `${currentUrl}${currentUrl.includes('?') ? '&' : '?'}lang=ar`;
