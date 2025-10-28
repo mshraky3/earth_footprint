@@ -44,7 +44,7 @@ const Navigation = () => {
           ease: [0.25, 0.1, 0.25, 1]
         }}
       >
-        <img src={logo} alt="بصمة الأرض" className={styles.navFloatingLogoImage} loading="lazy" />
+        <img src={logo} alt="شعار بصمة الأرض للاستشارات البيئية - مكتب متخصص في التصاريح البيئية" className={styles.navFloatingLogoImage} loading="lazy" />
       </motion.div>
 
       <motion.div 
@@ -58,7 +58,7 @@ const Navigation = () => {
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.15, ease: "easeOut" }}
         >
-          <img src={logo} alt="بصمة الأرض" className={styles.logoImage} loading="eager" />
+          <img src={logo} alt="بصمة الأرض للاستشارات البيئية - مركز معتمد للتصاريح البيئية في السعودية" className={styles.logoImage} loading="eager" />
           <span className={styles.logoText}>بصمة الأرض</span>
         </motion.div>
 

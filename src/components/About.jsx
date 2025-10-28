@@ -79,7 +79,7 @@ const About = () => {
                        ease: [0.25, 0.1, 0.25, 1]
                      }}
                    >
-                     <img src={logo} alt="بصمة الأرض" className={styles.aboutFloatingLogo} loading="lazy" />
+                     <img src={logo} alt="شعار بصمة الأرض - مكتب استشارات بيئية معتمد من المركز الوطني للرقابة" className={styles.aboutFloatingLogo} loading="lazy" />
                    </motion.div>
 
                    {/* Main Logo Card */}
@@ -95,7 +95,7 @@ const About = () => {
                      }}
                    >
                      <div className={styles.logoContainer}>
-                       <img src={logo} alt="بصمة الأرض" className={styles.mainLogo} />
+                       <img src={logo} alt="بصمة الأرض للاستشارات البيئية - حلول بيئية متكاملة للمنشآت الصناعية" className={styles.mainLogo} />
                        <div className={styles.logoOverlay}></div>
                      </div>
                      <div className={styles.logoText}>

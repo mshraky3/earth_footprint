@@ -92,13 +92,13 @@ const SEOHead = () => {
     // Add hreflang links
     const hreflangAr = document.createElement('link');
     hreflangAr.rel = 'alternate';
-    hreflangAr.hreflang = 'ar';
+    hreflangAr.hreflang = 'ar-SA';
     hreflangAr.href = arUrl;
     document.head.appendChild(hreflangAr);
 
     const hreflangEn = document.createElement('link');
     hreflangEn.rel = 'alternate';
-    hreflangEn.hreflang = 'en';
+    hreflangEn.hreflang = 'en-US';
     hreflangEn.href = enUrl;
     document.head.appendChild(hreflangEn);
 
@@ -107,6 +107,10 @@ const SEOHead = () => {
     hreflangDefault.hreflang = 'x-default';
     hreflangDefault.href = currentUrl;
     document.head.appendChild(hreflangDefault);
+
+    // Update document language attribute
+    document.documentElement.lang = language === 'ar' ? 'ar-SA' : 'en-US';
+    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
 
   }, [language]);
 

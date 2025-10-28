@@ -209,7 +209,7 @@ const Services = () => {
               ease: [0.25, 0.1, 0.25, 1]
             }}
           >
-            <img src={logo} alt="بصمة الأرض" className={styles.servicesLogo} loading="lazy" />
+            <img src={logo} alt="بصمة الأرض للاستشارات البيئية - خدمات التصاريح والتقارير البيئية المعتمدة" className={styles.servicesLogo} loading="lazy" />
           </motion.div>
 
 

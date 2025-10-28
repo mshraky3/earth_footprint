@@ -5,7 +5,28 @@
 
     <!-- Favicon and Icons -->
     <link rel="icon" type="image/webp" href="/logo_design_to_use.webp" />
-    <link rel="apple-touch-icon" href="/logo_design_to_use.webp" />
+    <link
+      rel="icon"
+      sizes="any"
+      type="image/webp"
+      href="/logo_design_to_use.webp"
+    />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/android-chrome-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="/android-chrome-512x512.png"
+    />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="canonical" href="https://erthfc.com" />
 
     <!-- Viewport and Mobile Optimization -->
@@ -52,6 +73,10 @@
       property="og:image"
       content="https://erthfc.com/logo_design_to_use.webp"
     />
+    <meta
+      property="og:image:alt"
+      content="شعار بصمة الأرض للاستشارات البيئية"
+    />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:site_name" content="بصمة الأرض للاستشارات البيئية" />
@@ -72,16 +97,39 @@
       property="twitter:image"
       content="https://erthfc.com/logo_design_to_use.webp"
     />
+    <meta
+      property="twitter:image:alt"
+      content="شعار بصمة الأرض للاستشارات البيئية"
+    />
 
     <!-- Additional SEO Meta Tags -->
     <meta name="geo.region" content="SA" />
     <meta name="geo.placename" content="Saudi Arabia" />
-    <meta name="geo.position" content="24.7136;46.6753" />
-    <meta name="ICBM" content="24.7136, 46.6753" />
+    <meta name="geo.position" content="26.3442221;43.973797399999995" />
+    <meta name="ICBM" content="26.3442221, 43.973797399999995" />
     <meta name="language" content="Arabic" />
     <meta name="revisit-after" content="7 days" />
     <meta name="rating" content="General" />
     <meta name="distribution" content="Global" />
+
+    <!-- Additional Performance and Security Meta Tags -->
+    <meta name="format-detection" content="telephone=yes" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="بصمة الأرض" />
+    <meta name="msapplication-TileColor" content="#2d5442" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+
+    <!-- Security Headers -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'none';"
+    />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
 
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -91,17 +139,23 @@
         "name": "بصمة الأرض للاستشارات البيئية",
         "alternateName": "Earth Footprint Environmental Consultations",
         "url": "https://erthfc.com",
-        "logo": "https://erthfc.com/logo_design_to_use.webp",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://erthfc.com/logo_design_to_use.webp",
+          "contentUrl": "https://erthfc.com/logo_design_to_use.webp",
+          "width": 512,
+          "height": 512
+        },
         "description": "مكتب بصمة الأرض للاستشارات البيئية - حلول واستشارات بيئية متكاملة لتمكين المنشآت الصناعية من النمو بوعي ومسؤولية",
         "address": {
           "@type": "PostalAddress",
           "addressCountry": "SA",
-          "addressRegion": "Riyadh",
-          "addressLocality": "Riyadh"
+          "addressRegion": "Qassim",
+          "addressLocality": "Qassim"
         },
         "contactPoint": {
           "@type": "ContactPoint",
-          "telephone": "+966-50-123-4567",
+          "telephone": "+966-59-700-7805",
           "contactType": "customer service",
           "availableLanguage": ["Arabic", "English"]
         },
@@ -118,6 +172,180 @@
           "إعادة التأهيل البيئي",
           "الاستشارات البيئية"
         ]
+      }
+    </script>
+
+    <!-- FAQ Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "ما هي خدمات الاستشارات البيئية التي تقدمها بصمة الأرض؟",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "نقدم خدمات التصاريح البيئية، التقارير البيئية، تقييم الأثر البيئي، التدقيق البيئي، والإدارة البيئية، وإعادة التأهيل البيئي للمنشآت الصناعية والتجارية."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "هل أنتم معتمدون من المركز الوطني للرقابة على الالتزام البيئي؟",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "نعم، نحن معتمدون من المركز الوطني للرقابة على الالتزام البيئي لتقديم خدمات التصاريح البيئية والاستشارات البيئية في المملكة العربية السعودية."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ما هي المناطق التي تقدمون فيها خدماتكم؟",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "نقدم خدماتنا في جميع أنحاء المملكة العربية السعودية، مع التركيز على منطقة القصيم والمناطق الصناعية الرئيسية."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How long does it take to get an environmental permit?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The time frame for environmental permits varies depending on the project type and complexity. Typically, it takes 2-6 weeks for standard permits, but complex projects may require longer processing time."
+            }
+          }
+        ]
+      }
+    </script>
+
+    <!-- Breadcrumb Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "الرئيسية",
+            "item": "https://erthfc.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "الخدمات",
+            "item": "https://erthfc.com/#services"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "من نحن",
+            "item": "https://erthfc.com/#about"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "المشاريع",
+            "item": "https://erthfc.com/#projects"
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "name": "اتصل بنا",
+            "item": "https://erthfc.com/#contact"
+          }
+        ]
+      }
+    </script>
+
+    <!-- Service Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "serviceType": "Environmental Consultations",
+        "provider": {
+          "@type": "Organization",
+          "name": "بصمة الأرض للاستشارات البيئية",
+          "url": "https://erthfc.com"
+        },
+        "areaServed": {
+          "@type": "Country",
+          "name": "Saudi Arabia"
+        },
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Environmental Services",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "التصاريح البيئية",
+                "description": "إصدار وتجديد التصاريح البيئية المعتمدة من المركز الوطني للرقابة على الالتزام البيئي"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "التقارير البيئية",
+                "description": "إعداد التقارير البيئية المطلوبة للمنشآت الصناعية والتجارية"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "تقييم الأثر البيئي",
+                "description": "دراسات تقييم الأثر البيئي الشاملة للمشاريع الصناعية والتنموية"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "التدقيق البيئي",
+                "description": "عمليات التدقيق البيئي المتخصصة للمنشآت الصناعية"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "الإدارة البيئية",
+                "description": "أنظمة الإدارة البيئية المتكاملة للمنشآت الصناعية"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "إعادة التأهيل البيئي",
+                "description": "برامج إعادة تأهيل المواقع البيئية الملوثة"
+              }
+            }
+          ]
+        }
+      }
+    </script>
+
+    <!-- Website Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "بصمة الأرض للاستشارات البيئية",
+        "url": "https://erthfc.com/",
+        "inLanguage": ["ar-SA", "en-US"],
+        "publisher": {
+          "@type": "Organization",
+          "name": "بصمة الأرض للاستشارات البيئية"
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://erthfc.com/?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
       }
     </script>
 

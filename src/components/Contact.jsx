@@ -35,7 +35,7 @@ const Contact = () => {
           }}
           viewport={{ once: true }}
         >
-          <img src={logo} alt="بصمة الأرض" className={styles.contactFloatingLogoImage} loading="lazy" />
+          <img src={logo} alt="شعار بصمة الأرض - مكتب استشارات بيئية في القصيم السعودية" className={styles.contactFloatingLogoImage} loading="lazy" />
         </motion.div>
 
         {/* Minimal Header */}
