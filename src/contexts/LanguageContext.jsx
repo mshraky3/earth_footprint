@@ -98,7 +98,7 @@ const translations = {
     'contact.copied': 'تم نسخ الرقم بنجاح!',
     
     // Footer
-    'footer.description': 'شريكك البيئي الأول لجميع القطاعات في المملكة',
+    'footer.description': 'شريكك البيئي الأول لمختلف القطاعات في المملكة',
     'footer.copyright': 'جميع الحقوق محفوظة.',
     'footer.nationalNumber': 'الرقم الوطني الموحد : 7039009084',
     
