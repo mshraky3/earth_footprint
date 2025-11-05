@@ -2,10 +2,22 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import viteCompression from 'vite-plugin-compression'
 import imagemin from 'vite-plugin-imagemin'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // https://vite.dev/config/
 export default defineConfig({
   base: '/',
+  resolve: {
+    alias: {
+      '@vercel/analytics/react': path.resolve(__dirname, 'node_modules/@vercel/analytics/dist/react/index.mjs')
+    }
+  },
+  optimizeDeps: {
+    include: ['@vercel/analytics/react']
+  },
   plugins: [
     react(),
     viteCompression({
