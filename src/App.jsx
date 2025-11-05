@@ -13,7 +13,7 @@ import Footer from './components/Footer';
 import SEOHead from './components/SEOHead';
 import './styles/shared.css';
 import './App.css';
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/react"
 
 const App = () => {
   // Lazy load non-critical CSS after initial render
