@@ -1,0 +1,1519 @@
+/* ============================================================
+   Sections below the hero.
+   Rhythm: dark plate → paper → dark plate → paper → dark → paper →
+   dark → dark (with a paper form card) → footer. Photographs are
+   pre-toned into the palette at build time (see IMAGES.md), so there
+   are no blend modes or blur filters at runtime — the page stays light
+   to scroll.
+   ============================================================ */
+
+:root {
+  --sec-pad: clamp(5rem, 11vw, 9.5rem);
+  /* a neutral shade for scrims over photographs: tinting them with the
+     green-black --ink washed natural colour out into murky green */
+  --night: #090b0a;
+}
+
+/* ---------- shared furniture ---------- */
+
+.sec {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: var(--sec-pad);
+}
+
+.sec--dark {
+  background: var(--ink);
+  color: var(--chalk);
+}
+
+.sec--paper {
+  background: var(--bone);
+  color: var(--bone-ink);
+}
+
+/* full-bleed photograph + a per-section scrim (--scrim) above it */
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sec--scrim::after,
+.foot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--scrim);
+}
+
+.sec-head {
+  max-width: 46rem;
+  margin-block-end: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.sec-kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  color: var(--sand);
+  margin-block-end: 1.1rem;
+}
+
+/* the ridge glyph — the fingerprint recurring as structure */
+.sec-kicker::before {
+  content: '';
+  width: 28px;
+  height: 14px;
+  flex: none;
+  border: 1px solid currentColor;
+  border-block-end: 0;
+  border-start-start-radius: 28px;
+  border-start-end-radius: 28px;
+  box-shadow: 0 4px 0 -3px currentColor inset;
+  opacity: 0.85;
+}
+
+.sec-title {
+  font-size: clamp(2.2rem, 5.4vw, 4.3rem);
+  font-weight: 500;
+  line-height: 1.16;
+  letter-spacing: -0.02em;
+}
+
+.sec-lede {
+  margin-block-start: 1.3rem;
+  color: var(--sage);
+  font-weight: 300;
+  font-size: clamp(1.02rem, 1.5vw, 1.18rem);
+  max-width: 38rem;
+}
+
+.sec--paper .sec-kicker {
+  color: var(--sand-deep);
+}
+
+.sec--paper .sec-lede {
+  color: color-mix(in oklab, var(--bone-ink) 72%, transparent);
+}
+
+/* reveal: arrives from a visible resting state, never from zero */
+.rv {
+  opacity: 0.001;
+  transform: translateY(22px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rv.is-seen {
+  opacity: 1;
+  transform: none;
+}
+
+.btn--ink {
+  background: var(--bone-ink);
+  color: var(--bone);
+}
+
+.btn--ink:hover {
+  background: var(--moss);
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   numbers
+   ============================================================ */
+
+/* No photograph here: the fingerprint ridges from the logo, drawn large,
+   sit behind the figures — the "impact" the heading talks about. */
+.numbers {
+  background:
+    radial-gradient(70% 90% at 18% 70%, color-mix(in oklab, var(--sand) 9%, transparent), transparent 70%),
+    var(--ink);
+}
+
+.bg--print {
+  inset: auto;
+  inset-block-end: -10%;
+  inset-inline-end: -8%;
+  width: min(1150px, 100vw);
+  height: auto;
+  object-fit: contain;
+  opacity: 0.15;
+}
+
+.figures {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-block-start: 1px solid color-mix(in oklab, var(--chalk) 22%, transparent);
+}
+
+.figures li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: clamp(2rem, 4vw, 3.2rem) clamp(1rem, 2vw, 2rem) clamp(2rem, 4vw, 3.2rem) 0;
+  border-inline-start: 1px solid color-mix(in oklab, var(--chalk) 16%, transparent);
+  padding-inline-start: clamp(1rem, 2vw, 2rem);
+}
+
+.figures li:first-child {
+  border-inline-start: 0;
+  padding-inline-start: 0;
+}
+
+.figures li:nth-child(2) { transition-delay: 0.08s; }
+.figures li:nth-child(3) { transition-delay: 0.16s; }
+.figures li:nth-child(4) { transition-delay: 0.24s; }
+
+.figures__n {
+  font-family: var(--display);
+  font-size: clamp(3.2rem, 5.8vw, 5.4rem);
+  font-weight: 300;
+  line-height: 0.95;
+  color: var(--sand);
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  text-align: right;
+}
+
+.figures__l {
+  font-family: var(--display);
+  font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+  color: var(--chalk);
+  margin-block-start: 0.8rem;
+}
+
+.figures__d {
+  font-size: 0.92rem;
+  color: var(--sage);
+  font-weight: 300;
+  line-height: 1.65;
+  max-width: 17rem;
+}
+
+/* ============================================================
+   services — paper, with a sticky photograph beside the list
+   ============================================================ */
+
+.services__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+}
+
+@media (min-width: 1024px) {
+  .services__grid {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: clamp(2.5rem, 5vw, 5rem);
+    align-items: start;
+  }
+}
+
+.services__panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  display: flex;
+  align-items: flex-end;
+  color: var(--chalk);
+  order: -1;
+}
+
+@media (min-width: 1024px) {
+  .services__panel {
+    position: sticky;
+    inset-block-start: 6.5rem;
+    aspect-ratio: 4 / 5;
+    max-height: 80vh;
+    order: 0;
+  }
+}
+
+.services__panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--ink) 10%, transparent) 30%,
+    color-mix(in oklab, var(--ink) 88%, transparent) 100%
+  );
+}
+
+.services__panel figcaption {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.2rem;
+  padding: clamp(1.4rem, 3vw, 2.2rem);
+}
+
+.services__count {
+  font-family: var(--display);
+  font-size: clamp(4.5rem, 9vw, 7.5rem);
+  font-weight: 200;
+  line-height: 0.85;
+  color: var(--sand);
+}
+
+.services__cap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-family: var(--display);
+  font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+  line-height: 1.3;
+  padding-block-end: 0.3rem;
+}
+
+.services__cap small {
+  font-family: var(--body);
+  font-size: 0.86rem;
+  font-weight: 300;
+  color: var(--sage);
+}
+
+.svc {
+  border-block-start: 1px solid color-mix(in oklab, var(--bone-ink) 18%, transparent);
+}
+
+.svc__item {
+  position: relative;
+  border-block-end: 1px solid color-mix(in oklab, var(--bone-ink) 18%, transparent);
+  transition: background 0.35s;
+}
+
+/* a sand rule runs the row on hover, and stays while it is open */
+.svc__item::after {
+  content: '';
+  position: absolute;
+  inset-block-end: -1px;
+  inset-inline: 0;
+  height: 2px;
+  background: var(--sand-deep);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.svc__item:hover::after,
+.svc__item.is-open::after {
+  transform: scaleX(1);
+}
+
+.svc__item.is-open {
+  background: color-mix(in oklab, var(--bone-2) 60%, transparent);
+}
+
+.svc__head {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.4rem 1.4rem;
+  padding: clamp(1.4rem, 2.6vw, 2rem) 0;
+  background: none;
+  border: 0;
+  font: inherit;
+  color: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition: padding-inline 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.svc__head:hover {
+  padding-inline: 0.8rem;
+}
+
+.svc__idx {
+  font-family: var(--display);
+  font-size: 1rem;
+  color: var(--sand-deep);
+  font-variant-numeric: tabular-nums;
+}
+
+.svc__name {
+  font-family: var(--display);
+  font-size: clamp(1.3rem, 2.5vw, 1.95rem);
+  font-weight: 500;
+  line-height: 1.25;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.svc__brief {
+  grid-column: 2;
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: color-mix(in oklab, var(--bone-ink) 66%, transparent);
+}
+
+.svc__new {
+  flex: none;
+  font-family: var(--body);
+  font-size: 0.7rem;
+  padding: 0.18rem 0.6rem;
+  border-radius: 999px;
+  background: var(--leaf);
+  color: #07130c;
+}
+
+/* Grid centering, not inset + translate: a logical inset paired with a
+   physical translate only cancels out in LTR, and this page is RTL. */
+.svc__chev {
+  grid-row: 1 / span 2;
+  grid-column: 3;
+  width: 38px;
+  height: 38px;
+  border: 1px solid color-mix(in oklab, var(--bone-ink) 26%, transparent);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: background 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.svc__chev::before,
+.svc__chev::after {
+  content: '';
+  grid-area: 1 / 1;
+  background: currentColor;
+}
+
+.svc__chev::before {
+  width: 13px;
+  height: 1.5px;
+}
+
+.svc__chev::after {
+  width: 1.5px;
+  height: 13px;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.svc__item.is-open .svc__chev {
+  background: var(--bone-ink);
+  border-color: var(--bone-ink);
+  color: var(--bone);
+}
+
+.svc__item.is-open .svc__chev::after {
+  transform: scaleY(0);
+}
+
+.svc__body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.svc__item.is-open .svc__body {
+  grid-template-rows: 1fr;
+}
+
+.svc__bodyInner {
+  overflow: hidden;
+}
+
+.svc__body p {
+  max-width: 44rem;
+  padding-block-end: 2rem;
+  font-size: 1.02rem;
+  font-weight: 300;
+  color: color-mix(in oklab, var(--bone-ink) 82%, transparent);
+}
+
+/* ============================================================
+   why us — dark plate, three pillars, then the path to a permit
+   ============================================================ */
+
+.why {
+  background: var(--night);
+  --scrim: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--night) 90%, transparent) 0%,
+    color-mix(in oklab, var(--night) 66%, transparent) 40%,
+    color-mix(in oklab, var(--night) 90%, transparent) 100%
+  );
+}
+
+.why .bg {
+  object-position: 78% 12%;
+}
+
+.why__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 860px) {
+  .why__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.why__card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: clamp(1.8rem, 3vw, 2.6rem);
+  background: color-mix(in oklab, var(--ink) 66%, transparent);
+  border: 1px solid color-mix(in oklab, var(--chalk) 16%, transparent);
+  border-block-start: 2px solid var(--sand);
+  transition: background 0.35s, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.why__card:hover {
+  background: color-mix(in oklab, var(--ink) 80%, transparent);
+  transform: translateY(-4px);
+}
+
+.why__card:nth-child(2) { transition-delay: 0.08s; }
+.why__card:nth-child(3) { transition-delay: 0.16s; }
+
+.why__mark {
+  width: 58px;
+  height: 58px;
+  color: var(--leaf-lift);
+}
+
+.why__mark svg {
+  width: 100%;
+  height: 100%;
+}
+
+.why__cat {
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  color: var(--sand);
+}
+
+.why__card h3 {
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.why__txt {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--sage);
+  line-height: 1.8;
+}
+
+/* the path — a real sequence, so these are numbered */
+.path {
+  margin-block-start: clamp(4rem, 8vw, 7rem);
+}
+
+.path__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.8rem 2rem;
+  margin-block-end: 2.6rem;
+}
+
+.path__title {
+  font-size: clamp(1.7rem, 3.4vw, 2.6rem);
+  font-weight: 500;
+}
+
+.path__note {
+  font-size: 0.95rem;
+  color: var(--sage);
+  font-weight: 300;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  counter-reset: step;
+}
+
+@media (min-width: 860px) {
+  .steps {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+.steps li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding-inline-end: 1rem;
+}
+
+.steps li::before {
+  counter-increment: step;
+  content: counter(step, arabic-indic);
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 1px solid var(--sand);
+  color: var(--sand);
+  font-family: var(--display);
+  font-size: 1.25rem;
+  margin-block-end: 0.8rem;
+  background: color-mix(in oklab, var(--ink) 70%, transparent);
+}
+
+@media (min-width: 860px) {
+  .steps li:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    inset-block-start: 27px;
+    inset-inline-start: 66px;
+    inset-inline-end: 6px;
+    height: 1px;
+    background: linear-gradient(to left, color-mix(in oklab, var(--sand) 70%, transparent), transparent);
+  }
+}
+
+.steps h4 {
+  font-family: var(--display);
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.steps p {
+  font-size: 0.95rem;
+  color: var(--sage);
+  font-weight: 300;
+  line-height: 1.75;
+}
+
+/* ============================================================
+   sectors — a photographic band, tiles overlapping its edge
+   ============================================================ */
+
+.sectors {
+  padding-block: 0 var(--sec-pad);
+}
+
+.sectors__band {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(380px, 48vw, 560px);
+  padding-block: 7rem 8rem;
+  color: var(--chalk);
+  background: var(--night);
+}
+
+.sectors__band::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--night) 62%, transparent) 0%,
+    color-mix(in oklab, var(--night) 42%, transparent) 45%,
+    color-mix(in oklab, var(--night) 90%, transparent) 100%
+  );
+}
+
+.sectors__band .sec-head {
+  margin-block-end: 0;
+}
+
+.sectors__band .sec-lede {
+  color: var(--sage);
+}
+
+.sectors__list {
+  position: relative;
+  z-index: 1;
+  margin-block-start: -4.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: color-mix(in oklab, var(--bone-ink) 20%, transparent);
+  border: 1px solid color-mix(in oklab, var(--bone-ink) 20%, transparent);
+}
+
+@media (min-width: 560px) {
+  .sectors__list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .sectors__list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.sectors__list li {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2.2rem;
+  min-height: 178px;
+  padding: 1.6rem clamp(1.3rem, 2.5vw, 2rem);
+  background: var(--bone);
+  transition: background 0.35s, color 0.35s, transform 0.2s ease-out;
+  transform: perspective(800px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+}
+
+.sectors__list li:hover {
+  background: var(--bone-ink);
+  color: var(--chalk);
+}
+
+/* a ridge arc swells out of the corner on hover */
+.sectors__list li::after {
+  content: '';
+  position: absolute;
+  inset-block-end: -70px;
+  inset-inline-start: -40px;
+  width: 150px;
+  height: 150px;
+  border: 1px solid var(--leaf-lift);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.65);
+  transition: opacity 0.45s, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 0 12px color-mix(in oklab, var(--leaf) 14%, transparent) inset;
+}
+
+.sectors__list li:hover::after {
+  opacity: 0.6;
+  transform: scale(1);
+}
+
+.sectors__ic {
+  width: 46px;
+  height: 46px;
+  color: var(--bone-ink);
+  transition: color 0.35s;
+}
+
+.sectors__list li:hover .sectors__ic {
+  color: var(--leaf-lift);
+}
+
+.sectors__ic svg {
+  width: 100%;
+  height: 100%;
+}
+
+.sectors__n {
+  font-family: var(--display);
+  font-size: clamp(1.2rem, 1.9vw, 1.5rem);
+  font-weight: 500;
+}
+
+.sectors__i {
+  position: absolute;
+  inset-block-start: 1.2rem;
+  inset-inline-end: 1.4rem;
+  font-family: var(--display);
+  font-size: 0.85rem;
+  color: var(--sand-deep);
+}
+
+.sectors__list li:hover .sectors__i {
+  color: var(--sand);
+}
+
+.sectors__cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem 2rem;
+  margin-block-start: clamp(2rem, 4vw, 3rem);
+}
+
+.sectors__cta p {
+  font-family: var(--display);
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+}
+
+/* ============================================================
+   reviews — palms behind, a big score, a swipeable track
+   ============================================================ */
+
+.reviews {
+  --scrim: linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--ink) 90%, transparent) 0%,
+    color-mix(in oklab, var(--ink) 58%, transparent) 55%,
+    color-mix(in oklab, var(--ink) 86%, transparent) 100%
+  );
+}
+
+.reviews .bg {
+  opacity: 0.85;
+  object-position: center 55%;
+}
+
+.reviews__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2.5rem 3rem;
+  margin-block-end: clamp(2.2rem, 5vw, 3.5rem);
+}
+
+.reviews__top .sec-head {
+  margin-block-end: 0;
+}
+
+.score {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+.score__num {
+  font-family: var(--display);
+  font-size: clamp(6rem, 13vw, 10.5rem);
+  font-weight: 200;
+  line-height: 0.82;
+  color: var(--sand);
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+}
+
+.score__stars {
+  color: var(--sand);
+  letter-spacing: 0.22em;
+  font-size: 1.15rem;
+  direction: ltr;
+  text-align: right;
+}
+
+.score__src {
+  font-size: 0.9rem;
+  color: var(--sage);
+  margin-block-start: 0.4rem;
+  max-width: 14rem;
+}
+
+.rev__nav {
+  display: flex;
+  gap: 0.7rem;
+  margin-block-end: 1.4rem;
+}
+
+.rev__btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: color-mix(in oklab, var(--ink) 60%, transparent);
+  border: 1px solid color-mix(in oklab, var(--chalk) 32%, transparent);
+  color: var(--chalk);
+  cursor: pointer;
+  transition: background 0.25s, border-color 0.25s, color 0.25s;
+}
+
+.rev__btn:hover,
+.rev__btn:focus-visible {
+  background: var(--leaf);
+  border-color: var(--leaf);
+  color: #07130c;
+}
+
+.rev__btn svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* full-bleed track that still starts on the content edge */
+.rev {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding-inline: max(var(--pad), calc((100% - var(--wrap)) / 2));
+  scroll-padding-inline: max(var(--pad), calc((100% - var(--wrap)) / 2));
+  padding-block-end: 0.5rem;
+}
+
+.rev::-webkit-scrollbar {
+  display: none;
+}
+
+.rev__card {
+  position: relative;
+  flex: 0 0 min(86vw, 400px);
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: clamp(1.6rem, 3vw, 2.2rem);
+  background: color-mix(in oklab, var(--ink) 80%, transparent);
+  border: 1px solid color-mix(in oklab, var(--chalk) 16%, transparent);
+}
+
+.rev__card::before {
+  content: '”';
+  position: absolute;
+  inset-block-start: 0.4rem;
+  inset-inline-end: 1.4rem;
+  font-family: var(--display);
+  font-size: 5.5rem;
+  line-height: 1;
+  color: color-mix(in oklab, var(--sand) 40%, transparent);
+}
+
+.rev__stars {
+  color: var(--sand);
+  letter-spacing: 0.18em;
+  font-size: 0.95rem;
+  direction: ltr;
+  text-align: right;
+}
+
+.rev__txt {
+  color: var(--chalk);
+  font-weight: 300;
+  font-size: 1.08rem;
+  line-height: 1.85;
+  flex: 1;
+}
+
+.rev__who {
+  font-family: var(--display);
+  font-size: 0.95rem;
+  color: var(--sand);
+  padding-block-start: 0.9rem;
+  border-block-start: 1px solid color-mix(in oklab, var(--chalk) 16%, transparent);
+}
+
+/* ============================================================
+   clients — paper, logos on white tiles in a slow marquee
+   ============================================================ */
+
+.clients {
+  padding-block: clamp(4rem, 8vw, 6.5rem);
+}
+
+.clients .sec-head {
+  margin-block-end: clamp(2rem, 4vw, 3rem);
+}
+
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  direction: ltr;
+  animation: marquee 48s linear infinite;
+}
+
+.marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+
+/* three identical sets, shifting by exactly one, so even very wide screens
+   never run out of logos before the loop restarts */
+@keyframes marquee {
+  to {
+    transform: translateX(-33.3333%);
+  }
+}
+
+.marquee__set {
+  display: flex;
+}
+
+.marquee__set li {
+  flex: none;
+  width: clamp(140px, 16vw, 184px);
+  aspect-ratio: 1;
+  margin-inline-end: 1rem;
+  display: grid;
+  place-items: center;
+  padding: 14px;
+  background: #fff;
+  border: 1px solid color-mix(in oklab, var(--bone-ink) 14%, transparent);
+  transition: border-color 0.3s;
+}
+
+.marquee__set li:hover {
+  border-color: var(--leaf);
+}
+
+.marquee__set img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* ============================================================
+   social — night sky, three large link rows
+   ============================================================ */
+
+.social {
+  background: var(--night);
+  --scrim: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--night) 55%, transparent) 0%,
+    color-mix(in oklab, var(--night) 34%, transparent) 40%,
+    color-mix(in oklab, var(--night) 62%, transparent) 78%,
+    var(--night) 100%
+  );
+}
+
+.social .bg {
+  object-position: center 30%;
+}
+
+.social__list {
+  border-block-start: 1px solid color-mix(in oklab, var(--chalk) 26%, transparent);
+}
+
+.social__row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2.2rem);
+  padding: clamp(1.5rem, 3vw, 2.3rem) 0;
+  border-block-end: 1px solid color-mix(in oklab, var(--chalk) 26%, transparent);
+  transition: background 0.35s, padding-inline 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.social__row:hover,
+.social__row:focus-visible {
+  background: color-mix(in oklab, var(--leaf) 12%, transparent);
+  padding-inline: clamp(0.8rem, 2vw, 1.6rem);
+}
+
+.social__icon {
+  width: clamp(54px, 7vw, 72px);
+  height: clamp(54px, 7vw, 72px);
+  border-radius: 50%;
+  border: 1px solid color-mix(in oklab, var(--chalk) 40%, transparent);
+  display: grid;
+  place-items: center;
+  color: var(--chalk);
+  transition: background 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.social__icon svg {
+  width: 40%;
+  height: 40%;
+}
+
+.social__row:hover .social__icon,
+.social__row:focus-visible .social__icon {
+  background: var(--leaf);
+  border-color: var(--leaf);
+  color: #07130c;
+}
+
+.social__txt {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.social__name {
+  font-family: var(--display);
+  font-size: clamp(1.7rem, 4.6vw, 3.4rem);
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.social__handle {
+  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+  color: var(--sand);
+  align-self: flex-start;
+}
+
+.social__arrow {
+  width: clamp(28px, 4vw, 40px);
+  height: clamp(28px, 4vw, 40px);
+  color: var(--sage);
+  transition: color 0.3s, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.social__row:hover .social__arrow,
+.social__row:focus-visible .social__arrow {
+  color: var(--leaf-lift);
+  transform: translate(-6px, -6px);
+}
+
+/* ============================================================
+   contact — dune photograph, channel list, a paper form card
+   ============================================================ */
+
+.contact {
+  background: var(--night);
+  --scrim: linear-gradient(
+    180deg,
+    var(--night) 0%,
+    color-mix(in oklab, var(--night) 46%, transparent) 26%,
+    color-mix(in oklab, var(--night) 56%, transparent) 72%,
+    var(--night) 100%
+  );
+}
+
+.contact .bg {
+  object-position: center 45%;
+}
+
+.contact__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+@media (min-width: 1024px) {
+  .contact__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    align-items: start;
+  }
+}
+
+.contact .sec-title {
+  font-size: clamp(2.1rem, 4vw, 3.4rem);
+}
+
+.contact__natl {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-block-start: 1.8rem;
+  padding: 0.6rem 1.1rem;
+  border: 1px solid color-mix(in oklab, var(--chalk) 30%, transparent);
+  background: color-mix(in oklab, var(--ink) 55%, transparent);
+  font-size: 0.9rem;
+  color: var(--sage);
+}
+
+.contact__natl b {
+  color: var(--sand);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+}
+
+.chan {
+  margin-block-start: clamp(2rem, 4vw, 3rem);
+  border-block-start: 1px solid color-mix(in oklab, var(--chalk) 26%, transparent);
+}
+
+.chan__row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.25rem 0;
+  border-block-end: 1px solid color-mix(in oklab, var(--chalk) 26%, transparent);
+  transition: background 0.3s, padding-inline 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+a.chan__row:hover,
+a.chan__row:focus-visible {
+  background: color-mix(in oklab, var(--leaf) 12%, transparent);
+  padding-inline: 0.9rem;
+}
+
+.chan__ic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in oklab, var(--chalk) 36%, transparent);
+  display: grid;
+  place-items: center;
+  color: var(--chalk);
+}
+
+.chan__ic svg {
+  width: 22px;
+  height: 22px;
+}
+
+.chan__k {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--sage);
+}
+
+.chan__v {
+  display: block;
+  font-family: var(--display);
+  font-size: clamp(1.25rem, 2.4vw, 1.7rem);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.chan__row--wa .chan__ic,
+.chan__row--wa .chan__v {
+  color: var(--leaf-lift);
+}
+
+.chan__go {
+  width: 22px;
+  height: 22px;
+  color: var(--sage);
+}
+
+/* the form sits on paper so the photograph can stay dark and legible */
+.cform {
+  background: var(--bone);
+  color: var(--bone-ink);
+  padding: clamp(1.7rem, 4vw, 3rem);
+  border-block-start: 4px solid var(--sand);
+}
+
+.cform__title {
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  font-weight: 500;
+}
+
+.cform__sub {
+  margin-block: 0.4rem 1.8rem;
+  font-size: 0.92rem;
+  color: color-mix(in oklab, var(--bone-ink) 66%, transparent);
+}
+
+.cform__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.15rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.field--wide {
+  grid-column: 1 / -1;
+}
+
+.field > span {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: color-mix(in oklab, var(--bone-ink) 78%, transparent);
+}
+
+.field input,
+.field select,
+.field textarea {
+  font: inherit;
+  font-size: 1rem;
+  color: var(--bone-ink);
+  background: #fbf9f3;
+  border: 1px solid color-mix(in oklab, var(--bone-ink) 24%, transparent);
+  border-radius: 4px;
+  padding: 0.85rem 1rem;
+  width: 100%;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: color-mix(in oklab, var(--bone-ink) 46%, transparent);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--leaf);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--leaf) 26%, transparent);
+}
+
+.field input:user-invalid {
+  border-color: #b4553f;
+}
+
+.cform__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.4rem;
+  margin-block-start: 1.6rem;
+}
+
+.cform__foot .btn {
+  padding-inline: 2.2rem;
+}
+
+.cform__note {
+  font-size: 0.9rem;
+  color: color-mix(in oklab, var(--bone-ink) 70%, transparent);
+}
+
+.cform__note[data-state='ok'] {
+  color: #2a7a53;
+}
+
+.cform__note[data-state='err'] {
+  color: #a4402b;
+}
+
+/* ============================================================
+   footer
+   ============================================================ */
+
+.foot {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--chalk);
+  padding-block: clamp(4rem, 8vw, 6rem) 1.6rem;
+  --scrim: linear-gradient(180deg, var(--night) 0%, transparent 35%);
+}
+
+.foot .bg--print {
+  inset-block-end: -30%;
+  inset-inline-end: auto;
+  inset-inline-start: -10%;
+  opacity: 0.1;
+}
+
+.foot__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.6rem;
+}
+
+@media (min-width: 860px) {
+  .foot__grid {
+    grid-template-columns: 1.5fr 1fr 1.1fr 1fr;
+    gap: 3rem;
+  }
+}
+
+.foot__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.foot__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-family: var(--display);
+  font-size: 1.35rem;
+  font-weight: 500;
+}
+
+.foot__logo svg {
+  width: 44px;
+  height: 44px;
+  color: var(--leaf-lift);
+}
+
+.foot__note {
+  color: var(--sage);
+  font-weight: 300;
+  max-width: 24rem;
+}
+
+.foot__coord {
+  font-size: 0.85rem;
+  color: var(--sand);
+  direction: ltr;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.foot h4 {
+  font-family: var(--display);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--sand);
+  margin-block-end: 1rem;
+}
+
+.foot__list {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.foot__list a {
+  color: var(--sage);
+  transition: color 0.25s;
+}
+
+.foot__list a:hover {
+  color: var(--chalk);
+}
+
+.foot__social {
+  display: flex;
+  gap: 0.6rem;
+  margin-block-start: 1.2rem;
+}
+
+.foot__social a {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in oklab, var(--chalk) 34%, transparent);
+  color: var(--chalk);
+  transition: background 0.25s, border-color 0.25s, color 0.25s, transform 0.25s;
+}
+
+.foot__social a:hover,
+.foot__social a:focus-visible {
+  background: var(--leaf);
+  border-color: var(--leaf);
+  color: #07130c;
+  transform: translateY(-2px);
+}
+
+.foot__social svg {
+  width: 19px;
+  height: 19px;
+}
+
+/* an oversized wordmark, tone-on-tone: it anchors the page without competing */
+.foot__mark {
+  margin-block: clamp(2.5rem, 6vw, 4.5rem) 0;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(3.4rem, 14.5vw, 15rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  text-align: center;
+  color: color-mix(in oklab, var(--chalk) 8%, transparent);
+  user-select: none;
+  pointer-events: none;
+}
+
+.foot__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem 2rem;
+  margin-block-start: 1rem;
+  padding-block-start: 1.3rem;
+  border-block-start: 1px solid color-mix(in oklab, var(--chalk) 22%, transparent);
+  font-size: 0.85rem;
+  color: var(--sage);
+}
+
+.foot__top {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--chalk);
+  transition: color 0.25s;
+}
+
+.foot__top:hover {
+  color: var(--leaf-lift);
+}
+
+.foot__top svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ============================================================
+   responsive
+   ============================================================ */
+
+@media (max-width: 1023px) {
+  .figures {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .figures li:nth-child(3) {
+    border-inline-start: 0;
+    padding-inline-start: 0;
+  }
+
+  .figures li:nth-child(n + 3) {
+    border-block-start: 1px solid color-mix(in oklab, var(--chalk) 16%, transparent);
+  }
+}
+
+@media (max-width: 719px) {
+  .sectors__band {
+    padding-block: 5.5rem 7rem;
+  }
+
+  .score {
+    flex-wrap: wrap;
+  }
+
+  .cform__foot .btn {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .figures {
+    grid-template-columns: 1fr;
+  }
+
+  .figures li,
+  .figures li:nth-child(3) {
+    border-inline-start: 0;
+    padding-inline-start: 0;
+  }
+
+  .figures li:nth-child(n + 2) {
+    border-block-start: 1px solid color-mix(in oklab, var(--chalk) 16%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rv {
+    opacity: 1;
+    transform: none;
+  }
+
+  .sectors__list li {
+    transform: none;
+  }
+}

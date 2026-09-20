@@ -1,0 +1,15 @@
+{
+  "name": "بصمة الأرض للاستشارات البيئية",
+  "short_name": "بصمة الأرض",
+  "description": "استشارات وتصاريح بيئية معتمدة من المركز الوطني للرقابة على الالتزام البيئي — القصيم، المملكة العربية السعودية.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#071410",
+  "theme_color": "#071410",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    { "src": "/favicon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/favicon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

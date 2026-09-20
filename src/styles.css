@@ -1,0 +1,1944 @@
+/* ============================================================
+   بصمة الأرض — Earth Footprint
+   A committed single-world design: a night-side planet in leaf
+   green and desert sand, opening onto document-light sections.
+   ============================================================ */
+
+:root {
+  /* ground */
+  --ink: #071410;
+  --ink-2: #0b1c16;
+  --pine: #102b21;
+  --moss: #2d5442;
+
+  /* accents — same emerald hue family as --moss/--pine, but lighter and
+     less saturated than the jewel-toned pass before it: a calmer sage-
+     spring green instead of a punchy one, which was reading as part of
+     the site's overall visual weight. */
+  --leaf: #52ac81;
+  --leaf-lift: #6ec69b;
+  --sand: #c8a464;
+  --sand-deep: #9c7c42;
+
+  /* light world */
+  --bone: #f2efe6;
+  --bone-2: #e8e4d7;
+  --bone-ink: #16241c;
+
+  /* type on dark */
+  --sage: #a9c0a4;
+  --sage-dim: #7d9179;
+  --chalk: #eaf0e2;
+
+  --edge: color-mix(in oklab, var(--moss) 55%, transparent);
+  --edge-soft: color-mix(in oklab, var(--moss) 28%, transparent);
+
+  --display: 'Readex Pro', 'Segoe UI', system-ui, sans-serif;
+  --body: 'IBM Plex Sans Arabic', 'Segoe UI', system-ui, sans-serif;
+
+  --wrap: 1180px;
+  --pad: clamp(1.25rem, 4vw, 3.5rem);
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* anchors must clear the fixed nav instead of landing under it */
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--chalk);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body.is-locked,
+body.is-navopen {
+  overflow: hidden;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--display);
+  font-weight: 500;
+  line-height: 1.22;
+  margin: 0;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--leaf-lift);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.wrap {
+  width: min(var(--wrap), 100% - var(--pad) * 2);
+  margin-inline: auto;
+}
+
+/* ============================================================
+   3D stage
+   ============================================================ */
+
+.stage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.stage canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.4s linear;
+}
+
+.stage__vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 90% at 30% 45%, transparent 38%, rgba(4, 12, 9, 0.7) 100%),
+    linear-gradient(to top, var(--ink) 2%, transparent 30%);
+}
+
+/* Once the sequence hands off, the copy side gets a scrim so the
+   Arabic always clears the land dots behind it. */
+.stage__vignette::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.1s ease;
+  background: linear-gradient(
+    to right,
+    transparent 24%,
+    rgba(7, 20, 16, 0.74) 56%,
+    rgba(7, 20, 16, 0.93) 100%
+  );
+}
+
+.is-live .stage__vignette::after {
+  opacity: 1;
+}
+
+/* On phones the copy sits above the planet, so the scrim protects the top. */
+@media (max-width: 1023px) {
+  .stage__vignette::after {
+    background: linear-gradient(
+      to bottom,
+      rgba(7, 20, 16, 0.86) 22%,
+      rgba(7, 20, 16, 0.45) 55%,
+      transparent 80%
+    );
+  }
+}
+
+/* ============================================================
+   intro overlay
+   ============================================================ */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  transition: opacity 0.7s ease;
+}
+
+.intro.is-done {
+  opacity: 0;
+}
+
+.intro__meta {
+  position: absolute;
+  inset-block-end: clamp(1.5rem, 5vh, 3rem);
+  inset-inline-start: var(--pad);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-family: var(--body);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  color: var(--sand);
+  direction: ltr;
+  text-align: left;
+}
+
+.intro__coord {
+  font-variant-numeric: tabular-nums;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--chalk);
+}
+
+.intro__phase {
+  direction: rtl;
+  letter-spacing: 0.06em;
+  color: var(--sage-dim);
+}
+
+.intro__skip {
+  position: absolute;
+  inset-block-end: clamp(1.5rem, 5vh, 3rem);
+  inset-inline-end: var(--pad);
+  pointer-events: auto;
+  background: none;
+  border: 1px solid var(--edge);
+  color: var(--sage);
+  font-family: var(--body);
+  font-size: 0.8rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.25s, border-color 0.25s;
+}
+
+.intro__skip:hover {
+  color: var(--chalk);
+  border-color: var(--leaf);
+}
+
+/* ============================================================
+   nav
+   ============================================================ */
+
+.nav {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  /* aligned to the same measure as the sections, not full-bleed padding */
+  padding-block: 1rem;
+  padding-inline: max(var(--pad), calc((100vw - var(--wrap)) / 2));
+  opacity: 0;
+  transform: translateY(-12px);
+  transition: opacity 0.8s ease, transform 0.8s ease, background 0.4s, border-color 0.4s;
+  border-block-end: 1px solid transparent;
+}
+
+.nav.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+.nav.is-stuck {
+  /* A solid tone instead of a blurred one: backdrop-filter forces the
+     browser to resample everything behind a fixed element on every
+     scroll frame, which was fighting the WebGL canvas for the same
+     frame budget and was a real part of the site feeling heavy. */
+  background: color-mix(in oklab, var(--ink) 96%, transparent);
+  border-block-end-color: var(--edge-soft);
+}
+
+.nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.nav__mark {
+  width: 34px;
+  height: 34px;
+  color: var(--leaf);
+  flex: none;
+}
+
+.nav__mark svg {
+  width: 100%;
+  height: 100%;
+}
+
+.nav__word {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.nav__word strong {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 1.02rem;
+  letter-spacing: 0.01em;
+}
+
+.nav__word small {
+  font-size: 0.68rem;
+  color: var(--sage-dim);
+  letter-spacing: 0.06em;
+}
+
+.nav__links {
+  display: flex;
+  gap: clamp(0.9rem, 2.2vw, 1.9rem);
+  margin-inline-start: auto;
+  font-size: 0.9rem;
+  color: var(--sage);
+}
+
+.nav__links a {
+  position: relative;
+  padding-block: 0.25rem;
+  transition: color 0.25s;
+}
+
+.nav__links a::after {
+  content: '';
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline: 0;
+  height: 1px;
+  background: var(--leaf);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.nav__links a:hover {
+  color: var(--chalk);
+}
+
+.nav__links a:hover::after {
+  transform: scaleX(1);
+}
+
+.nav__cta {
+  font-size: 0.88rem;
+  padding: 0.55rem 1.2rem;
+  border: 1px solid var(--edge);
+  border-radius: 999px;
+  color: var(--chalk);
+  transition: background 0.25s, border-color 0.25s;
+}
+
+.nav__cta:hover {
+  background: var(--moss);
+  border-color: var(--moss);
+}
+
+/* ============================================================
+   hero
+   ============================================================ */
+
+main {
+  position: relative;
+  z-index: 10;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+  padding: 7rem var(--pad) 5rem;
+}
+
+/* Same centred measure as every other section, so the hero copy's right edge
+   lines up with the nav and the sections below it. In RTL the copy hugs the
+   inline start (the right) on its own — no auto margins, which resolve the
+   opposite way here and strand dead space on the right.
+   Explicitly positioned + stacked above .stage: a static box only beats a
+   positioned sibling by DOM order within the same context, which is too
+   fragile against markup drift — this makes the win explicit. */
+.hero__inner {
+  position: relative;
+  z-index: 1;
+  width: min(var(--wrap), 100%);
+  margin-inline: auto;
+}
+
+.hero__title,
+.hero__eyebrow {
+  max-width: 46rem;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+}
+
+.is-live .reveal {
+  animation: rise 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.is-live .reveal:nth-child(1) { animation-delay: 0.05s; }
+.is-live .reveal:nth-child(2) { animation-delay: 0.16s; }
+.is-live .reveal:nth-child(3) { animation-delay: 0.3s; }
+.is-live .reveal:nth-child(4) { animation-delay: 0.42s; }
+.is-live .reveal:nth-child(5) { animation-delay: 0.56s; }
+
+@keyframes rise {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  color: var(--sage);
+  border: 1px solid var(--edge-soft);
+  background: color-mix(in oklab, var(--pine) 82%, transparent);
+  padding: 0.45rem 1rem 0.45rem 1.1rem;
+  border-radius: 999px;
+}
+
+.hero__eyebrow .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--leaf-lift);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--leaf) 22%, transparent);
+  flex: none;
+}
+
+.hero__title {
+  margin-block: 1.6rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.hero__title-main {
+  font-size: clamp(3.2rem, 9vw, 6.6rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  background: linear-gradient(190deg, var(--chalk) 25%, var(--leaf) 130%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero__title-sub {
+  font-size: clamp(1.1rem, 2.6vw, 1.7rem);
+  font-weight: 300;
+  color: var(--sand);
+  letter-spacing: 0.01em;
+}
+
+.hero__lede {
+  margin-block-start: 1.5rem;
+  max-width: 34rem;
+  font-size: clamp(1rem, 1.5vw, 1.12rem);
+  color: var(--sage);
+  font-weight: 300;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-block-start: 2.2rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.85rem 1.6rem;
+  border-radius: 4px;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s, border-color 0.25s;
+}
+
+.btn svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.25s;
+}
+
+.btn--solid {
+  background: var(--leaf);
+  color: #07130c;
+}
+
+.btn--solid:hover {
+  background: var(--leaf-lift);
+  transform: translateY(-2px);
+}
+
+.btn--solid:hover svg {
+  transform: translateX(-3px);
+}
+
+.btn--ghost {
+  border: 1px solid var(--edge);
+  color: var(--chalk);
+}
+
+.btn--ghost:hover {
+  border-color: var(--leaf);
+  transform: translateY(-2px);
+}
+
+/* Real coordinates — the office's own, and the fingerprint's core. */
+.hero__coords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 clamp(1.5rem, 4vw, 3rem);
+  margin-block-start: 3rem;
+  padding-block-start: 1.4rem;
+  border-block-start: 1px solid var(--edge-soft);
+  max-width: 34rem;
+}
+
+.hero__coords dt {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--sage-dim);
+  margin-block-end: 0.25rem;
+}
+
+.hero__coords dd {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--chalk);
+  font-variant-numeric: tabular-nums;
+}
+
+.hero__scroll {
+  position: absolute;
+  z-index: 1;
+  inset-block-end: 2rem;
+  inset-inline-start: var(--pad);
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--sage-dim);
+  opacity: 0;
+  transition: opacity 0.8s ease 1.2s;
+}
+
+.is-live .hero__scroll {
+  opacity: 1;
+}
+
+.hero__scroll i {
+  display: block;
+  width: 44px;
+  height: 1px;
+  background: linear-gradient(to left, var(--leaf), transparent);
+  animation: sweep 2.4s ease-in-out infinite;
+}
+
+@keyframes sweep {
+  0%, 100% { transform: scaleX(0.4); transform-origin: right; opacity: 0.4; }
+  50% { transform: scaleX(1); transform-origin: right; opacity: 1; }
+}
+
+/* Windows with "Show animations" turned off reports prefers-reduced-motion
+   for every site, not just this one — visitors on those machines never see
+   the opening sequence at all. This gives anyone a conscious way to watch
+   it regardless of that system setting, rather than losing it silently. */
+.hero__replay {
+  position: absolute;
+  z-index: 1;
+  inset-block-end: 2rem;
+  inset-inline-end: var(--pad);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: 1px solid var(--edge);
+  color: var(--sage);
+  font-family: var(--body);
+  font-size: 0.78rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.8s ease 1.2s, color 0.25s, border-color 0.25s;
+}
+
+.is-live .hero__replay {
+  opacity: 1;
+}
+
+.hero__replay svg {
+  width: 15px;
+  height: 15px;
+}
+
+.hero__replay:hover,
+.hero__replay:focus-visible {
+  color: var(--chalk);
+  border-color: var(--leaf);
+}
+
+@media (max-width: 1023px) {
+  .hero__replay span {
+    display: none;
+  }
+
+  .hero__replay {
+    padding: 0.6rem;
+  }
+}
+
+/* ============================================================
+   section furniture
+   ============================================================ */
+
+.sec-head {
+  max-width: 40rem;
+  margin-block-end: clamp(2.5rem, 6vw, 4rem);
+}
+
+.sec-kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  color: var(--sand);
+  margin-block-end: 1rem;
+}
+
+/* the ridge glyph — the fingerprint recurring as structure */
+.sec-kicker::before {
+  content: '';
+  width: 26px;
+  height: 13px;
+  flex: none;
+  border: 1px solid currentColor;
+  border-block-end: 0;
+  border-start-start-radius: 26px;
+  border-start-end-radius: 26px;
+  box-shadow: 0 4px 0 -3px currentColor inset;
+  opacity: 0.85;
+}
+
+.sec-title {
+  font-size: clamp(1.8rem, 4.2vw, 3rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.sec-lede {
+  margin-block-start: 1.1rem;
+  color: var(--sage);
+  font-weight: 300;
+  font-size: 1.02rem;
+  max-width: 36rem;
+}
+
+/* Sections arrive from a visible resting state, never from zero. */
+.sec-head,
+.why__card,
+.figures li,
+.svc__item,
+.ccard {
+  opacity: 0.001;
+  transform: translateY(18px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.is-seen {
+  opacity: 1;
+  transform: none;
+}
+
+.why__card:nth-child(2) { transition-delay: 0.08s; }
+.why__card:nth-child(3) { transition-delay: 0.16s; }
+.figures li:nth-child(2) { transition-delay: 0.07s; }
+.figures li:nth-child(3) { transition-delay: 0.14s; }
+.figures li:nth-child(4) { transition-delay: 0.21s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sec-head,
+  .why__card,
+  .figures li,
+  .svc__item,
+  .ccard,
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .is-live .reveal {
+    animation: none;
+  }
+}
+
+/* ============================================================
+   numbers
+   ============================================================ */
+
+.numbers {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(4rem, 10vw, 7rem) 0;
+  background: linear-gradient(to bottom, transparent, var(--ink) 22%);
+}
+
+/* ridge field watermark — the print motif carried past the hero */
+.numbers::before {
+  content: '';
+  position: absolute;
+  inset-block-start: -22%;
+  inset-inline-start: -8%;
+  width: min(620px, 70vw);
+  aspect-ratio: 1;
+  pointer-events: none;
+  opacity: 0.12;
+  background: repeating-radial-gradient(
+    circle at 50% 55%,
+    transparent 0 13px,
+    var(--sand) 13px 14.4px
+  );
+  -webkit-mask-image: radial-gradient(circle at 50% 55%, #000 12%, transparent 68%);
+  mask-image: radial-gradient(circle at 50% 55%, #000 12%, transparent 68%);
+}
+
+.figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  border-block-start: 1px solid var(--edge-soft);
+}
+
+.figures li {
+  padding: 2rem 1.6rem 2rem 0;
+  border-block-end: 1px solid var(--edge-soft);
+  border-inline-start: 1px solid var(--edge-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.figures li:last-child {
+  border-inline-start: 0;
+}
+
+.figures__n {
+  font-family: var(--display);
+  font-size: clamp(2.6rem, 5.5vw, 3.9rem);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--sand);
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  text-align: right;
+}
+
+.figures__l {
+  font-size: 1rem;
+  color: var(--chalk);
+  margin-block-start: 0.5rem;
+}
+
+.figures__d {
+  font-size: 0.85rem;
+  color: var(--sage-dim);
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   services — the document world
+   ============================================================ */
+
+.services,
+.why {
+  position: relative;
+  z-index: 2;
+  background: var(--bone);
+  color: var(--bone-ink);
+}
+
+.services {
+  padding: clamp(4rem, 10vw, 7rem) 0 clamp(2rem, 5vw, 3rem);
+}
+
+.services .sec-kicker,
+.why .sec-kicker {
+  color: var(--sand-deep);
+}
+
+.services .sec-lede,
+.why .sec-lede {
+  color: color-mix(in oklab, var(--bone-ink) 72%, transparent);
+}
+
+.svc {
+  border-block-start: 1px solid color-mix(in oklab, var(--bone-ink) 16%, transparent);
+}
+
+.svc__item {
+  position: relative;
+  border-block-end: 1px solid color-mix(in oklab, var(--bone-ink) 16%, transparent);
+}
+
+/* a sand rule runs the row on hover, and stays while it is open */
+.svc__item::after {
+  content: '';
+  position: absolute;
+  inset-block-end: -1px;
+  inset-inline: 0;
+  height: 1px;
+  background: var(--sand-deep);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.svc__item:hover::after,
+.svc__item.is-open::after {
+  transform: scaleX(1);
+}
+
+.svc__item.is-open {
+  background: color-mix(in oklab, var(--bone-2) 55%, transparent);
+}
+
+.svc__head {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.5rem 1.2rem;
+  padding: 1.5rem 0;
+  background: none;
+  border: 0;
+  font: inherit;
+  color: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition: padding-inline 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.svc__head:hover {
+  padding-inline-start: 0.6rem;
+  padding-inline-end: 0.6rem;
+}
+
+.svc__idx {
+  font-family: var(--display);
+  font-size: 0.95rem;
+  color: var(--sand-deep);
+  font-variant-numeric: tabular-nums;
+}
+
+.svc__name {
+  font-family: var(--display);
+  font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.svc__brief {
+  grid-column: 2;
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: color-mix(in oklab, var(--bone-ink) 62%, transparent);
+}
+
+.svc__new {
+  flex: none;
+  font-family: var(--body);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  background: var(--leaf);
+  color: #07130c;
+  align-self: center;
+}
+
+/* A logical inset (inset-inline-start) paired with a physical translate
+   (-50%, always toward physical left) only cancels out to a true center in
+   LTR — in this RTL page it compounds instead, so the cross sat off to one
+   side looking like a stray dash. Grid centering has no direction-dependent
+   math to get wrong. */
+.svc__chev {
+  grid-row: 1 / span 2;
+  grid-column: 3;
+  width: 34px;
+  height: 34px;
+  border: 1px solid color-mix(in oklab, var(--bone-ink) 22%, transparent);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: background 0.3s, border-color 0.3s, transform 0.35s;
+}
+
+.svc__chev::before,
+.svc__chev::after {
+  content: '';
+  grid-area: 1 / 1;
+  background: currentColor;
+}
+
+.svc__chev::before {
+  width: 12px;
+  height: 1.5px;
+}
+
+.svc__chev::after {
+  width: 1.5px;
+  height: 12px;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.svc__item.is-open .svc__chev {
+  background: var(--bone-ink);
+  border-color: var(--bone-ink);
+  color: var(--bone);
+}
+
+.svc__item.is-open .svc__chev::after {
+  transform: scaleY(0);
+}
+
+.svc__body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.svc__item.is-open .svc__body {
+  grid-template-rows: 1fr;
+}
+
+.svc__bodyInner {
+  overflow: hidden;
+}
+
+.svc__body p {
+  max-width: 46rem;
+  padding-block-end: 1.9rem;
+  font-size: 0.98rem;
+  font-weight: 300;
+  color: color-mix(in oklab, var(--bone-ink) 80%, transparent);
+}
+
+/* ============================================================
+   why us
+   ============================================================ */
+
+.why {
+  padding: clamp(2rem, 5vw, 3rem) 0 clamp(4rem, 10vw, 7rem);
+}
+
+/* Three reasons divide evenly into three columns, same as the sectors
+   grid below — no dead cell left over at any width. */
+.why__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: color-mix(in oklab, var(--bone-ink) 16%, transparent);
+  border: 1px solid color-mix(in oklab, var(--bone-ink) 16%, transparent);
+}
+
+@media (min-width: 720px) {
+  .why__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.why__card {
+  position: relative;
+  overflow: hidden;
+  background: var(--bone);
+  padding: clamp(1.6rem, 3vw, 2.2rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: background 0.35s;
+}
+
+.why__card:hover {
+  background: var(--bone-2);
+}
+
+/* the print mark recurring as a quiet corner watermark, not a chip cloud */
+.why__mark {
+  position: absolute;
+  inset-block-start: 0.6rem;
+  inset-inline-end: 0.9rem;
+  width: 46px;
+  height: 46px;
+  color: var(--bone-ink);
+  opacity: 0.08;
+}
+
+.why__mark svg {
+  width: 100%;
+  height: 100%;
+}
+
+.why__cat {
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  color: var(--sand-deep);
+}
+
+.why__card h3 {
+  font-size: 1.22rem;
+  font-weight: 500;
+}
+
+.why__txt {
+  font-size: 0.94rem;
+  font-weight: 300;
+  color: color-mix(in oklab, var(--bone-ink) 72%, transparent);
+  flex: 1;
+}
+
+/* ============================================================
+   sectors
+   ============================================================ */
+
+/* A survey map of the ground we cover: layered elevation rings instead of
+   a flat gradient, dark again after the long light stretch above so the
+   page doesn't settle into one register for too long. */
+.sectors {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  padding: clamp(4rem, 10vw, 7rem) 0;
+  background: radial-gradient(140% 100% at 12% -10%, var(--pine) 0%, var(--ink) 55%), var(--ink);
+  color: var(--chalk);
+}
+
+.sectors::before,
+.sectors::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle at 50% 50%,
+    transparent 0 15px,
+    color-mix(in oklab, var(--leaf) 55%, transparent) 15px 16.4px
+  );
+}
+
+.sectors::before {
+  inset-inline-end: -18%;
+  inset-block-start: -22%;
+  width: min(680px, 62vw);
+  aspect-ratio: 1;
+  opacity: 0.16;
+  mask-image: radial-gradient(circle at 50% 50%, #000 0%, transparent 68%);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 0%, transparent 68%);
+}
+
+.sectors::after {
+  inset-inline-start: -14%;
+  inset-block-end: -26%;
+  width: min(520px, 48vw);
+  aspect-ratio: 1;
+  opacity: 0.1;
+  mask-image: radial-gradient(circle at 50% 50%, #000 0%, transparent 68%);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 0%, transparent 68%);
+}
+
+/* Nine sectors: three columns divide evenly, so no dead cell is left over. */
+.sectors__list {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: var(--edge-soft);
+  border: 1px solid var(--edge-soft);
+}
+
+@media (min-width: 560px) {
+  .sectors__list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.sectors__list li {
+  position: relative;
+  overflow: hidden;
+  background: var(--ink-2);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.6rem clamp(1.1rem, 2.5vw, 1.7rem);
+  transition: background 0.35s, transform 0.2s ease-out;
+  transform: perspective(700px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  will-change: transform;
+}
+
+.sectors__ic {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  color: var(--leaf-lift);
+}
+
+.sectors__ic svg {
+  width: 100%;
+  height: 100%;
+}
+
+.sectors__n {
+  flex: 1;
+  font-family: var(--display);
+  font-size: clamp(1rem, 1.9vw, 1.2rem);
+  font-weight: 400;
+  color: var(--chalk);
+}
+
+.sectors__i {
+  font-family: var(--display);
+  font-size: 0.8rem;
+  color: var(--sand);
+  flex: none;
+}
+
+/* a ridge arc swells out of the corner on hover */
+.sectors__list li::after {
+  content: '';
+  position: absolute;
+  inset-block-end: -58px;
+  inset-inline-start: -30px;
+  width: 116px;
+  height: 116px;
+  border: 1px solid var(--leaf);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.65);
+  transition: opacity 0.45s, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 0 9px color-mix(in oklab, var(--leaf) 12%, transparent) inset;
+}
+
+.sectors__list li:hover {
+  background: var(--pine);
+}
+
+.sectors__list li:hover::after {
+  opacity: 0.5;
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sectors__list li {
+    transform: none;
+  }
+}
+
+/* ============================================================
+   review score
+   ============================================================ */
+
+.score {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 1.8rem);
+  padding: clamp(1.3rem, 3vw, 1.8rem);
+  margin-block-end: 1.5rem;
+  border: 1px solid color-mix(in oklab, var(--bone-ink) 16%, transparent);
+  background: linear-gradient(
+    to left,
+    color-mix(in oklab, var(--leaf) 14%, transparent),
+    transparent 65%
+  );
+}
+
+.score__num {
+  font-family: var(--display);
+  font-size: clamp(3rem, 8vw, 4.6rem);
+  font-weight: 300;
+  line-height: 0.9;
+  color: var(--sand-deep);
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+}
+
+.score__stars {
+  color: var(--sand-deep);
+  letter-spacing: 0.22em;
+  font-size: 1.05rem;
+  direction: ltr;
+  text-align: right;
+}
+
+.score__src {
+  font-size: 0.85rem;
+  color: color-mix(in oklab, var(--bone-ink) 68%, transparent);
+  margin-block-start: 0.35rem;
+}
+
+/* ============================================================
+   social — a third panel tone (moss), between the near-black hero/
+   contact bookends and the paper-bone document sections, so the page
+   doesn't read as one long dark stretch broken only by two light patches.
+   ============================================================ */
+
+.social {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  padding: clamp(4rem, 10vw, 7rem) 0;
+  background: linear-gradient(155deg, var(--moss) 0%, var(--pine) 78%);
+  color: var(--chalk);
+}
+
+/* the fingerprint arc, oversized and faint, behind the cards */
+.social::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: -8%;
+  width: min(620px, 60vw);
+  aspect-ratio: 1;
+  translate: 0 -50%;
+  pointer-events: none;
+  opacity: 0.14;
+  background: repeating-radial-gradient(
+    circle at 50% 50%,
+    transparent 0 15px,
+    var(--sand) 15px 16.4px
+  );
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 0%, transparent 70%);
+  mask-image: radial-gradient(circle at 50% 50%, #000 0%, transparent 70%);
+}
+
+.social .sec-lede {
+  color: color-mix(in oklab, var(--chalk) 68%, transparent);
+}
+
+.social__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: color-mix(in oklab, var(--chalk) 18%, transparent);
+  border: 1px solid color-mix(in oklab, var(--chalk) 18%, transparent);
+}
+
+@media (min-width: 720px) {
+  .social__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.social__card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.9rem;
+  padding: clamp(1.8rem, 4vw, 2.4rem);
+  background: color-mix(in oklab, var(--pine) 70%, var(--moss));
+  transition: background 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.social__card:hover,
+.social__card:focus-visible {
+  background: color-mix(in oklab, var(--leaf) 20%, var(--pine));
+  transform: translateY(-3px);
+}
+
+.social__icon {
+  width: 52px;
+  height: 52px;
+  flex: none;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--chalk) 30%, transparent);
+  display: grid;
+  place-items: center;
+  color: var(--chalk);
+  transition: background 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.social__icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.social__card:hover .social__icon,
+.social__card:focus-visible .social__icon {
+  background: var(--leaf);
+  border-color: var(--leaf);
+  color: #07130c;
+}
+
+.social__name {
+  font-family: var(--display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--chalk);
+}
+
+.social__handle {
+  font-size: 0.88rem;
+  color: var(--sand);
+}
+
+/* ============================================================
+   contact
+   ============================================================ */
+
+/* Dune ridgelines from above — the same ridge pattern the fingerprint over
+   the Kingdom is drawn from, so the photo reads as the land itself rather
+   than stock decoration. Recolored to the site's own palette via a
+   color-blend layer, not left in its natural sunrise tones. */
+.contact {
+  position: relative;
+  z-index: 2;
+  padding: clamp(4rem, 10vw, 7rem) 0;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--ink) 78%, transparent) 0%,
+      color-mix(in oklab, var(--ink) 22%, transparent) 30%,
+      color-mix(in oklab, var(--ink) 38%, transparent) 72%,
+      color-mix(in oklab, var(--ink) 78%, transparent) 100%
+    ),
+    linear-gradient(150deg, var(--moss) 0%, var(--ink) 85%),
+    url('/images/dunes.webp') center 35% / cover no-repeat;
+  background-blend-mode: normal, color, normal;
+  border-block-start: 1px solid var(--edge-soft);
+}
+
+.contact__wrap {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 6vw, 4rem);
+}
+
+@media (min-width: 880px) {
+  .contact__wrap {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.contact__natl {
+  margin-block-start: 1.6rem;
+  font-size: 0.85rem;
+  color: var(--sage-dim);
+  letter-spacing: 0.04em;
+}
+
+.contact__natl b {
+  color: var(--sand);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.contact__cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--edge-soft);
+  border: 1px solid var(--edge-soft);
+}
+
+.ccard {
+  background: var(--ink-2);
+  padding: clamp(1.3rem, 3vw, 1.9rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-height: 118px;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+a.ccard:hover {
+  background: var(--pine);
+}
+
+.ccard__k {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--sage-dim);
+}
+
+.ccard__v {
+  font-family: var(--display);
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--chalk);
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  text-align: right;
+}
+
+.ccard--wa .ccard__v,
+.ccard--loc .ccard__v {
+  direction: rtl;
+}
+
+.ccard--wa .ccard__v {
+  color: var(--leaf-lift);
+}
+
+/* ============================================================
+   footer
+   ============================================================ */
+
+.foot {
+  position: relative;
+  z-index: 2;
+  background: var(--ink);
+  border-block-start: 1px solid var(--edge-soft);
+  padding: 2.5rem 0;
+}
+
+.foot__wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.2rem 2rem;
+}
+
+.foot__id {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.foot__brand {
+  font-family: var(--display);
+  font-size: 1.05rem;
+}
+
+.foot__brand span {
+  color: var(--sage-dim);
+  font-size: 0.8rem;
+}
+
+.foot__note {
+  color: var(--sage-dim);
+  font-size: 0.85rem;
+  font-weight: 300;
+}
+
+.foot__copy {
+  margin-inline-start: auto;
+  color: var(--sage-dim);
+  font-size: 0.78rem;
+}
+
+/* ============================================================
+   mobile nav
+   ============================================================ */
+
+.nav__burger {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: 1px solid var(--edge);
+  border-radius: 999px;
+  color: var(--chalk);
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 0.5rem 0.9rem;
+  cursor: pointer;
+}
+
+.nav__burger-bars {
+  display: grid;
+  gap: 4px;
+  width: 16px;
+}
+
+.nav__burger-bars i {
+  display: block;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.nav__burger[aria-expanded='true'] .nav__burger-bars i:first-child {
+  transform: translateY(2.75px) rotate(45deg);
+}
+
+.nav__burger[aria-expanded='true'] .nav__burger-bars i:last-child {
+  transform: translateY(-2.75px) rotate(-45deg);
+}
+
+.mnav {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: 45;
+  padding: 5rem var(--pad) 1.5rem;
+  background: color-mix(in oklab, var(--ink) 97%, transparent);
+  border-block-end: 1px solid var(--edge-soft);
+}
+
+.mnav nav {
+  display: grid;
+}
+
+.mnav a {
+  padding: 0.9rem 0;
+  font-size: 1.05rem;
+  font-family: var(--display);
+  border-block-end: 1px solid var(--edge-soft);
+}
+
+.mnav a:last-child {
+  border-block-end: 0;
+  color: var(--leaf-lift);
+}
+
+/* ============================================================
+   reviews
+   ============================================================ */
+
+.reviews {
+  position: relative;
+  z-index: 2;
+  padding: clamp(4rem, 10vw, 7rem) 0;
+  background: var(--bone);
+  color: var(--bone-ink);
+}
+
+.reviews .sec-kicker {
+  color: var(--sand-deep);
+}
+
+.reviews .sec-lede {
+  color: color-mix(in oklab, var(--bone-ink) 72%, transparent);
+}
+
+/* Six reviews: explicit column counts that divide evenly, so the grid
+   never leaves an empty cell showing as a dead block. */
+.rev {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: color-mix(in oklab, var(--bone-ink) 16%, transparent);
+  border: 1px solid color-mix(in oklab, var(--bone-ink) 16%, transparent);
+}
+
+@media (min-width: 620px) {
+  .rev {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1080px) {
+  .rev {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.rev__card {
+  background: var(--bone);
+  padding: clamp(1.4rem, 3vw, 1.9rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.rev__stars {
+  color: var(--sand-deep);
+  letter-spacing: 0.18em;
+  font-size: 0.9rem;
+  direction: ltr;
+  text-align: right;
+}
+
+.rev__txt {
+  color: color-mix(in oklab, var(--bone-ink) 78%, transparent);
+  font-weight: 300;
+  font-size: 0.95rem;
+  flex: 1;
+}
+
+.rev__who {
+  font-family: var(--display);
+  font-size: 0.9rem;
+  color: var(--bone-ink);
+  padding-block-start: 0.4rem;
+  border-block-start: 1px solid color-mix(in oklab, var(--bone-ink) 16%, transparent);
+}
+
+/* ============================================================
+   clients
+   ============================================================ */
+
+.clients {
+  position: relative;
+  z-index: 2;
+  background: var(--bone);
+  color: var(--bone-ink);
+  padding-block: clamp(3rem, 7vw, 4.5rem);
+}
+
+.clients__lead {
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  color: color-mix(in oklab, var(--bone-ink) 62%, transparent);
+  margin-block-end: 1.5rem;
+}
+
+.clients__row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1px;
+  background: color-mix(in oklab, var(--bone-ink) 16%, transparent);
+  border: 1px solid color-mix(in oklab, var(--bone-ink) 16%, transparent);
+}
+
+.clients__row li {
+  background: var(--bone);
+  display: grid;
+  place-items: center;
+  padding: 1.1rem;
+  min-height: 92px;
+  transition: background 0.3s;
+}
+
+.clients__row li:hover {
+  background: var(--bone-2);
+}
+
+.clients__row img {
+  max-width: 100%;
+  height: auto;
+  max-height: 56px;
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.55;
+  transition: opacity 0.3s, filter 0.3s;
+}
+
+.clients__row li:hover img {
+  filter: none;
+  opacity: 1;
+  mix-blend-mode: normal;
+}
+
+/* ============================================================
+   contact form
+   ============================================================ */
+
+.cform {
+  margin-block-start: clamp(2.5rem, 6vw, 3.5rem);
+  padding-block-start: clamp(2rem, 5vw, 2.8rem);
+  border-block-start: 1px solid var(--edge-soft);
+}
+
+.cform__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.field--wide {
+  grid-column: 1 / -1;
+}
+
+.field > span {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: var(--sage-dim);
+}
+
+.field input,
+.field select,
+.field textarea {
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--chalk);
+  background: var(--ink-2);
+  border: 1px solid var(--edge-soft);
+  border-radius: 4px;
+  padding: 0.75rem 0.9rem;
+  width: 100%;
+  transition: border-color 0.25s, background 0.25s;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: color-mix(in oklab, var(--sage-dim) 75%, transparent);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--leaf);
+  background: var(--pine);
+}
+
+.field input:user-invalid {
+  border-color: #b4553f;
+}
+
+.cform__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-block-start: 1.4rem;
+}
+
+.cform__note {
+  font-size: 0.88rem;
+  color: var(--sage);
+}
+
+.cform__note[data-state='ok'] {
+  color: var(--leaf-lift);
+}
+
+.cform__note[data-state='err'] {
+  color: #d98a72;
+}
+
+/* ============================================================
+   responsive + motion
+   ============================================================ */
+
+/* ---- tablet and below ---- */
+@media (max-width: 1023px) {
+  .nav__links {
+    display: none;
+  }
+
+  .nav__cta {
+    margin-inline-start: auto;
+  }
+
+  .nav__burger {
+    display: inline-flex;
+  }
+
+  .hero {
+    min-height: 0;
+    padding-block: 7.5rem 4rem;
+  }
+
+  .hero__inner {
+    max-width: none;
+  }
+
+  .hero__scroll {
+    display: none;
+  }
+
+  /* the planet sits behind the copy, so the copy gets its own ground */
+  .hero__lede,
+  .hero__coords {
+    max-width: none;
+  }
+
+  .figures li {
+    border-inline-start: 0;
+    padding-inline-end: 0;
+  }
+}
+
+/* ---- phones ---- */
+@media (max-width: 719px) {
+  html {
+    scroll-padding-top: 4.5rem;
+  }
+
+  body {
+    line-height: 1.7;
+  }
+
+  .nav {
+    padding-block: 0.75rem;
+  }
+
+  .nav__word small {
+    display: none;
+  }
+
+  .nav__cta {
+    display: none;
+  }
+
+  .nav__burger {
+    margin-inline-start: auto;
+  }
+
+  .hero {
+    padding-block: 6.5rem 3rem;
+  }
+
+  .hero__eyebrow {
+    font-size: 0.72rem;
+    padding: 0.4rem 0.75rem;
+    line-height: 1.5;
+    align-items: flex-start;
+  }
+
+  .hero__eyebrow .dot {
+    margin-block-start: 0.45rem;
+  }
+
+  .hero__actions .btn {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+
+  .hero__coords {
+    gap: 1rem 2rem;
+    margin-block-start: 2rem;
+  }
+
+  .figures {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .figures li {
+    padding-block: 1.4rem;
+  }
+
+  /* index, name and control stack instead of fighting for one row */
+  .svc__head {
+    grid-template-columns: auto 1fr auto;
+    gap: 0.35rem 0.8rem;
+    padding-block: 1.2rem;
+  }
+
+  .svc__name {
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .svc__chev {
+    width: 28px;
+    height: 28px;
+  }
+
+  .svc__chev::before {
+    width: 10px;
+  }
+
+  .svc__chev::after {
+    height: 10px;
+  }
+
+  .contact__cards {
+    grid-template-columns: 1fr;
+  }
+
+  .clients__row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .foot__wrap {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .foot__copy {
+    margin-inline-start: 0;
+  }
+}
+
+/* ---- very small phones ---- */
+@media (max-width: 400px) {
+  :root {
+    --pad: 1rem;
+  }
+
+  .figures {
+    grid-template-columns: 1fr;
+  }
+
+  .sectors__list li {
+    padding: 0.55rem 1rem;
+  }
+
+  .svc__brief {
+    font-size: 0.84rem;
+  }
+}
+
+/* ---- very wide screens: stop the measure from sprawling ---- */
+@media (min-width: 1600px) {
+  :root {
+    --wrap: 1320px;
+  }
+}
+
+/* ---- short landscape (phones held sideways) ---- */
+@media (max-height: 560px) and (min-width: 720px) {
+  .hero {
+    min-height: 0;
+    padding-block: 6rem 3rem;
+  }
+
+  .hero__coords {
+    margin-block-start: 1.6rem;
+    padding-block-start: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
