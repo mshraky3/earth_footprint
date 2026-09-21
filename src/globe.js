@@ -17,6 +17,19 @@ const COL = {
   core: new THREE.Color('#061711'),
 };
 
+// Per-theme colours. Dark is the original night-side planet; light turns it
+// into a pale sage globe with dark land dots, so it still reads on off-white.
+const PALETTE = {
+  dark: {
+    core: '#061711', rim: '#2D5442', dot: '#52AC81', dotHi: '#EAF0E2',
+    outline: '#EAF0E2', glow: '#52AC81', ridge: '#C8A464', line: '#2D5442', halo: 0.85,
+  },
+  light: {
+    core: '#E3EADF', rim: '#A9C4B2', dot: '#2F7A56', dotHi: '#16241C',
+    outline: '#16241C', glow: '#52AC81', ridge: '#8A6A2E', line: '#8FA894', halo: 0.45,
+  },
+};
+
 /* ── timeline (seconds) ───────────────────────────────────────── */
 const T = {
   spinEnd: 3.2,       // globe decelerates onto the Kingdom
@@ -48,7 +61,7 @@ function facingRotation(lon, lat) {
   return { x: lat * DEG, y: Math.PI / 2 - (lon + 180) * DEG };
 }
 
-export function createGlobe(canvas, { onHandoff, pace = 1 } = {}) {
+export function createGlobe(canvas, { onHandoff, pace = 1, theme = 'dark' } = {}) {
   // The opening sequence is the whole point of the page, so it always plays
   // on load — it used to auto-skip when the OS reported prefers-reduced-motion,
   // but on this client's own machine that setting is just "Show animations"
@@ -78,7 +91,7 @@ export function createGlobe(canvas, { onHandoff, pace = 1 } = {}) {
   const core = new THREE.Mesh(
     new THREE.SphereGeometry(R * 0.988, 64, 48),
     new THREE.ShaderMaterial({
-      uniforms: { uCore: { value: COL.core }, uRim: { value: COL.moss } },
+      uniforms: { uCore: { value: COL.core.clone() }, uRim: { value: COL.moss.clone() } },
       vertexShader: `
         varying vec3 vN;
         void main(){
@@ -128,8 +141,8 @@ export function createGlobe(canvas, { onHandoff, pace = 1 } = {}) {
       uDpr: { value: DPR },
       uReveal: { value: 0 },
       uFocus: { value: 0 },
-      uLeaf: { value: COL.leaf },
-      uBone: { value: COL.bone },
+      uLeaf: { value: COL.leaf.clone() },
+      uBone: { value: COL.bone.clone() },
     },
     vertexShader: `
       attribute float aRand; attribute float aNear;
@@ -315,7 +328,7 @@ export function createGlobe(canvas, { onHandoff, pace = 1 } = {}) {
       transparent: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
-      uniforms: { uColor: { value: COL.leaf }, uStrength: { value: 0.0 } },
+      uniforms: { uColor: { value: COL.leaf.clone() }, uStrength: { value: 0.0 } },
       vertexShader: `
         varying vec3 vN;
         void main(){
@@ -355,6 +368,26 @@ export function createGlobe(canvas, { onHandoff, pace = 1 } = {}) {
     })
   );
   scene.add(motes);
+
+  /* ── theme ───────────────────────────────────────────────── */
+  let haloK = 0.85;
+  function setTheme(name) {
+    const c = PALETTE[name] || PALETTE.dark;
+    core.material.uniforms.uCore.value.set(c.core);
+    core.material.uniforms.uRim.value.set(c.rim);
+    dotMat.uniforms.uLeaf.value.set(c.dot);
+    dotMat.uniforms.uBone.value.set(c.dotHi);
+    saudiMat.color.set(c.outline);
+    saudiGlowMat.color.set(c.glow);
+    ridgeMat.color.set(c.ridge);
+    ridgeGlowMat.color.set(c.ridge);
+    markerMat.color.set(c.ridge);
+    neighbourMat.color.set(c.line);
+    gratMat.color.set(c.line);
+    motes.material.color.set(c.line);
+    haloK = c.halo;
+  }
+  setTheme(theme);
 
   /* ── layout ────────────────────────────────────────────────── */
   let restX = -0.62;
@@ -491,7 +524,7 @@ export function createGlobe(canvas, { onHandoff, pace = 1 } = {}) {
     // Reveals.
     dotMat.uniforms.uReveal.value = clamp01(t / 1.15);
     dotMat.uniforms.uFocus.value = span(t, [2.9, 4.4]) * (1 - 0.55 * settle);
-    halo.material.uniforms.uStrength.value = clamp01(t / 1.4) * (0.85 - 0.25 * inT) * scrollFade;
+    halo.material.uniforms.uStrength.value = clamp01(t / 1.4) * (haloK - 0.25 * inT) * scrollFade;
     gratMat.opacity = clamp01(t / 0.9) * 0.28 * (1 - span(t, [2.4, 3.6])) * scrollFade;
     motes.material.opacity = 0.5 * clamp01(t / 1.5) * scrollFade;
     motes.rotation.y += dt * 0.01;
@@ -558,5 +591,5 @@ export function createGlobe(canvas, { onHandoff, pace = 1 } = {}) {
     };
   }
 
-  return { skip, setScrollFade, handoffAt: T.handoff, isReduced: reduced };
+  return { skip, setScrollFade, setTheme, handoffAt: T.handoff, isReduced: reduced };
 }

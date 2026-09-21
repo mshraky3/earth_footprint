@@ -39,7 +39,36 @@
   --wrap: 1180px;
   --pad: clamp(1.25rem, 4vw, 3.5rem);
 
+  --vignette: rgba(4, 12, 9, 0.7);
+
   color-scheme: dark;
+}
+
+/* Light theme: the same design with the dark ground swapped for a warm
+   off-white. Dark sections become the light ground, "paper" sections go a
+   shade deeper so the rhythm between them survives, and accents that were
+   tuned for dark (sand, leaf-lift) darken enough to read as text. Set on
+   <html data-theme> by the head script: by the clock unless overridden. */
+:root[data-theme='light'] {
+  --ink: #f7f5ee;
+  --ink-2: #efece2;
+  --pine: #e4eadf;
+
+  --leaf-lift: #2e7d57;
+  --sand: #94702f;
+  --sand-deep: #85652b;
+
+  --bone: #ebe6d8;
+  --bone-2: #e0dbca;
+
+  --sage: #46584a;
+  --sage-dim: #677767;
+  --chalk: #13221a;
+
+  --night: #f3f0e7;
+  --vignette: rgba(247, 245, 238, 0.8);
+
+  color-scheme: light;
 }
 
 * {
@@ -125,7 +154,7 @@ ul {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(120% 90% at 30% 45%, transparent 38%, rgba(4, 12, 9, 0.7) 100%),
+    radial-gradient(120% 90% at 30% 45%, transparent 38%, var(--vignette) 100%),
     linear-gradient(to top, var(--ink) 2%, transparent 30%);
 }
 
@@ -140,8 +169,8 @@ ul {
   background: linear-gradient(
     to right,
     transparent 24%,
-    rgba(7, 20, 16, 0.74) 56%,
-    rgba(7, 20, 16, 0.93) 100%
+    color-mix(in oklab, var(--ink) 74%, transparent) 56%,
+    color-mix(in oklab, var(--ink) 93%, transparent) 100%
   );
 }
 
@@ -154,8 +183,8 @@ ul {
   .stage__vignette::after {
     background: linear-gradient(
       to bottom,
-      rgba(7, 20, 16, 0.86) 22%,
-      rgba(7, 20, 16, 0.45) 55%,
+      color-mix(in oklab, var(--ink) 86%, transparent) 22%,
+      color-mix(in oklab, var(--ink) 45%, transparent) 55%,
       transparent 80%
     );
   }
@@ -336,6 +365,43 @@ ul {
 
 .nav__links a:hover::after {
   transform: scaleX(1);
+}
+
+/* theme toggle: shows the mode you'd switch to */
+.nav__theme {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  background: none;
+  border: 1px solid var(--edge);
+  border-radius: 50%;
+  color: var(--chalk);
+  cursor: pointer;
+  transition: background 0.25s, border-color 0.25s;
+}
+
+.nav__theme:hover {
+  border-color: var(--leaf);
+  background: color-mix(in oklab, var(--leaf) 14%, transparent);
+}
+
+.nav__theme svg {
+  grid-area: 1 / 1;
+  width: 19px;
+  height: 19px;
+}
+
+.nav__theme-sun,
+[data-theme='light'] .nav__theme-moon {
+  display: block;
+}
+
+.nav__theme-moon,
+[data-theme='light'] .nav__theme-sun {
+  display: none;
 }
 
 .nav__cta {
@@ -696,7 +762,8 @@ main {
     display: none;
   }
 
-  .nav__cta {
+  /* links are hidden here, so the toggle is what pushes the actions over */
+  .nav__theme {
     margin-inline-start: auto;
   }
 
@@ -744,9 +811,6 @@ main {
     display: none;
   }
 
-  .nav__burger {
-    margin-inline-start: auto;
-  }
 
   .hero {
     padding-block: 6.5rem 3rem;

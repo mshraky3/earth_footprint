@@ -15,7 +15,7 @@ Colour: **Reviews** and **Services** photos are toned into the site palette (kep
 | Section | File | Size | Subject | Source (photographer) |
 |---|---|---|---|---|
 | في أرقام | `print.svg` | vector | Fingerprint ridges from the logo (sand, ~15% opacity) | drawn for this site |
-| الخدمات (side panel) | `services-panel.webp` | 1000×1286 | Desert with shrubs and rock, Hail (toned) | [Rabah Al Shammary](https://unsplash.com/photos/sand-dune-and-mountain-scenery-7vOpzRF33Zo) |
+| الخدمات (side panel) | `services-panel.webp` | 800×1029 | Tree rings with a green leaf — echoes the logo (print + leaves). Portrait crop of the photo the client used on their original (v1) site, `earth_footprint/src/assets/contact16-9.webp` | Client-supplied (v1 site) |
 | لماذا نحن | `why-seedling.webp` | 1800×1030 | Hands holding a seedling in soil | [Noah Buscher](https://unsplash.com/photos/hands-holding-small-plant-seedling-in-soil-x8ZStukS2PM) |
 | القطاعات (band) | `sectors-solar.webp` | 1800×788 | Aerial solar farm | [Priamo Mendez](https://unsplash.com/photos/a-large-field-of-solar-panels-in-the-desert-E4XEBPEkgUs) |
 | آراء العملاء | `reviews-palms.webp` | 1800×1200 | Date-palm grove, Saudi Arabia (toned) | [NEOM](https://unsplash.com/photos/a-row-of-palm-trees-with-mountains-in-the-background-ARpmY5qq7Lk) |

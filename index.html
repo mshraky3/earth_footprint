@@ -6,7 +6,7 @@
     <title>بصمة الأرض — للاستشارات البيئية</title>
     <meta
       name="description"
-      content="مكتب بصمة الأرض للاستشارات البيئية — تصاريح وتقارير وتقييم أثر بيئي معتمد من المركز الوطني للرقابة على الالتزام البيئي. القصيم، المملكة العربية السعودية."
+      content="مكتب بصمة الأرض للاستشارات البيئية — تصاريح وتقارير وتقييم أثر بيئي معتمد من المركز الوطني للرقابة على الالتزام البيئي. الفرع الرئيسي في بريدة، القصيم — المملكة العربية السعودية."
     />
 
     <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -15,6 +15,19 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#071410" />
+
+    <!-- Theme before first paint: light by day (06:00–18:00 local), dark by
+         night, unless the visitor flipped the toggle — that choice holds only
+         until the next switch-over, then the clock takes back over. -->
+    <script>
+      (function () {
+        var t, o;
+        try { o = JSON.parse(localStorage.getItem('ef-theme') || 'null'); } catch (e) {}
+        if (o && o.until > Date.now()) t = o.theme;
+        else { var h = new Date().getHours(); t = h >= 6 && h < 18 ? 'light' : 'dark'; }
+        document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
 
     <link rel="canonical" href="https://erthfc.com/" />
     <meta name="robots" content="index, follow" />
@@ -26,7 +39,7 @@
     <meta property="og:title" content="بصمة الأرض — شريكك البيئي الأول" />
     <meta
       property="og:description"
-      content="استشارات وتصاريح بيئية معتمدة من المركز الوطني للرقابة على الالتزام البيئي. القصيم، المملكة العربية السعودية."
+      content="استشارات وتصاريح بيئية معتمدة من المركز الوطني للرقابة على الالتزام البيئي. الفرع الرئيسي في بريدة، القصيم — المملكة العربية السعودية."
     />
     <meta property="og:url" content="https://erthfc.com/" />
     <meta property="og:image" content="https://erthfc.com/og-image.jpg" />
@@ -37,7 +50,7 @@
     <meta name="twitter:title" content="بصمة الأرض — شريكك البيئي الأول" />
     <meta
       name="twitter:description"
-      content="استشارات وتصاريح بيئية معتمدة من المركز الوطني للرقابة على الالتزام البيئي. القصيم، المملكة العربية السعودية."
+      content="استشارات وتصاريح بيئية معتمدة من المركز الوطني للرقابة على الالتزام البيئي. الفرع الرئيسي في بريدة، القصيم — المملكة العربية السعودية."
     />
     <meta name="twitter:image" content="https://erthfc.com/og-image.jpg" />
     <meta name="twitter:site" content="@erth_3" />
@@ -116,6 +129,15 @@
         <a href="#social">تابعنا</a>
         <a href="#location">موقعنا</a>
       </nav>
+      <button class="nav__theme" id="themeToggle" type="button" aria-label="التبديل إلى الوضع الداكن">
+        <svg class="nav__theme-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z" />
+        </svg>
+        <svg class="nav__theme-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4" />
+        </svg>
+      </button>
       <a class="nav__cta" href="#contact">تواصل معنا</a>
       <button class="nav__burger" id="burger" type="button" aria-expanded="false" aria-controls="mobileNav">
         <span class="nav__burger-label">القائمة</span>
@@ -181,8 +203,8 @@
               <dd>43.9738° شرقاً</dd>
             </div>
             <div>
-              <dt>المقر</dt>
-              <dd>القصيم، السعودية</dd>
+              <dt>الفرع الرئيسي</dt>
+              <dd>بريدة، القصيم</dd>
             </div>
           </dl>
         </div>
@@ -300,7 +322,7 @@
                     <p>
                       خطوة محورية قبل تنفيذ أي مشروع جديد، يتم من خلالها تحليل وتقييم
                       التأثيرات البيئية المحتملة للنشاط المقترح على الهواء والمياه والتربة
-                      والمجتمع المحيط، مع إعداد دراسات الجدوى البيئية وتقديم الحلول التي
+                      والمجتمع المحيط، مع تقديم الحلول التي
                       تضمن تقليل الأضرار وتعزيز ممارسات التنمية المستدامة.
                     </p>
                   </div>
@@ -348,17 +370,17 @@
               <li class="svc__item" data-svc>
                 <button class="svc__head" type="button" aria-expanded="false">
                   <span class="svc__idx">٠٦</span>
-                  <span class="svc__name">خطط إعادة التأهيل البيئي</span>
-                  <span class="svc__brief">استعادة التوازن البيئي للمواقع المتدهورة</span>
+                  <span class="svc__name">خطط المعالجة وإعادة التأهيل</span>
+                  <span class="svc__brief">معالجة المواقع الملوثة واستعادة توازنها البيئي</span>
                   <span class="svc__chev" aria-hidden="true"></span>
                 </button>
                 <div class="svc__body">
                   <div class="svc__bodyInner">
                     <p>
-                      برامج متكاملة لإعادة التأهيل والاستصلاح البيئي للمواقع الملوثة
-                      والمتدهورة، تتضمن تقييم الحالة الحالية، ووضع استراتيجيات المعالجة،
-                      ومتابعة تنفيذ الحلول لضمان استعادة الموارد الطبيعية والوظائف البيئية
-                      للموقع.
+                      نُعدّ خطط المعالجة وإعادة التأهيل البيئي للمواقع الملوثة والمتدهورة،
+                      بدءًا من تقييم الحالة الراهنة، مرورًا بوضع استراتيجيات المعالجة،
+                      وانتهاءً بمتابعة تنفيذ الحلول لضمان استعادة الموارد الطبيعية والوظائف
+                      البيئية للموقع.
                     </p>
                   </div>
                 </div>
@@ -367,15 +389,15 @@
               <li class="svc__item" data-svc>
                 <button class="svc__head" type="button" aria-expanded="false">
                   <span class="svc__idx">٠٧</span>
-                  <span class="svc__name">الاستشارات الفنية المتخصصة</span>
-                  <span class="svc__brief">الموارد والنفايات والتلوث والطاقة المستدامة</span>
+                  <span class="svc__name">خطط استشارية لإدارة النفايات والموارد، والحد من التلوث وتعزيز الطاقة المستدامة</span>
+                  <span class="svc__brief">استشارات فنية متخصصة لجميع القطاعات</span>
                   <span class="svc__chev" aria-hidden="true"></span>
                 </button>
                 <div class="svc__body">
                   <div class="svc__bodyInner">
                     <p>
-                      دعم متكامل للمنشآت في إدارة الموارد البيئية والنفايات والتلوث والطاقة
-                      المستدامة عبر جميع القطاعات. يُنفذها فريق استشاري بحثي مختص لتقديم
+                      نضع للمنشآت خططًا استشارية متكاملة تشمل إدارة النفايات، وإدارة الموارد
+                      التشغيلية، والحد من التلوث، وتعزيز الطاقة المستدامة عبر جميع القطاعات. يُنفذها فريق استشاري بحثي مختص لتقديم
                       تحليلات دقيقة مبنية على بيانات علمية، بما يدعم صناع القرار في اتخاذ
                       خيارات استراتيجية مستنيرة.
                     </p>
@@ -387,19 +409,20 @@
                 <button class="svc__head" type="button" aria-expanded="false">
                   <span class="svc__idx">٠٨</span>
                   <span class="svc__name">
-                    إصدار تصريح موان
+                    إصدار تصاريح وتراخيص موان
                     <span class="svc__new">جديد</span>
                   </span>
-                  <span class="svc__brief">أنشطة جمع ونقل وتخزين وإعادة تدوير النفايات</span>
+                  <span class="svc__brief">خدمات متكاملة في إدارة النفايات</span>
                   <span class="svc__chev" aria-hidden="true"></span>
                 </button>
                 <div class="svc__body">
                   <div class="svc__bodyInner">
                     <p>
-                      حل متكامل للمنشآت الراغبة في ممارسة أنشطة جمع، نقل، تخزين، إعادة
-                      تدوير، أو التخلص النهائي من النفايات وفق الأنظمة المعتمدة. تشمل إعداد
+                      خدمات متكاملة في إدارة النفايات للمنشآت الراغبة في ممارسة أنشطة جمع،
+                      نقل، تخزين، إعادة تدوير، أو التخلص النهائي من النفايات وفق الأنظمة
+                      المعتمدة لدى المركز الوطني لإدارة النفايات (موان). تشمل إعداد
                       المستندات والخطط البيئية اللازمة، وتقديم الطلبات إلكترونيًا، ومتابعة
-                      الإجراءات حتى صدور التصريح.
+                      الإجراءات حتى صدور التصريح أو الترخيص.
                     </p>
                   </div>
                 </div>
@@ -407,7 +430,7 @@
             </ul>
 
             <figure class="services__panel rv">
-              <img class="bg" src="/images/services-panel.webp" alt="" width="1000" height="1286" loading="lazy" decoding="async" />
+              <img class="bg" src="/images/services-panel.webp" alt="" width="800" height="1029" loading="lazy" decoding="async" />
               <figcaption>
                 <span class="services__count" aria-hidden="true">8</span>
                 <span class="services__cap">
@@ -477,7 +500,7 @@
               <p class="why__cat">التغطية</p>
               <h3>تغطية شاملة للمملكة</h3>
               <p class="why__txt">
-                مقرنا في القصيم ونقدّم خدماتنا لكافة مناطق المملكة من خلال شبكة من
+                فرعنا الرئيسي في بريدة بمنطقة القصيم، ونقدّم خدماتنا لكافة مناطق المملكة من خلال شبكة من
                 الشراكات والتعاون الممتدة إلى تسع مناطق.
               </p>
             </article>
@@ -872,7 +895,7 @@
                   <path d="M17 17 7 7M7 15V7h8" />
                 </svg>
               </a>
-              <a class="chan__row chan__row--wa" href="https://wa.me/966597007805" target="_blank" rel="noopener noreferrer">
+              <a class="chan__row chan__row--wa" href="https://wa.me/966533778433" target="_blank" rel="noopener noreferrer">
                 <span class="chan__ic" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M4 20l1.3-4.2A8 8 0 1 1 8.4 18.8L4 20Z" />
@@ -895,7 +918,7 @@
                   </svg>
                 </span>
                 <span>
-                  <span class="chan__k">المقر — افتح في خرائط جوجل</span>
+                  <span class="chan__k">الفرع الرئيسي — افتح في خرائط جوجل</span>
                   <span class="chan__v">بريدة، القصيم</span>
                 </span>
                 <svg class="chan__go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -934,9 +957,9 @@
                   <option>تقييم الأثر البيئي</option>
                   <option>التدقيق البيئي</option>
                   <option>خطط الإدارة البيئية</option>
-                  <option>خطط إعادة التأهيل البيئي</option>
-                  <option>الاستشارات الفنية المتخصصة</option>
-                  <option>إصدار تصريح موان</option>
+                  <option>خطط المعالجة وإعادة التأهيل</option>
+                  <option>خطط استشارية لإدارة النفايات والموارد والطاقة المستدامة</option>
+                  <option>إصدار تصاريح وتراخيص موان</option>
                   <option>خدمة أخرى</option>
                 </select>
               </label>
@@ -960,9 +983,9 @@
         <section class="loc" id="location" aria-labelledby="locTitle">
           <div class="loc__card">
             <p class="sec-kicker">موقعنا</p>
-            <h2 class="loc__title" id="locTitle">زورونا في مقرنا ببريدة</h2>
+            <h2 class="loc__title" id="locTitle">زورونا في فرعنا الرئيسي ببريدة</h2>
             <address class="loc__addr">
-              مكتب بصمة الأرض للاستشارات البيئية<br />
+              مكتب بصمة الأرض للاستشارات البيئية — الفرع الرئيسي<br />
               طريق الملك عبدالله، بريدة، منطقة القصيم<br />
               المملكة العربية السعودية
             </address>
@@ -1017,8 +1040,8 @@
             <ul class="foot__list">
               <li><a href="tel:+966597007805">0597007805</a></li>
               <li><a href="tel:+966533778433">0533778433</a></li>
-              <li><a href="https://wa.me/966597007805" target="_blank" rel="noopener noreferrer">واتساب</a></li>
-              <li><a href="https://maps.google.com/?cid=1596513742221465984" target="_blank" rel="noopener noreferrer">بريدة، القصيم — الموقع على الخريطة</a></li>
+              <li><a href="https://wa.me/966533778433" target="_blank" rel="noopener noreferrer">واتساب</a></li>
+              <li><a href="https://maps.google.com/?cid=1596513742221465984" target="_blank" rel="noopener noreferrer">الفرع الرئيسي: بريدة، القصيم</a></li>
             </ul>
           </div>
 

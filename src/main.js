@@ -13,6 +13,66 @@ const nav = $('#nav');
 const hero = $('#hero');
 const canvas = $('#globe');
 
+/* ── theme: light by day, dark by night, with a manual toggle ─── */
+// The head script already set <html data-theme> before first paint; this
+// keeps it in step with the clock and handles the toggle. A manual choice is
+// honoured until the next 06:00 / 18:00 switch-over, then the clock resumes.
+
+const THEME_KEY = 'ef-theme';
+const DAY_START = 6;
+const DAY_END = 18;
+const root = document.documentElement;
+const themeBtn = $('#themeToggle');
+const themeMeta = document.querySelector('meta[name="theme-color"]');
+
+const clockTheme = (d = new Date()) =>
+  d.getHours() >= DAY_START && d.getHours() < DAY_END ? 'light' : 'dark';
+
+function nextSwitch(d = new Date()) {
+  const n = new Date(d);
+  const h = d.getHours();
+  if (h < DAY_START) n.setHours(DAY_START, 0, 0, 0);
+  else if (h < DAY_END) n.setHours(DAY_END, 0, 0, 0);
+  else {
+    n.setDate(n.getDate() + 1);
+    n.setHours(DAY_START, 0, 0, 0);
+  }
+  return n.getTime();
+}
+
+function storedTheme() {
+  try {
+    const o = JSON.parse(localStorage.getItem(THEME_KEY) || 'null');
+    if (o && o.until > Date.now()) return o.theme;
+  } catch {}
+  return null;
+}
+
+function applyTheme(theme) {
+  if (root.dataset.theme !== theme) root.dataset.theme = theme;
+  const dark = theme === 'dark';
+  themeBtn.setAttribute('aria-label', dark ? 'التبديل إلى الوضع الفاتح' : 'التبديل إلى الوضع الداكن');
+  themeMeta?.setAttribute('content', dark ? '#071410' : '#f7f5ee');
+  globe?.setTheme(theme);
+}
+
+themeBtn.addEventListener('click', () => {
+  const theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+  try {
+    localStorage.setItem(THEME_KEY, JSON.stringify({ theme, until: nextSwitch() }));
+  } catch {}
+  const swap = () => applyTheme(theme);
+  // A short cross-fade where supported; an instant swap everywhere else.
+  if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.startViewTransition(swap);
+  } else {
+    swap();
+  }
+});
+
+// Follow the clock while the page stays open (e.g. across sunset).
+setInterval(() => applyTheme(storedTheme() || clockTheme()), 60_000);
+
 /* ── the 3D sequence ──────────────────────────────────────────── */
 
 // >1 plays the opening faster than its authored timeline (5.7s → ~4.2s to
@@ -52,7 +112,7 @@ function skipIntro() {
 
 globeModule
   .then(({ createGlobe }) => {
-    globe = createGlobe(canvas, { onHandoff: handoff, pace: PACE });
+    globe = createGlobe(canvas, { onHandoff: handoff, pace: PACE, theme: root.dataset.theme });
     started = performance.now(); // telemetry tracks the globe's own clock
     if (wantSkip) globe.skip();
     onScroll();
@@ -89,7 +149,7 @@ const PHASES = [
   [0.0, 'تحديد الموقع'],
   [1.6, 'تثبيت المدار'],
   [3.1, 'المملكة العربية السعودية'],
-  [4.3, 'القصيم — مقر بصمة الأرض'],
+  [4.3, 'بريدة، القصيم — الفرع الرئيسي'],
 ];
 
 let started = performance.now();
@@ -311,5 +371,7 @@ cform.addEventListener('submit', (e) => {
 
   cnote.dataset.state = 'ok';
   cnote.textContent = 'جارٍ فتح واتساب لإرسال طلبك...';
-  window.open(`https://wa.me/966597007805?text=${encodeURIComponent(lines.join('\n'))}`, '_blank');
+  window.open(`https://wa.me/966533778433?text=${encodeURIComponent(lines.join('\n'))}`, '_blank');
 });
+
+applyTheme(storedTheme() || clockTheme());
