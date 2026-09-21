@@ -85,9 +85,10 @@
   --night: #1f3d30;
   --vignette: rgba(31, 61, 48, 0.5);
 
-  /* a clean, saturated jade — the olive band read as dirty */
-  --band: #2f7d5d;
-  --jade-deep: #24664c;
+  /* the logo's own green, sampled from its fingerprint ridges (#2F5B50),
+     and a deeper step of it for the footer */
+  --band: #2f5b50;
+  --jade-deep: #264a41;
 
   --field: #fbfbf7;
   --ok: #2d6f4c;
