@@ -57,30 +57,38 @@
    tuned for dark (sand, leaf-lift) darken enough to read as text. Set on
    <html data-theme> by the head script: by the clock unless overridden. */
 :root[data-theme='light'] {
-  /* ground: soft sage, not white */
-  --ink: #dde8de;
-  --ink-2: #d1e0d3;
-  --pine: #c5d8c9;
+  /* Light is designed as its own look, not an inversion of the night:
+     a crisp cream base, white plates, mint bands for rhythm, and deeper,
+     more saturated greens so accents still carry weight in daylight. */
+  --ink: #f8f7f1;
+  --ink-2: #ffffff;
+  --pine: #e3efe6;
+  --moss: #5d8a70;
 
-  --leaf-lift: #256b4a;
-  --sand: #86662a;
-  --sand-deep: #7d5f27;
+  --leaf-deep: #1f7a4d;
+  --leaf-lift: #1f7a4d;
+  --sand: #9a7428;
+  --sand-deep: #8a6522;
 
-  /* alternate plates: warm white */
-  --bone: #f6f4ed;
-  --bone-2: #ebe8dd;
-  --bone-ink: #13221a;
+  --bone: #ffffff;
+  --bone-2: #f1f5ef;
+  --bone-ink: #13241b;
 
-  --sage: #3a5043;
-  --sage-dim: #5a6f61;
-  --chalk: #10231a;
+  --sage: #435a4b;
+  --sage-dim: #637868;
+  --chalk: #13241b;
 
-  --night: #d4e2d6;
-  --vignette: rgba(205, 222, 208, 0.92);
+  --tint: #e7f1e9;
+  --tint-2: #d7e8db;
 
-  --field: #fffdf8;
-  --ok: #2a7a53;
+  --night: #f8f7f1;
+  --vignette: rgba(248, 247, 241, 0.9);
+
+  --field: #fbfcf9;
+  --ok: #1f7a4d;
   --err: #a4402b;
+
+  --card-shadow: 0 1px 2px rgba(19, 36, 27, 0.05), 0 12px 32px -14px rgba(19, 36, 27, 0.18);
 
   color-scheme: light;
 }
@@ -445,15 +453,15 @@ main {
    planet (the stage sits left, the copy right), fading into the page's sage. */
 [data-theme='light'] .hero {
   background:
-    radial-gradient(55% 75% at 26% 48%, rgba(250, 253, 248, 0.95) 0%, rgba(250, 253, 248, 0) 70%),
-    linear-gradient(180deg, #c3d8c8 0%, var(--ink) 100%);
+    radial-gradient(55% 75% at 26% 48%, #ffffff 0%, rgba(255, 255, 255, 0) 70%),
+    linear-gradient(180deg, #dcebe0 0%, var(--ink) 100%);
 }
 
 @media (max-width: 1023px) {
   [data-theme='light'] .hero {
     background:
-      radial-gradient(80% 45% at 50% 78%, rgba(250, 253, 248, 0.95) 0%, rgba(250, 253, 248, 0) 70%),
-      linear-gradient(180deg, #c3d8c8 0%, var(--ink) 100%);
+      radial-gradient(80% 45% at 50% 78%, #ffffff 0%, rgba(255, 255, 255, 0) 70%),
+      linear-gradient(180deg, #dcebe0 0%, var(--ink) 100%);
   }
 }
 

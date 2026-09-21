@@ -1638,3 +1638,205 @@ a.chan__row:focus-visible {
     min-height: 280px;
   }
 }
+
+/* ============================================================
+   light theme — section by section
+   Dark mode is untouched by everything below. Light is laid out as
+   cream → white → mint bands; photos are either shown vivid (framed
+   cards keep their own dark overlay) or dropped where they were only a
+   backdrop, because a milky wash over a photo just reads as fog.
+   ============================================================ */
+
+/* buttons + small accents: a deeper green that holds up in daylight */
+[data-theme='light'] .btn--solid,
+[data-theme='light'] .svc__new {
+  background: var(--leaf-deep);
+  color: #fff;
+}
+
+[data-theme='light'] .btn--solid:hover {
+  background: #186640;
+}
+
+[data-theme='light'] .nav__cta:hover,
+[data-theme='light'] .rev__btn:hover,
+[data-theme='light'] .rev__btn:focus-visible,
+[data-theme='light'] .social__row:hover .social__icon,
+[data-theme='light'] .social__row:focus-visible .social__icon,
+[data-theme='light'] .foot__social a:hover,
+[data-theme='light'] .foot__social a:focus-visible {
+  background: var(--leaf-deep);
+  border-color: var(--leaf-deep);
+  color: #fff;
+}
+
+/* numbers — cream, with the figures in green and the mark faint behind */
+[data-theme='light'] .numbers {
+  background:
+    radial-gradient(70% 90% at 18% 70%, color-mix(in oklab, var(--leaf) 10%, transparent), transparent 70%),
+    var(--ink);
+}
+
+[data-theme='light'] .figures__n {
+  color: var(--leaf-deep);
+}
+
+[data-theme='light'] .bg--print {
+  opacity: 0.22;
+}
+
+/* services — white; the photo panel keeps a real dark overlay so the
+   caption reads on the image instead of the image being washed out */
+[data-theme='light'] .services__panel {
+  color: #f1f5ef;
+  box-shadow: var(--card-shadow);
+}
+
+[data-theme='light'] .services__panel::after {
+  background: linear-gradient(180deg, rgba(7, 20, 16, 0) 40%, rgba(7, 20, 16, 0.82) 100%);
+}
+
+[data-theme='light'] .services__count {
+  color: #e2c07a;
+}
+
+[data-theme='light'] .services__cap small {
+  color: #cfdccc;
+}
+
+/* mint bands: why, reviews, contact. The backdrop photos go — the cards and
+   copy stand on a clean tint instead. */
+[data-theme='light'] .why,
+[data-theme='light'] .reviews,
+[data-theme='light'] .contact {
+  background: var(--tint);
+  --scrim: none;
+}
+
+[data-theme='light'] .why > .bg,
+[data-theme='light'] .reviews > .bg,
+[data-theme='light'] .contact > .bg {
+  display: none;
+}
+
+/* neighbours are now different colours, so they need their full top pad */
+[data-theme='light'] .reviews + .social,
+[data-theme='light'] .social + .contact {
+  padding-block-start: var(--sec-pad);
+}
+
+[data-theme='light'] .why__card,
+[data-theme='light'] .rev__card {
+  background: #fff;
+  border-color: transparent;
+  box-shadow: var(--card-shadow);
+}
+
+[data-theme='light'] .why__card:hover {
+  background: #fff;
+}
+
+[data-theme='light'] .why__mark {
+  color: var(--leaf-deep);
+}
+
+[data-theme='light'] .steps li::before {
+  background: #fff;
+  border-color: var(--leaf-deep);
+  color: var(--leaf-deep);
+}
+
+[data-theme='light'] .steps li:not(:last-child)::after {
+  background: linear-gradient(to left, color-mix(in oklab, var(--leaf-deep) 55%, transparent), transparent);
+}
+
+[data-theme='light'] .rev__btn {
+  background: #fff;
+  border-color: color-mix(in oklab, var(--chalk) 18%, transparent);
+}
+
+[data-theme='light'] .score__num,
+[data-theme='light'] .score__stars,
+[data-theme='light'] .rev__stars {
+  color: var(--sand);
+}
+
+/* sectors — the framed photo stays vivid with a dark overlay and light copy */
+[data-theme='light'] .sectors__band {
+  color: #f1f5ef;
+  box-shadow: var(--card-shadow);
+}
+
+[data-theme='light'] .sectors__band::after {
+  background: linear-gradient(
+    180deg,
+    rgba(9, 11, 10, 0.12) 0%,
+    rgba(9, 11, 10, 0.38) 45%,
+    rgba(9, 11, 10, 0.82) 100%
+  );
+}
+
+[data-theme='light'] .sectors__band .sec-kicker {
+  color: #e2c07a;
+}
+
+[data-theme='light'] .sectors__band .sec-lede {
+  color: #d6e2d3;
+}
+
+[data-theme='light'] .sectors__list {
+  box-shadow: var(--card-shadow);
+}
+
+[data-theme='light'] .sectors__list li:hover .sectors__ic {
+  color: var(--leaf-deep);
+}
+
+/* clients — white tiles need an edge on white */
+[data-theme='light'] .marquee__set li {
+  border-color: color-mix(in oklab, var(--chalk) 10%, transparent);
+  box-shadow: 0 6px 18px -12px rgba(19, 36, 27, 0.25);
+}
+
+/* contact — mint band, white card, white chips */
+[data-theme='light'] .contact__natl {
+  background: #fff;
+  border-color: color-mix(in oklab, var(--chalk) 14%, transparent);
+}
+
+[data-theme='light'] .chan__ic {
+  background: #fff;
+  border-color: color-mix(in oklab, var(--chalk) 16%, transparent);
+  color: var(--leaf-deep);
+}
+
+[data-theme='light'] .cform {
+  border-block-start-color: var(--leaf-deep);
+}
+
+/* footer — a deeper mint to close the page; the map sits on a white card */
+[data-theme='light'] .foot {
+  background: var(--tint-2);
+  padding-block-start: var(--sec-pad);
+}
+
+[data-theme='light'] .loc {
+  background: #fff;
+  border-color: transparent;
+  box-shadow: var(--card-shadow);
+}
+
+[data-theme='light'] .foot__mark {
+  color: color-mix(in oklab, var(--leaf-deep) 10%, transparent);
+}
+
+[data-theme='light'] .foot__social a {
+  background: #fff;
+  border-color: color-mix(in oklab, var(--chalk) 14%, transparent);
+}
+
+/* the outline button can sit over the globe's land dots (phones) */
+[data-theme='light'] .hero .btn--ghost {
+  background: #fff;
+  border-color: color-mix(in oklab, var(--chalk) 16%, transparent);
+}
