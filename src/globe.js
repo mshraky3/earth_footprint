@@ -21,14 +21,15 @@ const COL = {
 // into a pale sage globe with dark land dots, so it still reads on off-white.
 const PALETTE = {
   dark: {
-    core: '#061711', rim: '#2D5442', dot: '#52AC81', dotHi: '#EAF0E2',
+    core: '#061711', rim: '#2D5442', coreAlpha: 1, dot: '#52AC81', dotHi: '#EAF0E2',
     outline: '#EAF0E2', glow: '#52AC81', ridge: '#C8A464', line: '#2D5442', halo: 0.85,
   },
-  // Light: a bright, near-white planet with deep-green land, like a printed
-  // globe — it needs to stand off the sage ground, not melt into it.
+  // Daylight: the globe sits over a sunlit canopy photograph, so it becomes
+  // glass — a faint forest-tinted core the photo shows through, with white
+  // land, a white outline and the gold print.
   light: {
-    core: '#F6FAF4', rim: '#8DBBA0', dot: '#3C8C64', dotHi: '#E4EFE3',
-    outline: '#123524', glow: '#3F9A6E', ridge: '#8C6420', line: '#8FB39C', halo: 0.7,
+    core: '#1F3D30', rim: '#BFE3C9', coreAlpha: 0.32, dot: '#DDEFE2', dotHi: '#FFFFFF',
+    outline: '#FFFFFF', glow: '#9FDDB9', ridge: '#E8C97F', line: '#D8EBDD', halo: 0.55,
   },
 };
 
@@ -93,7 +94,10 @@ export function createGlobe(canvas, { onHandoff, pace = 1, theme = 'dark' } = {}
   const core = new THREE.Mesh(
     new THREE.SphereGeometry(R * 0.988, 64, 48),
     new THREE.ShaderMaterial({
-      uniforms: { uCore: { value: COL.core.clone() }, uRim: { value: COL.moss.clone() } },
+      // transparent so the daylight theme can make the core glass; at alpha 1
+      // (dark) it draws exactly as an opaque sphere, and first, by id order.
+      transparent: true,
+      uniforms: { uCore: { value: COL.core.clone() }, uRim: { value: COL.moss.clone() }, uAlpha: { value: 1 } },
       vertexShader: `
         varying vec3 vN;
         void main(){
@@ -101,11 +105,12 @@ export function createGlobe(canvas, { onHandoff, pace = 1, theme = 'dark' } = {}
           gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
         }`,
       fragmentShader: `
-        uniform vec3 uCore; uniform vec3 uRim; varying vec3 vN;
+        uniform vec3 uCore; uniform vec3 uRim; uniform float uAlpha; varying vec3 vN;
         void main(){
           float f = 1.0 - clamp(dot(vN, vec3(0.0,0.0,1.0)), 0.0, 1.0);
           vec3 c = mix(uCore, uRim, pow(f, 2.6) * 0.85);
-          gl_FragColor = vec4(c, 1.0);
+          // the rim stays more solid than the face, so glass still reads as a sphere
+          gl_FragColor = vec4(c, uAlpha + (1.0 - uAlpha) * pow(f, 3.0) * 0.9);
         }`,
     })
   );
@@ -377,6 +382,7 @@ export function createGlobe(canvas, { onHandoff, pace = 1, theme = 'dark' } = {}
     const c = PALETTE[name] || PALETTE.dark;
     core.material.uniforms.uCore.value.set(c.core);
     core.material.uniforms.uRim.value.set(c.rim);
+    core.material.uniforms.uAlpha.value = c.coreAlpha;
     dotMat.uniforms.uLeaf.value.set(c.dot);
     dotMat.uniforms.uBone.value.set(c.dotHi);
     saudiMat.color.set(c.outline);

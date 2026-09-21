@@ -57,38 +57,41 @@
    tuned for dark (sand, leaf-lift) darken enough to read as text. Set on
    <html data-theme> by the head script: by the clock unless overridden. */
 :root[data-theme='light'] {
-  /* Light is designed as its own look, not an inversion of the night:
-     a crisp cream base, white plates, mint bands for rhythm, and deeper,
-     more saturated greens so accents still carry weight in daylight. */
-  --ink: #f8f7f1;
-  --ink-2: #ffffff;
-  --pine: #e3efe6;
-  --moss: #5d8a70;
+  /* Daylight. The brand's own v1 palette — forest teal and olive-sage —
+     over sage-stone surfaces. Light here comes from sunlit photography,
+     not from white: white is kept for cards and for type on photos. */
+  --forest: #1f3d30;
+  --teal: #2d5442;
+  --olive: #5c7550;
 
-  --leaf-deep: #1f7a4d;
-  --leaf-lift: #1f7a4d;
-  --sand: #9a7428;
-  --sand-deep: #8a6522;
+  --ink: #e3e8da;
+  --ink-2: #f6f6ef;
+  --pine: #d3dcc7;
+  --moss: #6b8057;
 
-  --bone: #ffffff;
-  --bone-2: #f1f5ef;
-  --bone-ink: #13241b;
+  --leaf-deep: #2d5442;
+  --leaf-lift: #2d5442;
+  --sand: #8c6a2a;
+  --sand-deep: #7f6026;
 
-  --sage: #435a4b;
-  --sage-dim: #637868;
-  --chalk: #13241b;
+  --bone: #edf0e6;
+  --bone-2: #dfe6d6;
+  --bone-ink: #1f3d30;
 
-  --tint: #e7f1e9;
-  --tint-2: #d7e8db;
+  --sage: #4a5d48;
+  --sage-dim: #667763;
+  --chalk: #1f3d30;
 
-  --night: #f8f7f1;
-  --vignette: rgba(248, 247, 241, 0.9);
+  --night: #1f3d30;
+  --vignette: rgba(31, 61, 48, 0.5);
 
-  --field: #fbfcf9;
-  --ok: #1f7a4d;
+  --band: #5c7550;
+
+  --field: #fbfbf7;
+  --ok: #2d6f4c;
   --err: #a4402b;
 
-  --card-shadow: 0 1px 2px rgba(19, 36, 27, 0.05), 0 12px 32px -14px rgba(19, 36, 27, 0.18);
+  --card-shadow: 0 1px 2px rgba(31, 61, 48, 0.06), 0 14px 34px -16px rgba(31, 61, 48, 0.3);
 
   color-scheme: light;
 }
@@ -447,22 +450,6 @@ ul {
 main {
   position: relative;
   z-index: 10;
-}
-
-/* Light theme hero: deeper sage at the top, a soft pool of light behind the
-   planet (the stage sits left, the copy right), fading into the page's sage. */
-[data-theme='light'] .hero {
-  background:
-    radial-gradient(55% 75% at 26% 48%, #ffffff 0%, rgba(255, 255, 255, 0) 70%),
-    linear-gradient(180deg, #dcebe0 0%, var(--ink) 100%);
-}
-
-@media (max-width: 1023px) {
-  [data-theme='light'] .hero {
-    background:
-      radial-gradient(80% 45% at 50% 78%, #ffffff 0%, rgba(255, 255, 255, 0) 70%),
-      linear-gradient(180deg, #dcebe0 0%, var(--ink) 100%);
-  }
 }
 
 .hero {

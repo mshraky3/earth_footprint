@@ -1640,203 +1640,313 @@ a.chan__row:focus-visible {
 }
 
 /* ============================================================
-   light theme — section by section
-   Dark mode is untouched by everything below. Light is laid out as
-   cream → white → mint bands; photos are either shown vivid (framed
-   cards keep their own dark overlay) or dropped where they were only a
-   backdrop, because a milky wash over a photo just reads as fog.
+   light theme ("daylight") — section by section
+   Dark mode is untouched by everything below.
+   Two kinds of surface:
+     on-photo   hero, numbers band, why, reviews, contact, footer —
+                white type over sunlit photos under a forest/olive
+                overlay (the v1 landing treatment), or a green band
+     on-stone   services, sectors, clients, social — forest type on
+                sage-stone; white only for cards
+   A surface declares its kind by re-scoping the type tokens, and cards
+   inside an on-photo surface switch back to forest type.
    ============================================================ */
 
-/* buttons + small accents: a deeper green that holds up in daylight */
+/* ---- on-photo / band surfaces: light type ---- */
+[data-theme='light'] .hero,
+[data-theme='light'] .intro,
+[data-theme='light'] .nav:not(.is-stuck),
+[data-theme='light'] .numbers,
+[data-theme='light'] .why,
+[data-theme='light'] .reviews,
+[data-theme='light'] .contact,
+[data-theme='light'] .foot,
+[data-theme='light'] .sectors__band,
+[data-theme='light'] .services__panel {
+  --chalk: #ffffff;
+  --sage: #e4ecdd;
+  --sage-dim: #c9d6c2;
+  --sand: #e8c97f;
+  --leaf-lift: #bfe3c9;
+  --pine: #2d5442;
+  --ink: #1f3d30;
+  --edge: rgba(255, 255, 255, 0.4);
+  --edge-soft: rgba(255, 255, 255, 0.22);
+  color: var(--chalk);
+}
+
+/* an open mobile menu sits on stone, so the bar goes back to dark type */
+[data-theme='light'] .is-navopen .nav {
+  --chalk: #1f3d30;
+  --sage: #4a5d48;
+  --sage-dim: #667763;
+  --edge: color-mix(in oklab, #6b8057 55%, transparent);
+}
+
+/* cards inside an on-photo surface: forest type on warm off-white */
+[data-theme='light'] .why__card,
+[data-theme='light'] .rev__card,
+[data-theme='light'] .rev__btn,
+[data-theme='light'] .cform,
+[data-theme='light'] .loc,
+[data-theme='light'] .contact__natl {
+  --chalk: #1f3d30;
+  --sage: #4a5d48;
+  --sage-dim: #667763;
+  --sand: #8c6a2a;
+  --leaf-lift: #2d5442;
+  --edge: rgba(31, 61, 48, 0.25);
+  --edge-soft: rgba(31, 61, 48, 0.14);
+  color: var(--chalk);
+}
+
+/* ---- buttons ---- */
 [data-theme='light'] .btn--solid,
 [data-theme='light'] .svc__new {
-  background: var(--leaf-deep);
+  background: var(--teal);
   color: #fff;
 }
 
 [data-theme='light'] .btn--solid:hover {
-  background: #186640;
+  background: var(--forest);
+}
+
+/* on a photo the primary action takes the bright brand leaf, as in dark */
+[data-theme='light'] .hero .btn--solid {
+  background: #52ac81;
+  color: #07130c;
+}
+
+[data-theme='light'] .hero .btn--solid:hover {
+  background: #6ec69b;
 }
 
 [data-theme='light'] .nav__cta:hover,
-[data-theme='light'] .rev__btn:hover,
-[data-theme='light'] .rev__btn:focus-visible,
 [data-theme='light'] .social__row:hover .social__icon,
-[data-theme='light'] .social__row:focus-visible .social__icon,
-[data-theme='light'] .foot__social a:hover,
-[data-theme='light'] .foot__social a:focus-visible {
-  background: var(--leaf-deep);
-  border-color: var(--leaf-deep);
+[data-theme='light'] .social__row:focus-visible .social__icon {
+  background: var(--teal);
+  border-color: var(--teal);
   color: #fff;
 }
 
-/* numbers — cream, with the figures in green and the mark faint behind */
-[data-theme='light'] .numbers {
+/* ---- hero: v1's sunlit canopy under a forest → olive overlay ---- */
+[data-theme='light'] .hero {
   background:
-    radial-gradient(70% 90% at 18% 70%, color-mix(in oklab, var(--leaf) 10%, transparent), transparent 70%),
-    var(--ink);
+    linear-gradient(135deg, rgba(31, 61, 48, 0.62) 0%, rgba(45, 84, 66, 0.5) 45%, rgba(85, 102, 66, 0.46) 75%, rgba(61, 104, 86, 0.58) 100%),
+    url('/images/hero-canopy.webp') center / cover no-repeat,
+    var(--teal);
 }
 
-[data-theme='light'] .figures__n {
-  color: var(--leaf-deep);
+@media (max-width: 900px) {
+  [data-theme='light'] .hero {
+    background:
+      linear-gradient(180deg, rgba(31, 61, 48, 0.66) 0%, rgba(45, 84, 66, 0.52) 55%, rgba(61, 104, 86, 0.62) 100%),
+      url('/images/hero-canopy-sm.webp') center / cover no-repeat,
+      var(--teal);
+  }
+}
+
+/* lighter edges than the night version, and the foot of the hero fades
+   into the olive numbers band below instead of into black */
+[data-theme='light'] .stage__vignette {
+  background:
+    radial-gradient(120% 90% at 30% 45%, transparent 45%, rgba(31, 61, 48, 0.35) 100%),
+    linear-gradient(to top, var(--band) 1%, transparent 22%);
+}
+
+[data-theme='light'] .stage__vignette::after {
+  background: linear-gradient(to right, transparent 30%, rgba(31, 61, 48, 0.38) 62%, rgba(31, 61, 48, 0.55) 100%);
+}
+
+@media (max-width: 1023px) {
+  [data-theme='light'] .stage__vignette::after {
+    background: linear-gradient(to bottom, rgba(31, 61, 48, 0.5) 20%, rgba(31, 61, 48, 0.2) 55%, transparent 80%);
+  }
+}
+
+[data-theme='light'] .hero__eyebrow {
+  background: rgba(31, 61, 48, 0.45);
+}
+
+/* ---- numbers: an olive band ---- */
+[data-theme='light'] .numbers {
+  background:
+    radial-gradient(70% 90% at 18% 70%, rgba(232, 201, 127, 0.14), transparent 70%),
+    var(--band);
+}
+
+[data-theme='light'] .figures,
+[data-theme='light'] .figures li {
+  border-color: rgba(255, 255, 255, 0.26);
 }
 
 [data-theme='light'] .bg--print {
-  opacity: 0.22;
+  opacity: 0.18;
 }
 
-/* services — white; the photo panel keeps a real dark overlay so the
-   caption reads on the image instead of the image being washed out */
+[data-theme='light'] .numbers .bg--print {
+  opacity: 0.32;
+}
+
+/* ---- stone surfaces ---- */
+[data-theme='light'] .services,
+[data-theme='light'] .sectors,
+[data-theme='light'] .clients {
+  background: var(--bone);
+}
+
+[data-theme='light'] .social {
+  background: var(--ink);
+}
+
+[data-theme='light'] .svc__item.is-open {
+  background: rgba(107, 128, 87, 0.12);
+}
+
+/* services photo keeps a real dark overlay under its light caption */
 [data-theme='light'] .services__panel {
-  color: #f1f5ef;
   box-shadow: var(--card-shadow);
 }
 
 [data-theme='light'] .services__panel::after {
-  background: linear-gradient(180deg, rgba(7, 20, 16, 0) 40%, rgba(7, 20, 16, 0.82) 100%);
+  background: linear-gradient(180deg, rgba(31, 61, 48, 0) 38%, rgba(31, 61, 48, 0.85) 100%);
 }
 
-[data-theme='light'] .services__count {
-  color: #e2c07a;
+/* ---- photo sections: the photos stay, lit, under a lighter overlay ---- */
+[data-theme='light'] .why {
+  --scrim: linear-gradient(
+    180deg,
+    rgba(31, 61, 48, 0.72) 0%,
+    rgba(45, 84, 66, 0.5) 38%,
+    rgba(61, 90, 60, 0.56) 70%,
+    rgba(31, 61, 48, 0.74) 100%
+  );
 }
 
-[data-theme='light'] .services__cap small {
-  color: #cfdccc;
+[data-theme='light'] .reviews {
+  --scrim: linear-gradient(
+    90deg,
+    rgba(31, 61, 48, 0.78) 0%,
+    rgba(45, 84, 66, 0.48) 55%,
+    rgba(31, 61, 48, 0.7) 100%
+  );
 }
 
-/* mint bands: why, reviews, contact. The backdrop photos go — the cards and
-   copy stand on a clean tint instead. */
-[data-theme='light'] .why,
-[data-theme='light'] .reviews,
 [data-theme='light'] .contact {
-  background: var(--tint);
-  --scrim: none;
+  --scrim: linear-gradient(
+    180deg,
+    rgba(31, 61, 48, 0.7) 0%,
+    rgba(61, 90, 60, 0.42) 35%,
+    rgba(61, 90, 60, 0.5) 70%,
+    rgba(31, 61, 48, 0.78) 100%
+  );
 }
 
-[data-theme='light'] .why > .bg,
-[data-theme='light'] .reviews > .bg,
-[data-theme='light'] .contact > .bg {
-  display: none;
-}
-
-/* neighbours are now different colours, so they need their full top pad */
+/* different colours meet at these seams now, so keep the full top pad */
 [data-theme='light'] .reviews + .social,
-[data-theme='light'] .social + .contact {
+[data-theme='light'] .social + .contact,
+[data-theme='light'] .foot {
   padding-block-start: var(--sec-pad);
 }
 
 [data-theme='light'] .why__card,
 [data-theme='light'] .rev__card {
-  background: #fff;
+  background: rgba(246, 246, 239, 0.96);
   border-color: transparent;
   box-shadow: var(--card-shadow);
 }
 
+[data-theme='light'] .why__card {
+  border-block-start: 2px solid var(--sand);
+}
+
 [data-theme='light'] .why__card:hover {
-  background: #fff;
+  background: #fbfbf7;
 }
 
 [data-theme='light'] .why__mark {
-  color: var(--leaf-deep);
+  color: var(--teal);
 }
 
 [data-theme='light'] .steps li::before {
-  background: #fff;
-  border-color: var(--leaf-deep);
-  color: var(--leaf-deep);
-}
-
-[data-theme='light'] .steps li:not(:last-child)::after {
-  background: linear-gradient(to left, color-mix(in oklab, var(--leaf-deep) 55%, transparent), transparent);
+  background: rgba(31, 61, 48, 0.55);
 }
 
 [data-theme='light'] .rev__btn {
-  background: #fff;
-  border-color: color-mix(in oklab, var(--chalk) 18%, transparent);
+  background: #f6f6ef;
+  border-color: #f6f6ef;
+  color: var(--chalk);
 }
 
-[data-theme='light'] .score__num,
-[data-theme='light'] .score__stars,
-[data-theme='light'] .rev__stars {
-  color: var(--sand);
+[data-theme='light'] .rev__btn:hover,
+[data-theme='light'] .rev__btn:focus-visible {
+  background: #e8c97f;
+  border-color: #e8c97f;
+  color: #1f3d30;
 }
 
-/* sectors — the framed photo stays vivid with a dark overlay and light copy */
+/* ---- sectors: framed photo keeps a dark overlay; tiles on off-white ---- */
 [data-theme='light'] .sectors__band {
-  color: #f1f5ef;
   box-shadow: var(--card-shadow);
 }
 
 [data-theme='light'] .sectors__band::after {
-  background: linear-gradient(
-    180deg,
-    rgba(9, 11, 10, 0.12) 0%,
-    rgba(9, 11, 10, 0.38) 45%,
-    rgba(9, 11, 10, 0.82) 100%
-  );
-}
-
-[data-theme='light'] .sectors__band .sec-kicker {
-  color: #e2c07a;
-}
-
-[data-theme='light'] .sectors__band .sec-lede {
-  color: #d6e2d3;
+  background: linear-gradient(180deg, rgba(31, 61, 48, 0.15) 0%, rgba(31, 61, 48, 0.4) 45%, rgba(31, 61, 48, 0.85) 100%);
 }
 
 [data-theme='light'] .sectors__list {
   box-shadow: var(--card-shadow);
 }
 
+[data-theme='light'] .sectors__list li {
+  background: var(--ink-2);
+}
+
+[data-theme='light'] .sectors__list li:hover {
+  background: #e6ecdc;
+}
+
 [data-theme='light'] .sectors__list li:hover .sectors__ic {
-  color: var(--leaf-deep);
+  color: var(--teal);
 }
 
-/* clients — white tiles need an edge on white */
 [data-theme='light'] .marquee__set li {
-  border-color: color-mix(in oklab, var(--chalk) 10%, transparent);
-  box-shadow: 0 6px 18px -12px rgba(19, 36, 27, 0.25);
+  border-color: rgba(31, 61, 48, 0.1);
+  box-shadow: 0 6px 18px -12px rgba(31, 61, 48, 0.35);
 }
 
-/* contact — mint band, white card, white chips */
+/* ---- contact ---- */
 [data-theme='light'] .contact__natl {
-  background: #fff;
-  border-color: color-mix(in oklab, var(--chalk) 14%, transparent);
-}
-
-[data-theme='light'] .chan__ic {
-  background: #fff;
-  border-color: color-mix(in oklab, var(--chalk) 16%, transparent);
-  color: var(--leaf-deep);
+  background: rgba(246, 246, 239, 0.94);
 }
 
 [data-theme='light'] .cform {
-  border-block-start-color: var(--leaf-deep);
+  background: #f6f6ef;
+  box-shadow: 0 22px 50px -24px rgba(7, 20, 16, 0.55);
 }
 
-/* footer — a deeper mint to close the page; the map sits on a white card */
+/* ---- footer: the brand teal closes the page ---- */
 [data-theme='light'] .foot {
-  background: var(--tint-2);
-  padding-block-start: var(--sec-pad);
+  background: var(--teal);
 }
 
 [data-theme='light'] .loc {
-  background: #fff;
+  background: #f6f6ef;
   border-color: transparent;
-  box-shadow: var(--card-shadow);
+  box-shadow: 0 18px 40px -20px rgba(7, 20, 16, 0.55);
 }
 
 [data-theme='light'] .foot__mark {
-  color: color-mix(in oklab, var(--leaf-deep) 10%, transparent);
+  color: rgba(255, 255, 255, 0.1);
 }
 
-[data-theme='light'] .foot__social a {
-  background: #fff;
-  border-color: color-mix(in oklab, var(--chalk) 14%, transparent);
+[data-theme='light'] .foot__bar {
+  border-color: rgba(255, 255, 255, 0.24);
 }
 
-/* the outline button can sit over the globe's land dots (phones) */
-[data-theme='light'] .hero .btn--ghost {
+[data-theme='light'] .foot__social a:hover,
+[data-theme='light'] .foot__social a:focus-visible {
   background: #fff;
-  border-color: color-mix(in oklab, var(--chalk) 16%, transparent);
+  border-color: #fff;
+  color: var(--teal);
 }
