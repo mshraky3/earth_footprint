@@ -85,7 +85,9 @@
   --night: #1f3d30;
   --vignette: rgba(31, 61, 48, 0.5);
 
-  --band: #5c7550;
+  /* a clean, saturated jade — the olive band read as dirty */
+  --band: #2f7d5d;
+  --jade-deep: #24664c;
 
   --field: #fbfbf7;
   --ok: #2d6f4c;
