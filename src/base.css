@@ -85,10 +85,10 @@
   --night: #1f3d30;
   --vignette: rgba(31, 61, 48, 0.5);
 
-  /* the brand green chosen by the client: #577932, the logo's leaf green,
-     and a deeper step of it for the footer */
-  --band: #577932;
-  --jade-deep: #4a6a2a;
+  /* the brand green chosen by the client (#374F1E), and a deeper step of
+     it for the footer */
+  --band: #374f1e;
+  --jade-deep: #2c4018;
 
   --field: #fbfbf7;
   --ok: #2d6f4c;

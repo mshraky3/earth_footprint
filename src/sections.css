@@ -1711,14 +1711,16 @@ a.chan__row:focus-visible {
 }
 
 /* on a photo the primary action takes the bright brand leaf, as in dark */
-/* the brand green #577932 on the photo, as everywhere else */
+/* the brand green #374F1E on the photo, as everywhere else */
 [data-theme='light'] .hero .btn--solid {
-  background: #577932;
+  background: #374f1e;
   color: #fff;
+  /* the deep green is close to the photo's shadows; a faint edge keeps it a button */
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28), 0 8px 20px -10px rgba(0, 0, 0, 0.5);
 }
 
 [data-theme='light'] .hero .btn--solid:hover {
-  background: #4a6a2a;
+  background: #2c4018;
 }
 
 [data-theme='light'] .nav__cta:hover,
@@ -1735,17 +1737,17 @@ a.chan__row:focus-visible {
      without detail, so the glass globe and the headline stay clean. The
      tint sits on the copy side only (RTL: right) and stays green, not grey. */
   background:
-    linear-gradient(to left, rgba(38, 56, 20, 0.66) 0%, rgba(38, 56, 20, 0.36) 42%, rgba(38, 56, 20, 0.12) 75%),
+    linear-gradient(to left, rgba(33, 48, 17, 0.66) 0%, rgba(33, 48, 17, 0.36) 42%, rgba(33, 48, 17, 0.12) 75%),
     url('/images/hero-canopy.webp') center 40% / cover no-repeat,
-    #577932;
+    #374f1e;
 }
 
 @media (max-width: 900px) {
   [data-theme='light'] .hero {
     background:
-      linear-gradient(180deg, rgba(38, 56, 20, 0.62) 0%, rgba(38, 56, 20, 0.3) 55%, rgba(38, 56, 20, 0.2) 100%),
+      linear-gradient(180deg, rgba(33, 48, 17, 0.62) 0%, rgba(33, 48, 17, 0.3) 55%, rgba(33, 48, 17, 0.2) 100%),
       url('/images/hero-canopy-sm.webp') center / cover no-repeat,
-      #577932;
+      #374f1e;
   }
 }
 
@@ -1753,7 +1755,7 @@ a.chan__row:focus-visible {
    into the olive numbers band below instead of into black */
 [data-theme='light'] .stage__vignette {
   background:
-    radial-gradient(120% 90% at 30% 45%, transparent 55%, rgba(38, 56, 20, 0.22) 100%),
+    radial-gradient(120% 90% at 30% 45%, transparent 55%, rgba(33, 48, 17, 0.22) 100%),
     linear-gradient(to top, var(--band) 0%, transparent 18%);
 }
 
@@ -1768,7 +1770,7 @@ a.chan__row:focus-visible {
 }
 
 [data-theme='light'] .hero__eyebrow {
-  background: rgba(38, 56, 20, 0.4);
+  background: rgba(33, 48, 17, 0.4);
 }
 
 /* type on a bright photo needs a whisper of shadow to hold its edge */
@@ -1788,7 +1790,7 @@ a.chan__row:focus-visible {
 [data-theme='light'] .numbers {
   background:
     radial-gradient(60% 80% at 15% 75%, rgba(255, 255, 255, 0.1), transparent 70%),
-    linear-gradient(180deg, #577932 0%, #4f6f2d 100%);
+    linear-gradient(180deg, #374f1e 0%, #324819 100%);
 }
 
 [data-theme='light'] .figures__n {
@@ -1879,16 +1881,16 @@ a.chan__row:focus-visible {
 [data-theme='light'] .chan__ic {
   background: #fff;
   border-color: rgba(31, 61, 48, 0.12);
-  color: #577932;
+  color: #374f1e;
 }
 
 [data-theme='light'] .chan__row--wa .chan__v {
-  color: #577932;
+  color: #374f1e;
 }
 
 [data-theme='light'] a.chan__row:hover,
 [data-theme='light'] a.chan__row:focus-visible {
-  background: rgba(87, 121, 50, 0.1);
+  background: rgba(55, 79, 30, 0.1);
 }
 
 /* different colours meet at these seams now, so keep the full top pad */
@@ -1972,21 +1974,21 @@ a.chan__row:focus-visible {
 
 [data-theme='light'] .cform {
   background: #fff;
-  border-block-start-color: #577932;
+  border-block-start-color: #374f1e;
   box-shadow: 0 1px 2px rgba(31, 61, 48, 0.06), 0 24px 48px -24px rgba(31, 61, 48, 0.35);
 }
 
 [data-theme='light'] .cform .btn--solid {
-  background: #577932;
+  background: #374f1e;
 }
 
 [data-theme='light'] .cform .btn--solid:hover {
-  background: #4a6a2a;
+  background: #2c4018;
 }
 
 /* ---- footer: the brand teal closes the page ---- */
 [data-theme='light'] .foot {
-  background: linear-gradient(180deg, #4f6f2d 0%, var(--jade-deep) 100%);
+  background: linear-gradient(180deg, #324819 0%, var(--jade-deep) 100%);
 }
 
 [data-theme='light'] .foot h4 {
@@ -1998,7 +2000,7 @@ a.chan__row:focus-visible {
 }
 
 [data-theme='light'] .loc .btn--solid {
-  background: #577932;
+  background: #374f1e;
 }
 
 [data-theme='light'] .loc {
@@ -2024,5 +2026,5 @@ a.chan__row:focus-visible {
 
 /* the outline button can sit over the globe's land dots (phones) */
 [data-theme='light'] .hero .btn--ghost {
-  background: rgba(38, 56, 20, 0.35);
+  background: rgba(33, 48, 17, 0.35);
 }
