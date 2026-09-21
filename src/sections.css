@@ -8,7 +8,8 @@
    ============================================================ */
 
 :root {
-  --sec-pad: clamp(5rem, 11vw, 9.5rem);
+  /* was up to 9.5rem a side: ~300px of dead space at every seam */
+  --sec-pad: clamp(4rem, 7.5vw, 6.5rem);
   /* a neutral shade for scrims over photographs: tinting them with the
      green-black --ink washed natural colour out into murky green */
   --night: #090b0a;
@@ -53,6 +54,13 @@
   z-index: -1;
   pointer-events: none;
   background: var(--scrim);
+}
+
+/* Two dark sections in a row: their photographs already dissolve into the
+   same --ink at the seam, so the second one doesn't need a full top pad. */
+.sec--dark + .sec--dark,
+.hero + .sec--dark {
+  padding-block-start: calc(var(--sec-pad) * 0.55);
 }
 
 .sec-head {
@@ -141,11 +149,12 @@
     var(--ink);
 }
 
+/* the office mark — fingerprint dome over two leaves — as line art */
 .bg--print {
   inset: auto;
-  inset-block-end: -10%;
-  inset-inline-end: -8%;
-  width: min(1150px, 100vw);
+  inset-block-end: -6%;
+  inset-inline-end: -6%;
+  width: min(1000px, 92vw);
   height: auto;
   object-fit: contain;
   opacity: 0.15;
@@ -235,7 +244,7 @@
     position: sticky;
     inset-block-start: 6.5rem;
     aspect-ratio: 4 / 5;
-    max-height: 80vh;
+    max-height: 72vh;
     order: 0;
   }
 }
@@ -322,7 +331,7 @@
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 0.4rem 1.4rem;
-  padding: clamp(1.4rem, 2.6vw, 2rem) 0;
+  padding: clamp(1.05rem, 1.8vw, 1.4rem) 0;
   background: none;
   border: 0;
   font: inherit;
@@ -345,7 +354,7 @@
 
 .svc__name {
   font-family: var(--display);
-  font-size: clamp(1.3rem, 2.5vw, 1.95rem);
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
   font-weight: 500;
   line-height: 1.25;
   display: flex;
@@ -356,7 +365,7 @@
 
 .svc__brief {
   grid-column: 2;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 300;
   color: color-mix(in oklab, var(--bone-ink) 66%, transparent);
 }
@@ -440,12 +449,14 @@
    ============================================================ */
 
 .why {
-  background: var(--night);
+  background: var(--ink);
   --scrim: linear-gradient(
     180deg,
-    color-mix(in oklab, var(--night) 90%, transparent) 0%,
+    var(--ink) 0%,
+    color-mix(in oklab, var(--night) 78%, transparent) 14%,
     color-mix(in oklab, var(--night) 66%, transparent) 40%,
-    color-mix(in oklab, var(--night) 90%, transparent) 100%
+    color-mix(in oklab, var(--night) 88%, transparent) 86%,
+    var(--ink) 100%
   );
 }
 
@@ -607,19 +618,29 @@
    ============================================================ */
 
 .sectors {
-  padding-block: 0 var(--sec-pad);
+  padding-block: var(--sec-pad);
 }
 
+/* A framed photograph on paper, not a second full-bleed plate: "why us"
+   above is already a full-bleed photo, and two of them stacked had no clean
+   seam. Dark section → paper is a crisp, intentional edge. */
 .sectors__band {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   display: flex;
   align-items: flex-end;
-  min-height: clamp(380px, 48vw, 560px);
-  padding-block: 7rem 8rem;
+  width: min(var(--wrap), 100% - var(--pad) * 2);
+  margin-inline: auto;
+  min-height: clamp(340px, 40vw, 500px);
+  padding-block: 4.5rem 7.5rem;
   color: var(--chalk);
-  background: var(--night);
+  background: var(--ink);
+}
+
+.sectors__band > .wrap {
+  width: auto;
+  margin-inline: clamp(1.4rem, 4vw, 3.2rem);
 }
 
 .sectors__band::after {
@@ -629,7 +650,7 @@
   z-index: -1;
   background: linear-gradient(
     180deg,
-    color-mix(in oklab, var(--night) 62%, transparent) 0%,
+    color-mix(in oklab, var(--night) 30%, transparent) 0%,
     color-mix(in oklab, var(--night) 42%, transparent) 45%,
     color-mix(in oklab, var(--night) 90%, transparent) 100%
   );
@@ -647,6 +668,7 @@
   position: relative;
   z-index: 1;
   margin-block-start: -4.5rem;
+  margin-inline: clamp(0.75rem, 3vw, 2.5rem);
   display: grid;
   grid-template-columns: 1fr;
   gap: 1px;
@@ -760,12 +782,14 @@
    ============================================================ */
 
 .reviews {
-  --scrim: linear-gradient(
-    90deg,
-    color-mix(in oklab, var(--ink) 90%, transparent) 0%,
-    color-mix(in oklab, var(--ink) 58%, transparent) 55%,
-    color-mix(in oklab, var(--ink) 86%, transparent) 100%
-  );
+  --scrim:
+    linear-gradient(180deg, transparent 50%, var(--ink) 100%),
+    linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--ink) 90%, transparent) 0%,
+      color-mix(in oklab, var(--ink) 58%, transparent) 55%,
+      color-mix(in oklab, var(--ink) 86%, transparent) 100%
+    );
 }
 
 .reviews .bg {
@@ -916,7 +940,12 @@
    ============================================================ */
 
 .clients {
-  padding-block: clamp(4rem, 8vw, 6.5rem);
+  padding-block: 0 var(--sec-pad);
+}
+
+.clients > .wrap {
+  padding-block-start: clamp(3rem, 6vw, 4.5rem);
+  border-block-start: 1px solid color-mix(in oklab, var(--bone-ink) 14%, transparent);
 }
 
 .clients .sec-head {
@@ -925,6 +954,11 @@
 
 .marquee {
   overflow: hidden;
+  /* The page is RTL, which anchors the max-content track to the right edge
+     so it overflows leftward: the translate then pulled its tail into view
+     and the logos ran out after one pass. Anchoring LTR starts the track at
+     the left edge, so shifting by exactly one set loops seamlessly. */
+  direction: ltr;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
 }
@@ -982,19 +1016,13 @@
    ============================================================ */
 
 .social {
-  background: var(--night);
-  --scrim: linear-gradient(
-    180deg,
-    color-mix(in oklab, var(--night) 55%, transparent) 0%,
-    color-mix(in oklab, var(--night) 34%, transparent) 40%,
-    color-mix(in oklab, var(--night) 62%, transparent) 78%,
-    var(--night) 100%
-  );
+  background: var(--ink);
 }
 
-.social .bg {
-  object-position: center 30%;
+.social .bg--print {
+  opacity: 0.1;
 }
+
 
 .social__list {
   border-block-start: 1px solid color-mix(in oklab, var(--chalk) 26%, transparent);
@@ -1077,13 +1105,13 @@
    ============================================================ */
 
 .contact {
-  background: var(--night);
+  background: var(--ink);
   --scrim: linear-gradient(
     180deg,
-    var(--night) 0%,
+    var(--ink) 0%,
     color-mix(in oklab, var(--night) 46%, transparent) 26%,
     color-mix(in oklab, var(--night) 56%, transparent) 72%,
-    var(--night) 100%
+    var(--ink) 100%
   );
 }
 
@@ -1301,15 +1329,17 @@ a.chan__row:focus-visible {
   overflow: hidden;
   background: var(--ink);
   color: var(--chalk);
-  padding-block: clamp(4rem, 8vw, 6rem) 1.6rem;
-  --scrim: linear-gradient(180deg, var(--night) 0%, transparent 35%);
+  /* contact above already ends on solid --ink, so the seam is invisible */
+  padding-block: calc(var(--sec-pad) * 0.55) 1.6rem;
+  --scrim: none;
 }
 
 .foot .bg--print {
-  inset-block-end: -30%;
+  inset-block-end: -4%;
   inset-inline-end: auto;
-  inset-inline-start: -10%;
-  opacity: 0.1;
+  inset-inline-start: -6%;
+  width: min(820px, 80vw);
+  opacity: 0.09;
 }
 
 .foot__grid {
@@ -1340,10 +1370,20 @@ a.chan__row:focus-visible {
   font-weight: 500;
 }
 
-.foot__logo svg {
+.foot__mark-img {
+  width: 58px;
+  height: 58px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fbf9f3;
+}
+
+.foot__mark-img img {
   width: 44px;
-  height: 44px;
-  color: var(--leaf-lift);
+  height: auto;
+  display: block;
 }
 
 .foot__note {
@@ -1515,5 +1555,80 @@ a.chan__row:focus-visible {
 
   .sectors__list li {
     transform: none;
+  }
+}
+
+/* ============================================================
+   location — the office on Google Maps, at the head of the footer
+   ============================================================ */
+
+.loc {
+  display: grid;
+  grid-template-columns: 1fr;
+  border: 1px solid color-mix(in oklab, var(--chalk) 16%, transparent);
+  background: color-mix(in oklab, var(--ink-2) 92%, transparent);
+  margin-block-end: clamp(3.5rem, 7vw, 5rem);
+}
+
+@media (min-width: 900px) {
+  .loc {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  }
+}
+
+.loc__card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(1.8rem, 4vw, 3rem);
+}
+
+.loc__card .sec-kicker {
+  margin-block-end: 0.9rem;
+}
+
+.loc__title {
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  font-weight: 500;
+}
+
+.loc__addr {
+  margin-block: 1.1rem 1.8rem;
+  font-style: normal;
+  color: var(--sage);
+  font-weight: 300;
+  line-height: 1.9;
+}
+
+.loc__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.loc__map {
+  position: relative;
+  min-height: 320px;
+  background: var(--ink-2);
+}
+
+.loc__map iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  /* sit the bright default map tiles closer to the night palette */
+  filter: saturate(0.85) contrast(0.95);
+}
+
+@media (max-width: 719px) {
+  .loc__actions .btn {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+
+  .loc__map {
+    min-height: 280px;
   }
 }

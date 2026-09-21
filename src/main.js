@@ -1,4 +1,7 @@
-import { createGlobe } from './globe.js';
+// The globe (three.js + map data, ~600KB) is loaded as its own chunk, so the
+// accordion, form, nav and marquee work the moment the page arrives instead
+// of waiting for the whole 3D bundle to download and parse.
+const globeModule = import('./globe.js');
 
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => [...document.querySelectorAll(sel)];
@@ -12,26 +15,52 @@ const canvas = $('#globe');
 
 /* ── the 3D sequence ──────────────────────────────────────────── */
 
+// >1 plays the opening faster than its authored timeline (5.7s → ~4.2s to
+// the hero copy), which was the "slow to start" complaint.
+const PACE = 1.35;
+
+// The intro plays once per visit; reloads and returns within the same
+// session go straight to the settled hero. ?motion=full forces it again.
+const INTRO_KEY = 'ef-intro-seen';
+const forceIntro = new URLSearchParams(location.search).get('motion') === 'full';
+let introSeen = false;
+try {
+  introSeen = sessionStorage.getItem(INTRO_KEY) === '1';
+} catch {}
+
 let live = false;
+let globe = null;
+let wantSkip = introSeen && !forceIntro;
 
 function handoff() {
   if (live) return;
   live = true;
   document.body.classList.add('is-live');
-  document.body.classList.remove('is-locked');
   nav.classList.add('is-in');
   intro.classList.add('is-done');
   setTimeout(() => intro.remove(), 900);
+  try {
+    sessionStorage.setItem(INTRO_KEY, '1');
+  } catch {}
 }
-
-document.body.classList.add('is-locked');
-
-const globe = createGlobe(canvas, { onHandoff: handoff });
 
 function skipIntro() {
-  globe.skip();
+  wantSkip = true;
+  globe?.skip();
   handoff();
 }
+
+globeModule
+  .then(({ createGlobe }) => {
+    globe = createGlobe(canvas, { onHandoff: handoff, pace: PACE });
+    started = performance.now(); // telemetry tracks the globe's own clock
+    if (wantSkip) globe.skip();
+    onScroll();
+  })
+  // No WebGL / chunk failed: the page must still open.
+  .catch(handoff);
+
+if (wantSkip) handoff();
 
 $('#skipIntro').addEventListener('click', skipIntro);
 
@@ -63,13 +92,13 @@ const PHASES = [
   [4.3, 'القصيم — مقر بصمة الأرض'],
 ];
 
-const started = performance.now();
+let started = performance.now();
 let telemetry;
 
 function tickTelemetry() {
   if (!intro.isConnected) return;
   const t = (performance.now() - started) / 1000;
-  const lock = Math.max(0, Math.min(1, (t - 2.2) / 2.0));
+  const lock = Math.max(0, Math.min(1, (t - 2.2 / PACE) / (2.0 / PACE)));
   const jitter = (1 - lock) ** 2;
 
   const lat = TARGET.lat + (Math.random() - 0.5) * 90 * jitter;
@@ -77,20 +106,16 @@ function tickTelemetry() {
   introCoord.textContent = `${lat.toFixed(4)}° N   ${lon.toFixed(4)}° E`;
 
   let label = PHASES[0][1];
-  for (const [at, text] of PHASES) if (t >= at) label = text;
+  for (const [at, text] of PHASES) if (t >= at / PACE) label = text;
   if (introPhase.textContent !== label) introPhase.textContent = label;
 
   telemetry = requestAnimationFrame(tickTelemetry);
 }
 
-if (globe.isReduced) {
-  handoff();
-} else {
-  telemetry = requestAnimationFrame(tickTelemetry);
-}
+if (!live) telemetry = requestAnimationFrame(tickTelemetry);
 
-// Safety net: never leave the page locked if a frame is dropped.
-setTimeout(handoff, 9000);
+// Safety net: never leave the hero copy hidden if a frame is dropped.
+setTimeout(handoff, 7000);
 
 /* ── scroll: the planet recedes behind the content ────────────── */
 
@@ -104,7 +129,7 @@ function onScroll() {
   requestAnimationFrame(() => {
     const y = window.scrollY;
     const p = Math.max(0, Math.min(1, y / (heroH * 0.85)));
-    globe.setScrollFade(1 - p * 0.82);
+    globe?.setScrollFade(1 - p * 0.82);
     const s = y > 40;
     if (s !== stuck) {
       stuck = s;

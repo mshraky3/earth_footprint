@@ -121,7 +121,9 @@ export function buildFingerprint({ center, bounds, rings, count = 40, rotation =
   // at B < 1 they are nested ellipses, elongated away from the offset axis.
   // That is a loop core — closed ovals tight at the centre, opening as they go
   // out — and unlike a parabola field it fills the whole shape evenly.
-  const B = 0.74;
+  // 0.74 crowded the far side ~6x tighter than the core, which merged into a
+  // solid block on the globe; 0.6 keeps the loop but spaces it evenly.
+  const B = 0.6;
   const psi = (lon, lat) => {
     const u = (lon - center[0]) / latScale;
     const v = lat - center[1];

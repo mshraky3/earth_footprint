@@ -48,7 +48,7 @@ function facingRotation(lon, lat) {
   return { x: lat * DEG, y: Math.PI / 2 - (lon + 180) * DEG };
 }
 
-export function createGlobe(canvas, { onHandoff } = {}) {
+export function createGlobe(canvas, { onHandoff, pace = 1 } = {}) {
   // The opening sequence is the whole point of the page, so it always plays
   // on load — it used to auto-skip when the OS reported prefers-reduced-motion,
   // but on this client's own machine that setting is just "Show animations"
@@ -58,9 +58,12 @@ export function createGlobe(canvas, { onHandoff } = {}) {
   // wants out still has an immediate way.
   const reduced = false;
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  // Capped at 1.5: the canvas covers the whole hero, and on 2x/3x screens the
+  // extra fill-rate was a large share of the scroll jank for no visible gain.
+  const DPR = Math.min(window.devicePixelRatio, 1.5);
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
   renderer.setClearColor(0x000000, 0);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+  renderer.setPixelRatio(DPR);
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(42, 1, 0.01, 100);
@@ -122,7 +125,7 @@ export function createGlobe(canvas, { onHandoff } = {}) {
     uniforms: {
       uSize: { value: 165 },
       uMax: { value: 9.0 },
-      uDpr: { value: Math.min(window.devicePixelRatio, 1.75) },
+      uDpr: { value: DPR },
       uReveal: { value: 0 },
       uFocus: { value: 0 },
       uLeaf: { value: COL.leaf },
@@ -231,7 +234,7 @@ export function createGlobe(canvas, { onHandoff } = {}) {
   // The core sits on Al-Qassim, where the office actually is.
   const ridgeMat = new LineMaterial({
     color: COL.sand.getHex(),
-    linewidth: 1.7,
+    linewidth: 1.4, // thinner ridges leave visible gaps at globe scale
     transparent: true,
     opacity: 0,
     resolution: res,
@@ -274,7 +277,7 @@ export function createGlobe(canvas, { onHandoff } = {}) {
       center: QASSIM,
       bounds: SAUDI_BOUNDS,
       rings: SAUDI_RINGS,
-      count: 40,
+      count: 26, // fewer levels = wider gaps between ridges (was 40)
     });
     // Draw from the core outward: order by distance of the ridge from Qassim.
     const withDist = lines.map((pts) => {
@@ -435,17 +438,28 @@ export function createGlobe(canvas, { onHandoff } = {}) {
   function skip() {
     if (skipped) return;
     skipped = true;
-    offset = Math.max(0, T.settle[1] - (performance.now() - startedAt) / 1000);
+    offset = Math.max(0, T.settle[1] - ((performance.now() - startedAt) / 1000) * pace);
     t = Math.max(t, T.settle[1]);
   }
 
   if (reduced && !frozen) skip();
 
   /* ── frame ─────────────────────────────────────────────────── */
+  let lastDraw = 0;
+
   function frame(now) {
+    // Once settled, the only motion is a slow sway and pointer parallax:
+    // ~30fps is indistinguishable there and halves the GPU work competing
+    // with page scrolling.
+    if (t > T.settle[1] && now - lastDraw < 30) {
+      rafId = onScreen ? requestAnimationFrame(frame) : 0;
+      return;
+    }
+    lastDraw = now;
+
     const dt = Math.min((now - prevNow) / 1000, 0.05);
     prevNow = now;
-    if (!frozen) t = (now - startedAt) / 1000 + offset;
+    if (!frozen) t = ((now - startedAt) / 1000) * pace + offset;
 
     const spin = clamp01(t / T.spinEnd);
     const settle = span(t, T.settle);
@@ -496,7 +510,11 @@ export function createGlobe(canvas, { onHandoff } = {}) {
     // Ridges bloom out of Al-Qassim.
     const rd = span(t, T.ridges);
     ridgeMat.opacity = clamp01(rd * 4) * scrollFade;
-    ridgeGlowMat.opacity = clamp01(rd * 4) * 0.22 * scrollFade;
+    // The glow only accompanies the drawing-in; the settled print is plain
+    // ridges, which reads cleaner against the country.
+    const glowOut = 1 - span(t, [T.ridges[1], T.settle[1]]);
+    ridgeGlowMat.opacity = clamp01(rd * 4) * 0.22 * glowOut * scrollFade;
+    ridgeGlowMat.visible = ridgeGlowMat.opacity > 0.001;
     markerMat.opacity = span(t, [3.7, 4.4]) * (0.55 + 0.45 * Math.sin(t * 3)) * scrollFade;
     for (const { line, segments, delay } of ridges) {
       const p = clamp01((rd - delay) / (1 - delay || 1));
