@@ -703,8 +703,9 @@
 }
 
 .sectors__list li:hover {
-  background: var(--bone-ink);
-  color: var(--chalk);
+  /* a leaf-tinted lift of the tile's own surface: works on either theme,
+     where inverting to --bone-ink would put light text on a light tile */
+  background: color-mix(in oklab, var(--leaf) 16%, var(--bone));
 }
 
 /* a ridge arc swells out of the corner on hover */
@@ -1269,7 +1270,7 @@ a.chan__row:focus-visible {
   font: inherit;
   font-size: 1rem;
   color: var(--bone-ink);
-  background: #fbf9f3;
+  background: var(--field);
   border: 1px solid color-mix(in oklab, var(--bone-ink) 24%, transparent);
   border-radius: 4px;
   padding: 0.85rem 1rem;
@@ -1296,7 +1297,7 @@ a.chan__row:focus-visible {
 }
 
 .field input:user-invalid {
-  border-color: #b4553f;
+  border-color: var(--err);
 }
 
 .cform__foot {
@@ -1317,11 +1318,11 @@ a.chan__row:focus-visible {
 }
 
 .cform__note[data-state='ok'] {
-  color: #2a7a53;
+  color: var(--ok);
 }
 
 .cform__note[data-state='err'] {
-  color: #a4402b;
+  color: var(--err);
 }
 
 /* ============================================================

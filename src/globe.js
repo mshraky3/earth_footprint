@@ -24,9 +24,11 @@ const PALETTE = {
     core: '#061711', rim: '#2D5442', dot: '#52AC81', dotHi: '#EAF0E2',
     outline: '#EAF0E2', glow: '#52AC81', ridge: '#C8A464', line: '#2D5442', halo: 0.85,
   },
+  // Light: a bright, near-white planet with deep-green land, like a printed
+  // globe — it needs to stand off the sage ground, not melt into it.
   light: {
-    core: '#E3EADF', rim: '#A9C4B2', dot: '#2F7A56', dotHi: '#16241C',
-    outline: '#16241C', glow: '#52AC81', ridge: '#8A6A2E', line: '#8FA894', halo: 0.45,
+    core: '#F6FAF4', rim: '#8DBBA0', dot: '#3C8C64', dotHi: '#E4EFE3',
+    outline: '#123524', glow: '#3F9A6E', ridge: '#8C6420', line: '#8FB39C', halo: 0.7,
   },
 };
 

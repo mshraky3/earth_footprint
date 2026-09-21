@@ -18,12 +18,19 @@
   --leaf: #52ac81;
   --leaf-lift: #6ec69b;
   --sand: #c8a464;
-  --sand-deep: #9c7c42;
+  --sand-deep: #b8955a;
 
-  /* light world */
-  --bone: #f2efe6;
-  --bone-2: #e8e4d7;
-  --bone-ink: #16241c;
+  /* the alternate surface. Dark mode is dark end to end: these used to be
+     cream "paper" plates, now a lifted green-black so sections still
+     alternate without any light band breaking the night. */
+  --bone: #0f241b;
+  --bone-2: #153126;
+  --bone-ink: #eaf0e2;
+
+  /* form + status */
+  --field: #0a1a14;
+  --ok: #6ec69b;
+  --err: #e59a86;
 
   /* type on dark */
   --sage: #a9c0a4;
@@ -50,23 +57,30 @@
    tuned for dark (sand, leaf-lift) darken enough to read as text. Set on
    <html data-theme> by the head script: by the clock unless overridden. */
 :root[data-theme='light'] {
-  --ink: #f7f5ee;
-  --ink-2: #efece2;
-  --pine: #e4eadf;
+  /* ground: soft sage, not white */
+  --ink: #dde8de;
+  --ink-2: #d1e0d3;
+  --pine: #c5d8c9;
 
-  --leaf-lift: #2e7d57;
-  --sand: #94702f;
-  --sand-deep: #85652b;
+  --leaf-lift: #256b4a;
+  --sand: #86662a;
+  --sand-deep: #7d5f27;
 
-  --bone: #ebe6d8;
-  --bone-2: #e0dbca;
+  /* alternate plates: warm white */
+  --bone: #f6f4ed;
+  --bone-2: #ebe8dd;
+  --bone-ink: #13221a;
 
-  --sage: #46584a;
-  --sage-dim: #677767;
-  --chalk: #13221a;
+  --sage: #3a5043;
+  --sage-dim: #5a6f61;
+  --chalk: #10231a;
 
-  --night: #f3f0e7;
-  --vignette: rgba(247, 245, 238, 0.8);
+  --night: #d4e2d6;
+  --vignette: rgba(205, 222, 208, 0.92);
+
+  --field: #fffdf8;
+  --ok: #2a7a53;
+  --err: #a4402b;
 
   color-scheme: light;
 }
@@ -425,6 +439,22 @@ ul {
 main {
   position: relative;
   z-index: 10;
+}
+
+/* Light theme hero: deeper sage at the top, a soft pool of light behind the
+   planet (the stage sits left, the copy right), fading into the page's sage. */
+[data-theme='light'] .hero {
+  background:
+    radial-gradient(55% 75% at 26% 48%, rgba(250, 253, 248, 0.95) 0%, rgba(250, 253, 248, 0) 70%),
+    linear-gradient(180deg, #c3d8c8 0%, var(--ink) 100%);
+}
+
+@media (max-width: 1023px) {
+  [data-theme='light'] .hero {
+    background:
+      radial-gradient(80% 45% at 50% 78%, rgba(250, 253, 248, 0.95) 0%, rgba(250, 253, 248, 0) 70%),
+      linear-gradient(180deg, #c3d8c8 0%, var(--ink) 100%);
+  }
 }
 
 .hero {
